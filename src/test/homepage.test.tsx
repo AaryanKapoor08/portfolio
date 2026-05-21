@@ -39,7 +39,7 @@ describe("portfolio homepage", () => {
     );
     expect(screen.getAllByRole("link", { name: /linkedin/i })[0]).toHaveAttribute(
       "href",
-      "https://linkedin.com/in/aaryan-kapoor-88a007332",
+      "https://www.linkedin.com/in/aaryan-kapoor-88a007332/",
     );
   });
 });

@@ -4,13 +4,23 @@ import { Badge } from '@/components/ui/badge';
 
 const experiences = [
   {
-    title: 'Lead Developer',
+    title: 'Competitor',
     org: 'Fredericton Ideation Boost Camp 2026',
     date: 'January 2026',
     location: 'Fredericton, NB',
     points: [
-      'Led a team of 3 CS students to design and pitch Auctus AI, an AI-powered community platform for small businesses.',
+      'Competed with a team of 3 CS students to design and pitch Auctus AI, an AI-powered community platform for small businesses.',
       'Deployed a production-ready MVP on Vercel within a 48-hour ideation period, now under review for municipal partnership.',
+    ],
+  },
+  {
+    title: 'Open Source Contributor',
+    org: 'GirlScript Summer of Code 2026',
+    date: '2026 - Present',
+    location: 'Remote',
+    points: [
+      'Contributing to open-source projects through GirlScript Summer of Code.',
+      'Working with maintainers on issues, pull requests, and production code improvements.',
     ],
   },
   {

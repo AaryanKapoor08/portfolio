@@ -41,7 +41,7 @@ const Hero: React.FC = () => {
           <a href="https://github.com/AaryanKapoor08" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
             <Github className="h-6 w-6" />
           </a>
-          <a href="https://linkedin.com/in/aaryan-kapoor-88a007332" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/aaryan-kapoor-88a007332/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
             <Linkedin className="h-6 w-6" />
           </a>
           <a href="mailto:aaryan.kapoor@unb.ca" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
