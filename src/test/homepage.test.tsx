@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import Index from "@/pages/Index";
 import { projects } from "@/data/projects";
+import { profileLinks } from "@/data/profile";
 
 describe("portfolio homepage", () => {
   it("renders the key homepage sections and contact email", () => {
@@ -16,7 +17,7 @@ describe("portfolio homepage", () => {
     expect(screen.getByRole("heading", { name: /experience/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /aaryan\.kapoor@unb\.ca/i })).toHaveAttribute(
       "href",
-      "mailto:aaryan.kapoor@unb.ca",
+      `mailto:${profileLinks.email}`,
     );
   });
 
@@ -35,11 +36,11 @@ describe("portfolio homepage", () => {
     }
     expect(screen.getAllByRole("link", { name: /github/i })[0]).toHaveAttribute(
       "href",
-      "https://github.com/AaryanKapoor08",
+      profileLinks.github,
     );
     expect(screen.getAllByRole("link", { name: /linkedin/i })[0]).toHaveAttribute(
       "href",
-      "https://www.linkedin.com/in/aaryan-kapoor-88a007332/",
+      profileLinks.linkedin,
     );
   });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import Section from '@/components/ui/Section';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const experiences = [
   {
@@ -56,40 +57,44 @@ const Experience: React.FC = () => {
       <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-8">
           {experiences.map((experience) => (
-            <article key={experience.org} className="relative pl-8 border-l-2 border-border">
-              <span className="absolute left-[-5px] top-2 h-2 w-2 rounded-full bg-accent" />
-              <p className="text-sm text-muted-foreground">
-                {experience.date} - {experience.location}
-              </p>
-              <h3 className="mt-2 text-2xl font-bold text-foreground">
-                {experience.title}
-              </h3>
-              <p className="mt-1 text-sm font-medium text-muted-foreground">
-                {experience.org}
-              </p>
-              <ul className="mt-4 space-y-3">
-                {experience.points.map((point) => (
-                  <li key={point} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </article>
+            <Card key={experience.org} className="border-l-4 border-l-accent bg-card/80">
+              <CardHeader>
+                <p className="text-sm text-muted-foreground">
+                  {experience.date} - {experience.location}
+                </p>
+                <CardTitle className="text-2xl font-bold">
+                  {experience.title}
+                </CardTitle>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {experience.org}
+                </p>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {experience.points.map((point) => (
+                    <li key={point} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           ))}
 
-          <article className="relative pl-8 border-l-2 border-border">
-            <span className="absolute left-[-5px] top-2 h-2 w-2 rounded-full bg-accent" />
-            <p className="text-sm text-muted-foreground">
-              Sept 2024 - Apr 2028 - Fredericton, NB
-            </p>
-            <h3 className="mt-2 text-2xl font-bold text-foreground">
-              University of New Brunswick
-            </h3>
-            <p className="mt-1 text-sm font-medium text-muted-foreground">
-              Bachelor of Science in Computer Science - GPA 3.9 / 4.2
-            </p>
-          </article>
+          <Card className="border-l-4 border-l-primary bg-card/80">
+            <CardHeader>
+              <p className="text-sm text-muted-foreground">
+                Sept 2024 - Apr 2028 - Fredericton, NB
+              </p>
+              <CardTitle className="text-2xl font-bold">
+                University of New Brunswick
+              </CardTitle>
+              <p className="text-sm font-medium text-muted-foreground">
+                Bachelor of Science in Computer Science - GPA 3.9 / 4.2
+              </p>
+            </CardHeader>
+          </Card>
         </div>
 
         <div>
@@ -98,8 +103,9 @@ const Experience: React.FC = () => {
           </h3>
           <div className="space-y-4">
             {certifications.map((certification) => (
-              <div key={certification.name} className="rounded-2xl border border-border bg-card p-5">
-                <div className="flex items-start justify-between gap-4">
+              <Card key={certification.name} className="bg-card/80">
+                <CardContent className="p-5">
+                  <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="font-semibold text-foreground">
                       {certification.name}
@@ -110,7 +116,8 @@ const Experience: React.FC = () => {
                   </div>
                   <Badge variant="secondary">{certification.date}</Badge>
                 </div>
-              </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

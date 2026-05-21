@@ -1,6 +1,7 @@
 import React from 'react';
 import Section from '@/components/ui/Section';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface SkillGroup {
   category: string;
@@ -44,10 +45,13 @@ const Skills: React.FC = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {skillGroups.map((group) => (
-          <div key={group.category} className="space-y-4">
-            <h3 className="text-xl font-semibold text-foreground border-b border-border pb-2">
+          <Card key={group.category} className="bg-card/80">
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold">
               {group.category}
-            </h3>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
             <div className="flex flex-wrap gap-2">
               {group.skills.map((skill) => (
                 <Badge key={skill} variant="secondary">
@@ -55,7 +59,8 @@ const Skills: React.FC = () => {
                 </Badge>
               ))}
             </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </Section>

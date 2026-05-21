@@ -1,12 +1,16 @@
 import React from 'react';
 import Section from '@/components/ui/Section';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { profileLinks } from '@/data/profile';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
   return (
     <Section id="contact" crossSection>
-      <div className="mx-auto max-w-3xl text-center space-y-8">
+      <Card className="mx-auto max-w-3xl bg-card/80">
+        <CardContent className="p-8 text-center md:p-10">
+        <div className="space-y-8">
         <div className="space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
             Let's Connect
@@ -18,33 +22,27 @@ const Contact: React.FC = () => {
         </div>
 
         <Button size="lg" asChild>
-          <a href="mailto:aaryan.kapoor@unb.ca">
+          <a href={`mailto:${profileLinks.email}`}>
             <Mail className="mr-2 h-4 w-4" />
-            aaryan.kapoor@unb.ca
+            {profileLinks.email}
           </a>
         </Button>
 
-        <div className="flex items-center justify-center gap-6">
-          <a
-            href="https://github.com/AaryanKapoor08"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="GitHub"
-          >
-            <Github className="h-6 w-6" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/aaryan-kapoor-88a007332/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="h-6 w-6" />
-          </a>
+        <div className="flex items-center justify-center gap-3">
+          <Button variant="outline" size="icon" asChild>
+            <a href={profileLinks.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <Github className="h-5 w-5" />
+            </a>
+          </Button>
+          <Button variant="outline" size="icon" asChild>
+            <a href={profileLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <Linkedin className="h-5 w-5" />
+            </a>
+          </Button>
         </div>
-      </div>
+        </div>
+        </CardContent>
+      </Card>
 
       <div className="mx-auto mt-20 max-w-5xl border-t border-border pt-8">
         <p className="text-center text-xs text-muted-foreground">

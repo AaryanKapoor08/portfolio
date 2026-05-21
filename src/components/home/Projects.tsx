@@ -11,7 +11,7 @@ const Projects: React.FC = () => {
           Featured Projects
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          A collection of my favorite works, focusing on AI, Full Stack development, and scalable architecture.
+          A curated view of AI tools, full-stack apps, hackathon builds, and developer experiments.
         </p>
       </div>
       
