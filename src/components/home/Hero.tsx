@@ -38,13 +38,13 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="flex items-center justify-center gap-6 pt-4">
-          <a href="https://github.com/aaryankapoor" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a href="https://github.com/AaryanKapoor08" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
             <Github className="h-6 w-6" />
           </a>
-          <a href="https://linkedin.com/in/aaryankapoor" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a href="https://linkedin.com/in/aaryan-kapoor-88a007332" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
             <Linkedin className="h-6 w-6" />
           </a>
-          <a href="mailto:aaryan@example.com" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a href="mailto:aaryan.kapoor@unb.ca" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
             <Mail className="h-6 w-6" />
           </a>
         </div>

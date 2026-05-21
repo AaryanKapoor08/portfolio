@@ -20,9 +20,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-muted text-muted-foreground hover:text-foreground transition-colors">
               <Github className="h-4 w-4" />
             </a>
-            <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-muted text-muted-foreground hover:text-foreground transition-colors">
-              <ExternalLink className="h-4 w-4" />
-            </a>
+            {project.demoUrl && (
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label={`${project.name} live demo`}>
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            )}
           </div>
         </div>
 
@@ -48,13 +50,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </ul>
       </div>
 
-      <div className="mt-8">
-        <Button variant="outline" size="sm" className="w-full group-hover:bg-accent group-hover:text-accent-foreground transition-colors" asChild>
-          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-            Live Demo
-          </a>
-        </Button>
-      </div>
+      {project.demoUrl && (
+        <div className="mt-8">
+          <Button variant="outline" size="sm" className="w-full group-hover:bg-accent group-hover:text-accent-foreground transition-colors" asChild>
+            <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+              Live Demo
+            </a>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
