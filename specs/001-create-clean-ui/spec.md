@@ -86,7 +86,7 @@ Visitors can contact Aaryan through a clear email CTA and social links.
 ### Functional Requirements
 
 - **FR-001**: The homepage MUST render hero, projects, about, skills, experience, and contact sections.
-- **FR-002**: The hero and contact areas MUST use `aaryan.kapoor@unb.ca`, `https://github.com/AaryanKapoor08`, and `https://www.linkedin.com/in/aaryan-kapoor-88a007332/`.
+- **FR-002**: The hero and contact areas MUST use shared profile links for `aaryan.kapoor@unb.ca`, `https://github.com/AaryanKapoor08`, and `https://www.linkedin.com/in/aaryan-kapoor-88a007332/`.
 - **FR-003**: Project data MUST avoid placeholder `#` URLs.
 - **FR-004**: Project cards MUST render live demo controls only when a real demo URL exists.
 - **FR-005**: Portfolio section components MUST live consistently under `src/components/home/`.
