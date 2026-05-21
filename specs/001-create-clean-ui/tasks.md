@@ -41,8 +41,8 @@ description: "Task list for creating a clean UI for the portfolio website"
 - [x] T021 Replace TODO README with project documentation
 - [x] T022 Replace template feature specification with portfolio-specific requirements
 - [x] T023 Update task list to reflect completed and remaining work
-- [ ] T024 Replace placeholder Vitest test with homepage render coverage
-- [ ] T025 Run final validation: `npm run lint`, `npm test`, `npm run build`, and `git status --short --branch`
+- [x] T024 Replace placeholder Vitest test with homepage render coverage
+- [x] T025 Run final validation: `npm run lint`, `npm test`, `npm run build`, and `git status --short --branch`
 
 ## Current Notes
 
