@@ -23,18 +23,6 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/AaryanKapoor08/promptgod'
   },
   {
-    id: 'rag-notebook',
-    name: 'RAG Notebook',
-    description: 'Jupyter Notebook experiments for retrieval-augmented generation workflows.',
-    techStack: ['Jupyter Notebook', 'Python', 'RAG', 'Embeddings'],
-    highlights: [
-      'Explores document retrieval and answer generation workflows',
-      'Documents experimentation around embeddings and context retrieval',
-      'Supports learning and prototyping for RAG applications'
-    ],
-    githubUrl: 'https://github.com/AaryanKapoor08/rag'
-  },
-  {
     id: 'software-maintenance-agent',
     name: 'Software Maintenance Agent',
     description: 'Python project exploring AI-assisted software maintenance workflows.',
@@ -72,42 +60,6 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/AaryanKapoor08/Prompt_Amplifier'
   },
   {
-    id: 'medbuddy',
-    name: 'MedBuddy',
-    description: 'Hackathon healthcare project built for GDG New Delhi.',
-    techStack: ['TypeScript', 'React', 'Healthcare', 'Hackathon'],
-    highlights: [
-      'Built for the GDG New Delhi HackFest hackathon',
-      'Focuses on accessible patient-facing healthcare support',
-      'Combines product thinking with a fast full-stack prototype'
-    ],
-    githubUrl: 'https://github.com/AaryanKapoor08/medbuddy'
-  },
-  {
-    id: 'godcoder',
-    name: 'GodCoder',
-    description: 'Coding-practice platform concept for university students.',
-    techStack: ['Web App', 'Coding Platform', 'Education'],
-    highlights: [
-      'Explores a LeetCode-style experience for university students',
-      'Designed around student-friendly coding practice workflows',
-      'Early-stage product for structured technical preparation'
-    ],
-    githubUrl: 'https://github.com/AaryanKapoor08/godcoder'
-  },
-  {
-    id: 'codemaxing',
-    name: 'Codemaxing',
-    description: 'Developer project focused on coding practice and productivity.',
-    techStack: ['Web App', 'Developer Tools', 'Practice'],
-    highlights: [
-      'Explores tools for improving coding consistency',
-      'Focuses on developer practice workflows',
-      'Part of a broader set of student-focused engineering experiments'
-    ],
-    githubUrl: 'https://github.com/AaryanKapoor08/codemaxing'
-  },
-  {
     id: 'interview-ai',
     name: 'Interview AI',
     description: 'AI-assisted interview preparation project.',
@@ -142,29 +94,5 @@ export const projects: Project[] = [
       'Designed a focused document Q&A workflow for custom knowledge bases'
     ],
     githubUrl: 'https://github.com/AaryanKapoor08/Rag_Pipeline'
-  },
-  {
-    id: 'airbnb-clone',
-    name: 'Airbnb Clone',
-    description: 'JavaScript project recreating core Airbnb-style listing and booking UI patterns.',
-    techStack: ['JavaScript', 'Frontend', 'Web App'],
-    highlights: [
-      'Recreates familiar marketplace-style listing interactions',
-      'Focuses on frontend layout, routing, and reusable UI patterns',
-      'Demonstrates practical JavaScript application structure'
-    ],
-    githubUrl: 'https://github.com/AaryanKapoor08/AirbnbClone'
-  },
-  {
-    id: 'media-finder',
-    name: 'Media Finder',
-    description: 'TypeScript project for searching and discovering media.',
-    techStack: ['TypeScript', 'Search', 'Media'],
-    highlights: [
-      'Explores a search-focused media discovery workflow',
-      'Uses TypeScript for a more maintainable frontend codebase',
-      'Built as a compact app around querying and presenting media results'
-    ],
-    githubUrl: 'https://github.com/AaryanKapoor08/media-finder'
   }
 ];
