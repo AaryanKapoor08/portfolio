@@ -1,128 +1,115 @@
-# Feature Specification: [FEATURE NAME]
+# Feature Specification: Clean Portfolio UI
 
-**Feature Branch**: `[###-feature-name]`  
-**Created**: [DATE]  
-**Status**: Draft  
-**Input**: User description: "$ARGUMENTS"
+**Feature Branch**: `001-create-clean-ui`
+**Created**: 2026-05-21
+**Status**: Implemented, pending final test coverage expansion
+**Input**: Build a clean Vite + React + TypeScript portfolio for Aaryan Kapoor with accurate content, project links, and maintainable component structure.
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing
 
-<!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
--->
+### User Story 1 - Understand Who Aaryan Is (Priority: P1)
 
-### User Story 1 - [Brief Title] (Priority: P1)
+Visitors can immediately see Aaryan Kapoor's name, role, value proposition, and primary contact/social links.
 
-[Describe this user journey in plain language]
+**Why this priority**: The hero section is the first impression and must communicate identity and credibility quickly.
 
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**Independent Test**: Render the homepage and verify the hero displays "Aaryan Kapoor", "Full Stack AI Developer", project/contact CTAs, email, GitHub, and LinkedIn links.
 
 **Acceptance Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** a visitor opens the homepage, **When** the hero loads, **Then** Aaryan's name, title, tagline, and CTAs are visible.
+2. **Given** a visitor selects a social/contact link, **When** the link is activated, **Then** it points to the real email, GitHub, or LinkedIn URL.
 
----
+### User Story 2 - Review Project Work (Priority: P1)
 
-### User Story 2 - [Brief Title] (Priority: P2)
+Visitors can browse featured projects with descriptions, tech stacks, highlights, source links, and live links where available.
 
-[Describe this user journey in plain language]
+**Why this priority**: Projects are the primary proof of skill for a portfolio site.
 
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently]
+**Independent Test**: Render the projects section and verify the GitHub-backed project cards are present with non-placeholder links.
 
 **Acceptance Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** a visitor scrolls to Projects, **When** the section renders, **Then** four project cards are shown.
+2. **Given** a project has a live deployment, **When** the card renders, **Then** it displays a live demo link.
+3. **Given** a project does not have a live deployment, **When** the card renders, **Then** it does not show a fake `#` live link.
 
----
+### User Story 3 - Navigate the Portfolio (Priority: P1)
 
-### User Story 3 - [Brief Title] (Priority: P3)
+Visitors can move between homepage sections using sticky navigation and smooth section links.
 
-[Describe this user journey in plain language]
+**Why this priority**: The portfolio is a single-page experience; navigation must make scanning easy.
 
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently]
+**Independent Test**: Verify navigation links target the expected section anchors: home, projects, about, experience, and contact.
 
 **Acceptance Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** the homepage is open, **When** the user chooses a nav link, **Then** the browser targets the corresponding section.
+2. **Given** the user scrolls down, **When** the navbar state updates, **Then** the navbar remains available.
 
----
+### User Story 4 - Assess Background and Skills (Priority: P2)
 
-[Add more user stories as needed, each with an assigned priority]
+Visitors can read a concise bio, see grouped skills, and review experience, certifications, and education.
 
-### Edge Cases
+**Why this priority**: Skills and experience add context after the visitor has seen identity and projects.
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
--->
+**Independent Test**: Render the homepage and verify About, Skills, Experience, certifications, and UNB education content appear.
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+**Acceptance Scenarios**:
 
-## Requirements *(mandatory)*
+1. **Given** a visitor reaches About, **When** the section renders, **Then** it describes Aaryan's UNB and AI/full-stack background.
+2. **Given** a visitor reaches Skills, **When** the section renders, **Then** skills are grouped into readable categories.
+3. **Given** a visitor reaches Experience, **When** the section renders, **Then** timeline, certification, and education details are visible.
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
--->
+### User Story 5 - Contact Aaryan (Priority: P2)
+
+Visitors can contact Aaryan through a clear email CTA and social links.
+
+**Why this priority**: The portfolio should convert interest into a direct conversation.
+
+**Independent Test**: Render Contact and verify `aaryan.kapoor@unb.ca`, GitHub, and LinkedIn links are present.
+
+**Acceptance Scenarios**:
+
+1. **Given** a visitor reaches Contact, **When** the section renders, **Then** the email CTA is visible.
+2. **Given** a visitor chooses a social link, **When** it opens, **Then** it targets the real GitHub or LinkedIn URL.
+
+## Edge Cases
+
+- Projects without live demos must not render placeholder or broken demo links.
+- The About visual must not show fake placeholder text if no real profile image exists.
+- Homepage sections must remain readable on small screens.
+- Removed duplicate components must not leave stale imports.
+
+## Requirements
 
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-001**: The homepage MUST render hero, projects, about, skills, experience, and contact sections.
+- **FR-002**: The hero and contact areas MUST use shared profile links for `aaryan.kapoor@unb.ca`, `https://github.com/AaryanKapoor08`, and `https://www.linkedin.com/in/aaryan-kapoor-88a007332/`.
+- **FR-003**: Project data MUST avoid placeholder `#` URLs.
+- **FR-004**: Project cards MUST render live demo controls only when a real demo URL exists.
+- **FR-005**: Portfolio section components MUST live consistently under `src/components/home/`.
+- **FR-006**: The app MUST pass lint, tests, and production build.
 
-*Example of marking unclear requirements:*
+### Key Entities
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **Project**: A portfolio project with id, name, description, tech stack, highlights, source URL, and optional demo URL.
+- **Skill Group**: A category label with a list of related skills.
+- **Experience Item**: A timeline entry with role, organization, date, location, and supporting points.
+- **Certification**: A credential with name, issuer, and date.
 
-### Key Entities *(include if feature involves data)*
+## Success Criteria
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
-
-## Success Criteria *(mandatory)*
-
-<!--
-  ACTION REQUIRED: Define measurable success criteria.
-  These must be technology-agnostic and measurable.
--->
-
-### Measurable Outcomes
-
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-001**: A visitor can identify the portfolio owner and role from the first viewport.
+- **SC-002**: All featured project cards display real content and no placeholder links.
+- **SC-003**: Contact links are accurate and visible in the hero/contact areas.
+- **SC-004**: The project has automated render coverage for key homepage content.
+- **SC-005**: `npm run lint`, `npm test`, and `npm run build` complete successfully.
 
 ## Assumptions
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right assumptions based on reasonable defaults
-  chosen when the feature description did not specify certain details.
--->
-
-- [Assumption about target users, e.g., "Users have stable internet connectivity"]
-- [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
-- [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
-- [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+- The portfolio is a single-page marketing/profile site.
+- No real profile image is available, so a polished initials visual is acceptable.
+- Projects without live deployments should link only to source code.
+- The existing Vite, React, Tailwind, shadcn/ui, and Framer Motion stack should be preserved.
