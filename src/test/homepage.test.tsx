@@ -26,14 +26,22 @@ describe("portfolio homepage", () => {
 
     for (const project of projects) {
       expect(screen.getByRole("heading", { name: project.name })).toBeInTheDocument();
-      expect(project.githubUrl).toMatch(/^https:\/\/github\.com\/AaryanKapoor08\//);
-      expect(project.githubUrl).not.toBe("#");
+      expect(screen.getAllByText(project.date).length).toBeGreaterThan(0);
+      if (project.githubUrl) {
+        expect(project.githubUrl).toMatch(/^https:\/\/github\.com\/AaryanKapoor08\//);
+        expect(project.githubUrl).not.toBe("#");
+      }
       expect(project.demoUrl).not.toBe("#");
     }
 
-    for (const liveDemoLink of screen.getAllByRole("link", { name: /live demo/i })) {
-      expect(liveDemoLink).toHaveAttribute("href", "https://auctus-kohv.vercel.app");
-    }
+    expect(screen.getByRole("link", { name: /promptgod live demo/i })).toHaveAttribute(
+      "href",
+      "https://chromewebstore.google.com/detail/promptgod/cohbligncfolnlncmobbelfjiehlpijo",
+    );
+    expect(screen.getByRole("link", { name: /auctus live demo/i })).toHaveAttribute(
+      "href",
+      "https://auctus-five.vercel.app/",
+    );
     expect(screen.getAllByRole("link", { name: /github/i })[0]).toHaveAttribute(
       "href",
       profileLinks.github,

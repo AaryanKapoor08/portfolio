@@ -10,24 +10,24 @@ interface SkillGroup {
 
 const skillGroups: SkillGroup[] = [
   {
-    category: 'Languages',
-    skills: ['TypeScript', 'JavaScript', 'Python', 'Java', 'C++', 'SQL'],
+    category: 'Programming',
+    skills: ['Python', 'JavaScript', 'TypeScript', 'Java', 'C'],
   },
   {
-    category: 'AI/ML',
-    skills: ['OpenAI API', 'LangChain', 'PyTorch', 'Pinecone', 'RAG', 'HuggingFace'],
+    category: 'Frontend & Backend',
+    skills: ['React.js', 'Next.js', 'Node.js', 'Express.js', 'HTML', 'CSS', 'Tailwind CSS', 'REST APIs'],
   },
   {
-    category: 'Web',
-    skills: ['React', 'Next.js', 'Node.js', 'Tailwind CSS', 'Vite', 'Redux'],
+    category: 'AI & Retrieval',
+    skills: ['RAG fundamentals', 'LangChain', 'LangGraph', 'LangSmith', 'LLM APIs', 'Prompt engineering', 'Provider orchestration', 'BM25'],
   },
   {
-    category: 'DevOps',
-    skills: ['Git', 'Docker', 'AWS', 'CI/CD', 'Linux'],
+    category: 'Databases & Tools',
+    skills: ['Supabase', 'PostgreSQL', 'MongoDB', 'SQL', 'SQLite', 'Git', 'GitHub Actions', 'Docker'],
   },
   {
-    category: 'Tools',
-    skills: ['VS Code', 'Postman', 'Figma', 'Jira'],
+    category: 'Testing & Platforms',
+    skills: ['pytest', 'Vitest', 'Vite', 'Vercel', 'Chrome Extensions', 'Solidity', 'Hardhat', 'ethers.js'],
   },
 ];
 
@@ -39,7 +39,7 @@ const Skills: React.FC = () => {
           Technical Skills
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          My toolkit for building the next generation of AI-powered applications.
+          Tools I use across AI developer tooling, retrieval systems, and full-stack product work.
         </p>
       </div>
 

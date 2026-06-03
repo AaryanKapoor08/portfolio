@@ -10,13 +10,13 @@ const About: React.FC = () => {
             About Me
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            I am a second-year Computer Science student at the University of New Brunswick and an
-            Oracle GenAI Certified developer. I build intelligent web applications that bridge
-            full-stack development with generative AI.
+            I am a rising third-year Computer Science student at the University of New Brunswick
+            and an Oracle GenAI Certified developer. I build AI developer tools, Chrome extensions,
+            and retrieval-agent systems.
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            My work spans RAG pipelines, prompt tooling, and production-ready platforms, with a focus
-            on turning complex AI capabilities into practical user experiences.
+            My work spans TypeScript, Python, React, LangGraph, RAG, and LLM provider orchestration,
+            with shipped open-source projects focused on making model behavior reliable in real workflows.
           </p>
         </div>
         <div className="relative aspect-square rounded-2xl overflow-hidden border border-border bg-card shadow-lg">
