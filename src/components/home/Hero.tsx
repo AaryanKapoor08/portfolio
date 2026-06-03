@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { profileLinks } from '@/data/profile';
 import { projects } from '@/data/projects';
-import { Github, Linkedin, Mail, ArrowRight, Sparkles } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -17,8 +17,7 @@ const Hero: React.FC = () => {
 
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <div className="space-y-5">
-          <Badge variant="secondary" className="gap-2 px-3 py-1 text-sm font-medium">
-            <Sparkles className="h-3.5 w-3.5" />
+          <Badge variant="secondary" className="px-3 py-1 text-sm font-medium">
             Rising third-year UNB CS student
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold text-foreground">
