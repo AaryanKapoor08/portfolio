@@ -5,40 +5,56 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const experiences = [
   {
-    title: 'Competitor',
+    title: 'Freelance Web Developer',
+    org: 'Hastinapur Metals Pvt. Ltd.',
+    date: '2026',
+    location: 'Remote',
+    points: [
+      "Built a robust website to run the firm's day-to-day operations, replacing manual tracking with a structured catalog, enquiry handling, and a direct admin view.",
+    ],
+  },
+  {
+    title: 'Participant',
+    org: 'Dual-Use Technology Hackathon, UNB',
+    date: 'May 2026',
+    location: 'Fredericton, NB',
+    points: [
+      'Built Fluo in a 48-hour team sprint: a defence procurement workflow using n8n-style automation, vendor risk checks, and a blockchain audit ledger for tamper-evident procurement events.',
+    ],
+  },
+  {
+    title: 'Open Source Contributor',
+    org: 'GirlScript Summer of Code',
+    date: '2026',
+    location: 'Remote',
+    points: [
+      'Active contributor in a large open-source mentorship program, resolving issues and landing merged pull requests across community-maintained repositories.',
+    ],
+  },
+  {
+    title: 'Open Source Contributor',
+    org: 'Code Social, Winter of Code',
+    date: 'Nov 2025 - Present',
+    location: 'Remote',
+    points: [
+      'Contributing across multiple repositories in a 3-month seasonal program through code reviews, pull requests, and issue triage.',
+    ],
+  },
+  {
+    title: 'Lead Developer',
     org: 'Fredericton Ideation Boost Camp 2026',
     date: 'January 2026',
     location: 'Fredericton, NB',
     points: [
-      'Competed with a team of 3 CS students to design and pitch Auctus AI, an AI-powered community platform for small businesses.',
-      'Deployed a production-ready MVP on Vercel within a 48-hour ideation period, now under review for municipal partnership.',
-    ],
-  },
-  {
-    title: 'Open Source Contributor',
-    org: 'GirlScript Summer of Code 2026',
-    date: '2026 - Present',
-    location: 'Remote',
-    points: [
-      'Contributing to open-source projects through GirlScript Summer of Code.',
-      'Working with maintainers on issues, pull requests, and production code improvements.',
-    ],
-  },
-  {
-    title: 'Open Source Contributor',
-    org: 'Code Social - Winter of Code 2025',
-    date: 'Nov 2025 - Present',
-    location: 'Remote',
-    points: [
-      'Contributing to open-source projects in a 3-month seasonal program with global developers and mentors.',
-      'Collaborative workflows: code reviews, pull requests, and issue resolution across multiple repositories.',
+      'Led a 3-person team to design and pitch Auctus, an AI funding-discovery platform, and shipped a working MVP within the 48-hour camp.',
     ],
   },
 ];
 
 const certifications = [
+  { name: 'RAG Bootcamp', issuer: 'Udemy', date: 'May 2026' },
   { name: 'Oracle GenAI Certified', issuer: 'Oracle', date: 'Nov 2025' },
-  { name: 'Oracle APEX Cloud Developer', issuer: 'Oracle', date: 'Nov 2025' },
+  { name: 'Oracle APEX Cloud Developer Certified Professional', issuer: 'Oracle', date: 'Nov 2025' },
   { name: 'HackFest Hackathon', issuer: 'GDG Cloud New Delhi', date: 'Nov 2025' },
 ];
 
@@ -50,7 +66,7 @@ const Experience: React.FC = () => {
           Experience
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Practical work, certifications, and education behind the projects.
+          Practical work, certifications, volunteering, and education behind the projects.
         </p>
       </div>
 
@@ -91,7 +107,10 @@ const Experience: React.FC = () => {
                 University of New Brunswick
               </CardTitle>
               <p className="text-sm font-medium text-muted-foreground">
-                Bachelor of Science in Computer Science - GPA 3.9 / 4.2
+                Bachelor of Science in Computer Science (Rising 3rd Year)
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Relevant coursework: Java, C, SQL, Calculus I & II, Statistics, Data Analysis, Machine Language.
               </p>
             </CardHeader>
           </Card>
@@ -120,6 +139,25 @@ const Experience: React.FC = () => {
               </Card>
             ))}
           </div>
+
+          <h3 className="mt-10 text-2xl font-bold text-foreground mb-6">
+            Volunteer
+          </h3>
+          <Card className="bg-card/80">
+            <CardContent className="p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-foreground">
+                    Atlantic AI Summit 2026
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Supported on-site logistics across keynotes, panels, and workshops for UNB's RIDSAI applied-AI gathering.
+                  </p>
+                </div>
+                <Badge variant="secondary">Jun 2026</Badge>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </Section>
