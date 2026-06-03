@@ -41,12 +41,12 @@ const experiences = [
     ],
   },
   {
-    title: 'Lead Developer',
+    title: 'Participant',
     org: 'Fredericton Ideation Boost Camp 2026',
     date: 'January 2026',
     location: 'Fredericton, NB',
     points: [
-      'Led a 3-person team to design and pitch Auctus, an AI funding-discovery platform, and shipped a working MVP within the 48-hour camp.',
+      'Participated in the 48-hour camp to design and pitch Auctus, an AI funding-discovery platform, and ship a working MVP.',
     ],
   },
 ];

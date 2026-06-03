@@ -167,9 +167,9 @@ Rising third-year Computer Science student building AI developer tools, Chrome e
       \resumeItemListEnd
 
     \resumeExpHeading
-      {Fredericton Ideation Boost Camp 2026 -- Lead Developer}{January 2026}
+      {Fredericton Ideation Boost Camp 2026 -- Participant}{January 2026}
       \resumeItemListStart
-        \resumeItem{Led a 3-person team to design and pitch Auctus, an AI funding-discovery platform, and shipped a working MVP within the 48-hour camp.}
+        \resumeItem{Participated in the 48-hour camp to design and pitch Auctus, an AI funding-discovery platform, and ship a working MVP.}
       \resumeItemListEnd
 
   \resumeSubHeadingListEnd
