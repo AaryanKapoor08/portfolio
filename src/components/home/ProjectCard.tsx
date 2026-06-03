@@ -10,19 +10,28 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const primaryUrl = project.demoUrl ?? project.githubUrl;
+
   return (
     <Card className="group flex h-full flex-col overflow-hidden bg-card/80 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-lg">
       <CardHeader className="space-y-4">
         <div className="flex items-start justify-between gap-4">
-          <CardTitle className="text-2xl font-bold group-hover:text-accent transition-colors">
-            {project.name}
-          </CardTitle>
+          <div>
+            <CardTitle className="text-2xl font-bold group-hover:text-accent transition-colors">
+              {project.name}
+            </CardTitle>
+            <p className="mt-1 text-sm font-medium text-muted-foreground">
+              {project.date}
+            </p>
+          </div>
           <div className="flex gap-2">
-            <Button variant="secondary" size="icon" asChild>
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`${project.name} GitHub repository`}>
-                <Github className="h-4 w-4" />
-              </a>
-            </Button>
+            {project.githubUrl && (
+              <Button variant="secondary" size="icon" asChild>
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`${project.name} GitHub repository`}>
+                  <Github className="h-4 w-4" />
+                </a>
+              </Button>
+            )}
             {project.demoUrl && (
               <Button variant="secondary" size="icon" asChild>
                 <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`${project.name} live demo`}>
@@ -55,13 +64,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </ul>
       </CardContent>
 
-      <CardFooter>
-        <Button variant={project.demoUrl ? 'default' : 'outline'} size="sm" className="w-full" asChild>
-          <a href={project.demoUrl ?? project.githubUrl} target="_blank" rel="noopener noreferrer">
-            {project.demoUrl ? 'Live Demo' : 'View Code'}
-          </a>
-        </Button>
-      </CardFooter>
+      {primaryUrl && (
+        <CardFooter>
+          <Button variant={project.demoUrl ? 'default' : 'outline'} size="sm" className="w-full" asChild>
+            <a href={primaryUrl} target="_blank" rel="noopener noreferrer">
+              {project.demoUrl ? 'Live Demo' : 'View Code'}
+            </a>
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };
