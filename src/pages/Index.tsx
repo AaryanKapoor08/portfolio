@@ -7,6 +7,7 @@ import Skills from '@/components/home/Skills';
 import Experience from '@/components/home/Experience';
 import Contact from '@/components/home/Contact';
 import Reveal from '@/components/ui/Reveal';
+import ScrollToTop from '@/components/ui/ScrollToTop';
 
 const Index = () => {
   return (
@@ -35,6 +36,8 @@ const Index = () => {
       <Reveal>
         <Contact />
       </Reveal>
+
+      <ScrollToTop />
     </Layout>
   );
 };
