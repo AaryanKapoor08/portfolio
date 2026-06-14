@@ -7,6 +7,7 @@ import { profileLinks } from '@/data/profile';
 import { projects } from '@/data/projects';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import HeroCanvas from '@/components/three/HeroCanvas';
+import Typewriter from '@/components/ui/Typewriter';
 
 const container: Variants = {
   hidden: {},
@@ -54,7 +55,15 @@ const Hero: React.FC = () => {
             Aaryan Kapoor
           </motion.h1>
           <motion.p variants={item} className="text-xl md:text-2xl font-medium text-muted-foreground">
-            Full Stack AI Developer
+            <Typewriter
+              words={[
+                'Full Stack AI Developer',
+                'Chrome Extension Builder',
+                'RAG & Retrieval Systems',
+                'LangGraph Agent Engineer',
+              ]}
+              className="text-foreground"
+            />
           </motion.p>
           <motion.p
             variants={item}
