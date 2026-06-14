@@ -54,9 +54,13 @@ export default function Typewriter({
   }, [text, deleting, index, words, reduced, typingSpeed, deletingSpeed, pauseMs]);
 
   return (
-    <span className={className} aria-live="polite">
-      {text}
-      <span className="ml-0.5 inline-block w-[2px] animate-pulse bg-accent align-middle" style={{ height: '1em' }} />
+    <span className={className}>
+      {/* Stable label for screen readers, SEO, and no-JS — always in the DOM. */}
+      <span className="sr-only">{words[0]}</span>
+      <span aria-hidden="true">
+        {text}
+        <span className="ml-0.5 inline-block w-[2px] animate-pulse bg-accent align-middle" style={{ height: '1em' }} />
+      </span>
     </span>
   );
 }
