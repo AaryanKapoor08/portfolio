@@ -12,7 +12,7 @@ import { Cloud, VBucks } from './Props';
  * V-Bucks and clouds drifting around. Lit with plain lights (no CDN HDRI)
  * so it always renders, online or not.
  */
-export default function FortniteScene() {
+export default function FortniteScene({ autoRotate = true }: { autoRotate?: boolean }) {
   return (
     <Canvas
       dpr={[1, 1.8]}
@@ -76,7 +76,7 @@ export default function FortniteScene() {
         <OrbitControls
           enablePan={false}
           enableZoom={false}
-          autoRotate
+          autoRotate={autoRotate}
           autoRotateSpeed={0.9}
           minPolarAngle={Math.PI / 3.2}
           maxPolarAngle={Math.PI / 1.9}

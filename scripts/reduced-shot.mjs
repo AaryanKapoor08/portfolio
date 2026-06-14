@@ -1,0 +1,11 @@
+import { chromium } from '@playwright/test';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
+const p = await ctx.newPage();
+await p.addInitScript(() => { try { document.documentElement.classList.add('dark'); } catch {} });
+await p.goto('http://localhost:8123/', { waitUntil: 'networkidle' });
+await p.evaluate(() => document.documentElement.classList.add('dark'));
+await p.evaluate(() => document.getElementById('play')?.scrollIntoView({ block: 'center' }));
+await p.waitForTimeout(3500);
+await p.screenshot({ path: 'scripts/reduced-play.png' });
+await b.close(); console.log('done');
