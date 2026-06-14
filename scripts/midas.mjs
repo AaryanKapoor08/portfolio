@@ -1,0 +1,11 @@
+import { chromium } from '@playwright/test';
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1280, height: 980 } });
+const errs=[]; p.on('pageerror',e=>errs.push(e.message)); p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});
+await p.goto('http://localhost:8123/', { waitUntil:'networkidle' });
+await p.evaluate(()=>document.documentElement.classList.add('dark'));
+await p.evaluate(()=>document.getElementById('about')?.scrollIntoView({block:'center'}));
+await p.waitForTimeout(5000);
+await p.screenshot({ path:'scripts/midas-about.png' });
+console.log('errs:', errs.slice(0,6).join(' | ')||'none');
+await b.close();
