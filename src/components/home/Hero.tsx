@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { profileLinks } from '@/data/profile';
 import { projects } from '@/data/projects';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
+import HeroCanvas from '@/components/three/HeroCanvas';
 
 const container: Variants = {
   hidden: {},
@@ -22,8 +23,10 @@ const item: Variants = {
 const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 py-24 lg:px-24">
+      <HeroCanvas />
+
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-background" />
+        <div className="absolute inset-0 bg-background/40" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.45)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.45)_1px,transparent_1px)] bg-[size:64px_64px] opacity-25" />
         <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-accent/10 to-transparent" />
         {/* Soft animated glow behind the headline */}
