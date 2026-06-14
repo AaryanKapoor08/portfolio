@@ -53,7 +53,10 @@ const Hero: React.FC = () => {
               Rising third-year UNB CS student
             </Badge>
           </motion.div>
-          <motion.h1 variants={item} className="text-5xl md:text-7xl font-bold text-foreground">
+          <motion.h1
+            variants={item}
+            className="bg-gradient-to-r from-foreground via-accent to-foreground bg-[length:200%_auto] bg-clip-text text-5xl font-bold text-transparent animate-aurora md:text-7xl"
+          >
             Aaryan Kapoor
           </motion.h1>
           <motion.p variants={item} className="text-xl md:text-2xl font-medium text-muted-foreground">
