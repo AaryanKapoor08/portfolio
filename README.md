@@ -15,15 +15,15 @@ Aaryan Kapoor's personal portfolio website, built to showcase AI-focused full-st
 
 ## Interactive Highlights
 
-- **3D hero** — floating Minecraft-style voxel blocks with procedural (asset-free) pixel textures and cursor parallax.
-- **Drag-the-llama stage** — a hand-built, low-poly Fortnite loot llama you can spin (`#play`).
-- **Interactive About block** — a hovering 3D diamond block.
+- **3D hero** — floating Minecraft-style voxel blocks (grass, dirt, stone, diamond ore) with procedural, asset-free pixel textures and cursor parallax.
+- **Battle Bus Drop stage** (`#play`) — a drag-to-orbit Fortnite scene hand-built from primitives: the Battle Bus (balloon + bus + spinning turbine), a loot llama, a pickaxe, V-Bucks, clouds, and a glowing storm circle.
+- **Interactive About block** — a hovering 3D diamond-ore block.
 - **Typewriter headline**, magnetic buttons, 3D-tilt + spotlight project cards, and an infinite skills marquee.
 - **Animated project filters**, scroll progress bar, count-up stats, and a drifting aurora backdrop.
-- **Custom desktop cursor** and a Minecraft block-build intro splash.
+- **Minecraft block-build intro splash** on first visit.
 - **Easter egg** — type the Konami code (↑↑↓↓←→←→ B A) for a block rain.
 
-All 3D scenes are code-split and lazy-mounted, and every motion effect respects `prefers-reduced-motion`.
+All 3D scenes are code-split and lazy-mounted (Three.js ships in its own vendor chunk), and every motion effect respects `prefers-reduced-motion`. Scenes use plain lighting — no CDN-hosted HDRI — so they render offline. The `scripts/*.mjs` Playwright helpers capture light/dark screenshots of the 3D sections for visual checks.
 
 ## Local Development
 
