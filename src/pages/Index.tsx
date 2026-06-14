@@ -11,12 +11,14 @@ import Reveal from '@/components/ui/Reveal';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import KonamiRain from '@/components/ui/KonamiRain';
+import CustomCursor from '@/components/ui/CustomCursor';
 
 const Index = () => {
   return (
     <Layout>
       <ScrollProgress />
       <KonamiRain />
+      <CustomCursor />
       <Navbar />
       <div id="home">
         <Hero />
