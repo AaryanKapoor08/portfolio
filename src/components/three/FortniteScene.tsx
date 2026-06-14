@@ -61,6 +61,16 @@ export default function FortniteScene() {
         <Cloud position={[4.2, 1.8, -5]} scale={1.3} />
         <Cloud position={[0, -2.2, -6]} scale={1.6} />
 
+        {/* Storm-circle glow ring on the ground */}
+        <mesh position={[0, -2.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[3.2, 3.55, 64]} />
+          <meshBasicMaterial color="#37c6d0" transparent opacity={0.55} toneMapped={false} />
+        </mesh>
+        <mesh position={[0, -2.06, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <circleGeometry args={[3.2, 64]} />
+          <meshBasicMaterial color="#37c6d0" transparent opacity={0.06} toneMapped={false} />
+        </mesh>
+
         <ContactShadows position={[0, -2.1, 0]} opacity={0.3} scale={14} blur={2.6} far={5} />
 
         <OrbitControls
