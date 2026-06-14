@@ -8,10 +8,12 @@ import Experience from '@/components/home/Experience';
 import Contact from '@/components/home/Contact';
 import Reveal from '@/components/ui/Reveal';
 import ScrollToTop from '@/components/ui/ScrollToTop';
+import ScrollProgress from '@/components/ui/ScrollProgress';
 
 const Index = () => {
   return (
     <Layout>
+      <ScrollProgress />
       <Navbar />
       <div id="home">
         <Hero />
