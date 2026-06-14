@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import Section from '@/components/ui/Section';
+
+const AboutBlock = lazy(() => import('@/components/three/AboutBlock'));
 
 const About: React.FC = () => {
   return (
@@ -21,19 +23,17 @@ const About: React.FC = () => {
         </div>
         <div className="relative aspect-square rounded-2xl overflow-hidden border border-border bg-card shadow-lg">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,hsl(var(--accent)/0.18),transparent_28%),linear-gradient(135deg,hsl(var(--muted)),hsl(var(--background)))]" />
-          <div className="absolute inset-8 rounded-2xl border border-border/70 bg-background/70 backdrop-blur-sm" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-            <div className="flex h-28 w-28 items-center justify-center rounded-full border border-border bg-foreground text-4xl font-bold tracking-normal text-background shadow-xl">
-              AK
-            </div>
-            <div className="text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                Full Stack AI
-              </p>
-              <p className="mt-1 text-lg font-semibold text-foreground">
-                Developer
-              </p>
-            </div>
+          <div className="absolute inset-6 rounded-2xl border border-border/70 bg-background/40 backdrop-blur-sm" />
+          <div className="absolute inset-0">
+            <Suspense fallback={null}>
+              <AboutBlock />
+            </Suspense>
+          </div>
+          <div className="absolute inset-x-0 bottom-5 text-center">
+            <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              Full Stack AI
+            </p>
+            <p className="mt-1 text-lg font-semibold text-foreground">Developer</p>
           </div>
         </div>
       </div>
