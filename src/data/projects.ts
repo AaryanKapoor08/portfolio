@@ -1,8 +1,11 @@
+export type ProjectCategory = 'AI Agents' | 'RAG' | 'Full-Stack' | 'Dev Tools';
+
 export interface Project {
   id: string;
   name: string;
   date: string;
   description: string;
+  category: ProjectCategory;
   techStack: string[];
   highlights: string[];
   demoUrl?: string;
@@ -15,6 +18,7 @@ export const projects: Project[] = [
     id: 'promptgod',
     name: 'PromptGod',
     date: 'November 2025 - Present',
+    category: 'Dev Tools',
     description: 'Manifest V3 Chrome extension that rewrites prompts directly inside major AI chat tools.',
     techStack: ['Manifest V3', 'TypeScript', 'Vite'],
     highlights: [
@@ -29,6 +33,7 @@ export const projects: Project[] = [
     id: 'software-maintenance-agent',
     name: 'Software Maintenance Agent',
     date: 'April 2026 - Present',
+    category: 'AI Agents',
     description: 'Local coding agent for small, testable software maintenance fixes.',
     techStack: ['Python', 'DSPy', 'pytest', 'SQLite', 'JEPA-style scoring'],
     highlights: [
@@ -42,6 +47,7 @@ export const projects: Project[] = [
     id: 'auctus',
     name: 'Auctus',
     date: 'January 2026 - Present',
+    category: 'Full-Stack',
     description: 'Canadian funding-discovery platform for businesses, students, and professors.',
     techStack: ['Next.js 16', 'React 19', 'Supabase'],
     highlights: [
@@ -56,6 +62,7 @@ export const projects: Project[] = [
     id: 'hermes-graph-context-router',
     name: 'Hermes Graph Context Router',
     date: 'May 2026 - Present',
+    category: 'AI Agents',
     description: 'Graph-guided context router that prepares focused briefings before coding agents edit a repo.',
     techStack: ['Python', 'CodeGraph', 'SQLite', 'MCP'],
     highlights: [
@@ -68,6 +75,7 @@ export const projects: Project[] = [
     id: 'agentic-rag-pipeline',
     name: 'Agentic RAG Pipeline',
     date: 'April 2026 - Present',
+    category: 'RAG',
     description: 'LangGraph retrieval workflow with planning, quality checks, and tracing.',
     techStack: ['Python', 'LangGraph', 'LangChain', 'LangSmith'],
     highlights: [
@@ -78,6 +86,7 @@ export const projects: Project[] = [
     id: 'multimodal-rag-pipeline',
     name: 'Multimodal RAG Pipeline',
     date: 'December 2025',
+    category: 'RAG',
     description: 'Prototype RAG system for text and image retrieval with grounded citations.',
     techStack: ['Python', 'LangChain', 'Embeddings'],
     highlights: [
