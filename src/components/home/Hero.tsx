@@ -9,6 +9,7 @@ import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import HeroCanvas from '@/components/three/HeroCanvas';
 import Typewriter from '@/components/ui/Typewriter';
 import Magnetic from '@/components/ui/Magnetic';
+import CountUp from '@/components/ui/CountUp';
 
 const container: Variants = {
   hidden: {},
@@ -107,8 +108,15 @@ const Hero: React.FC = () => {
         </motion.div>
 
         <motion.div variants={item} className="grid gap-3 pt-4 sm:grid-cols-3">
+          <Card className="bg-card/70 backdrop-blur transition-colors hover:border-accent/50">
+            <CardContent className="p-4">
+              <p className="text-2xl font-semibold text-foreground">
+                <CountUp to={projects.length} suffix="+" />
+              </p>
+              <p className="text-sm text-muted-foreground">featured projects</p>
+            </CardContent>
+          </Card>
           {[
-            [projects.length.toString(), 'featured projects'],
             ['AI', 'RAG, prompts, agents'],
             ['UNB', 'Computer Science'],
           ].map(([value, label]) => (
