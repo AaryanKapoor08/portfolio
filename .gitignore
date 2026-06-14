@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local screenshot artifacts from scripts/*.mjs
+scripts/*.png
