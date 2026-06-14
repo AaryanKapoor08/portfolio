@@ -59,8 +59,7 @@ const PlayStage: React.FC = () => {
         <h2 className="text-4xl md:text-5xl font-bold text-foreground">Battle Bus Drop</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           When I'm not shipping AI tools, I'm probably hot-dropping in Fortnite. Drag to orbit the
-          Battle Bus, loot llama, pickaxe, and V-Bucks — all hand-built live in the browser with
-          Three.js, no assets downloaded.
+          iconic Battle Bus, rendered in real time with Three.js and React Three Fiber.
         </p>
       </div>
 
@@ -79,6 +78,19 @@ const PlayStage: React.FC = () => {
           drag to orbit
         </span>
       </div>
+
+      <p className="mt-4 text-center text-xs text-muted-foreground/70">
+        Battle Bus model by{' '}
+        <a
+          href="https://sketchfab.com/RamonaFlowers"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:text-foreground"
+        >
+          RamonaFlowers
+        </a>{' '}
+        · licensed CC BY. Fortnite is a trademark of Epic Games.
+      </p>
     </Section>
   );
 };
