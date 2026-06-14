@@ -20,7 +20,7 @@ export default function HeroCanvas() {
   if (!enabled) return null;
 
   return (
-    <div className="absolute inset-0 -z-[5] opacity-90 [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_92%)]">
+    <div className="pointer-events-none absolute inset-0 z-0 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_84%,transparent)]">
       <Suspense fallback={null}>
         <HeroScene />
       </Suspense>
