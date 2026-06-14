@@ -2,6 +2,7 @@ import React from 'react';
 import Section from '@/components/ui/Section';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Marquee from '@/components/ui/Marquee';
 
 interface SkillGroup {
   category: string;
@@ -62,6 +63,11 @@ const Skills: React.FC = () => {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      <div className="mt-12 space-y-4">
+        <Marquee items={skillGroups.flatMap((g) => g.skills).slice(0, 18)} duration={36} />
+        <Marquee items={skillGroups.flatMap((g) => g.skills).slice(18)} duration={30} reverse />
       </div>
     </Section>
   );
