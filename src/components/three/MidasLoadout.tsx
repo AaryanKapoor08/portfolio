@@ -1,78 +1,57 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
 
 const MIDAS = '/models/midas.glb';
-const WAND = '/models/star-wand.glb';
 useGLTF.preload(MIDAS);
-useGLTF.preload(WAND);
-
-// --- Grip tuning: the wand's transform inside the right-hand bone. ---
-// These are in the hand bone's local space; adjust visually until the wand
-// sits in the palm like a harvesting tool.
-const WAND_SCALE = 1;
-const WAND_POS: [number, number, number] = [0, 0, 0];
-const WAND_ROT: [number, number, number] = [0, 0, 0];
 
 interface MidasLoadoutProps {
   targetSize?: number;
   spinSpeed?: number;
   animate?: boolean;
-  /** Constant yaw so he faces the camera (model ships facing -Z). */
+  /** Constant yaw so he faces the camera (model ships facing +Z, toward us). */
   facingY?: number;
 }
 
-/** True when this mesh (or any of its materials) is the default pistol. */
-function isPistol(mesh: THREE.Mesh): boolean {
-  const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-  return mats.some((m) => m && /Top_Tier_Pistol/i.test(m.name || ''));
-}
-
 /**
- * Midas (rigged) holding the Star Wand like an equipped harvesting tool.
- * Plays his idle animation, hides the default pistol, and parents the wand to
- * the right-hand bone (hand_r_037) so it follows the pose.
+ * Midas (rigged) standing in his idle pose, holding his default gold pistol.
+ * Centred and height-normalized so he drops cleanly into the showcase stage.
  */
 export default function MidasLoadout({
   targetSize = 3.4,
   spinSpeed = 0,
   animate = true,
-  facingY = Math.PI,
+  facingY = 0,
 }: MidasLoadoutProps) {
   const { scene, animations } = useGLTF(MIDAS);
-  const wandGltf = useGLTF(WAND);
+  const gl = useThree((s) => s.gl);
   const root = useRef<THREE.Group>(null);
   const spinner = useRef<THREE.Group>(null);
   const { actions } = useAnimations(animations, root);
 
-  // One-time setup: hide the pistol, swap in the wand on the right hand.
+  // Enable shadows and keep the high-res textures crisp: GLB textures import
+  // with anisotropy = 1, which makes detailed maps look blurry/pixelated at
+  // grazing angles. Crank every map to the GPU's max anisotropy.
   useEffect(() => {
-    scene.traverse((obj) => {
-      const mesh = obj as THREE.Mesh;
-      if (mesh.isMesh && isPistol(mesh)) mesh.visible = false;
-    });
-    const hand = scene.getObjectByName('hand_r_037');
-    if (hand && !hand.getObjectByName('__starwand')) {
-      const wand = wandGltf.scene.clone(true);
-      wand.name = '__starwand';
-      wand.scale.setScalar(WAND_SCALE);
-      wand.position.set(...WAND_POS);
-      wand.rotation.set(...WAND_ROT);
-      wand.traverse((o) => {
-        const m = o as THREE.Mesh;
-        if (m.isMesh) m.castShadow = true;
-      });
-      hand.add(wand);
-    }
+    const maxAniso = gl.capabilities.getMaxAnisotropy();
     scene.traverse((o) => {
       const m = o as THREE.Mesh;
-      if (m.isMesh) {
-        m.castShadow = true;
-        m.receiveShadow = true;
-      }
+      if (!m.isMesh) return;
+      m.castShadow = true;
+      m.receiveShadow = true;
+      const mats = Array.isArray(m.material) ? m.material : [m.material];
+      mats.forEach((mat) => {
+        const std = mat as THREE.MeshStandardMaterial;
+        [std.map, std.normalMap, std.roughnessMap, std.metalnessMap, std.emissiveMap, std.aoMap].forEach((t) => {
+          if (t && t.anisotropy !== maxAniso) {
+            t.anisotropy = maxAniso;
+            t.needsUpdate = true;
+          }
+        });
+      });
     });
-  }, [scene, wandGltf]);
+  }, [scene, gl]);
 
   // Play the idle so he's posed and alive.
   useEffect(() => {
