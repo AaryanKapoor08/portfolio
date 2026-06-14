@@ -22,10 +22,20 @@ const StageHint: React.FC<{ label: string }> = ({ label }) => (
 const PlayStage: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  // Reduced-motion users still get the scene — we just don't auto-spin it.
+  const reduced =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced || !ref.current) return;
+    const el = ref.current;
+    if (!el) return;
+    // If it's already on screen (deep-link, fast scroll), mount right away.
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 300 && rect.bottom > -300) {
+      setVisible(true);
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -33,9 +43,9 @@ const PlayStage: React.FC = () => {
           observer.disconnect();
         }
       },
-      { rootMargin: '200px' },
+      { rootMargin: '300px' },
     );
-    observer.observe(ref.current);
+    observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
@@ -60,10 +70,10 @@ const PlayStage: React.FC = () => {
       >
         {visible ? (
           <Suspense fallback={<StageHint label="Loading the lobby…" />}>
-            <FortniteScene />
+            <FortniteScene autoRotate={!reduced} />
           </Suspense>
         ) : (
-          <StageHint label="Scroll a little to drop in…" />
+          <StageHint label="Loading the lobby…" />
         )}
         <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
           drag to orbit

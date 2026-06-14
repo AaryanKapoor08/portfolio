@@ -10,11 +10,11 @@ export default function HeroCanvas() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Skip the hero scene on phones: the blocks crowd the headline and it
-    // costs battery. The 3D still shows up in the Play and About sections.
+    // Skip the hero scene on phones only: the blocks crowd the headline and
+    // it costs battery. (We intentionally still show it for reduced-motion
+    // users — the 3D is the whole point of this site.)
     const tooSmall = window.matchMedia('(max-width: 767px)').matches;
-    if (reduced || tooSmall) return;
+    if (tooSmall) return;
     // Let the hero copy render before we spin up WebGL.
     const id = window.setTimeout(() => setEnabled(true), 120);
     return () => window.clearTimeout(id);
