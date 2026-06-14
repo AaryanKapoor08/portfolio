@@ -1,7 +1,18 @@
 import React from 'react';
+import { motion, type Variants } from 'framer-motion';
 import Section from '@/components/ui/Section';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+const listContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const listItem: Variants = {
+  hidden: { opacity: 0, x: -24 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const experiences = [
   {
@@ -71,9 +82,16 @@ const Experience: React.FC = () => {
       </div>
 
       <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
-        <div className="space-y-8">
+        <motion.div
+          className="space-y-8"
+          variants={listContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+        >
           {experiences.map((experience) => (
-            <Card key={experience.org} className="border-l-4 border-l-accent bg-card/80">
+            <motion.div key={experience.org} variants={listItem}>
+            <Card className="border-l-4 border-l-accent bg-card/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-l-[6px] hover:shadow-lg">
               <CardHeader>
                 <p className="text-sm text-muted-foreground">
                   {experience.date} - {experience.location}
@@ -96,9 +114,11 @@ const Experience: React.FC = () => {
                 </ul>
               </CardContent>
             </Card>
+            </motion.div>
           ))}
 
-          <Card className="border-l-4 border-l-primary bg-card/80">
+          <motion.div variants={listItem}>
+          <Card className="border-l-4 border-l-primary bg-card/80 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
             <CardHeader>
               <p className="text-sm text-muted-foreground">
                 Sept 2024 - Apr 2028 - Fredericton, NB
@@ -114,7 +134,8 @@ const Experience: React.FC = () => {
               </p>
             </CardHeader>
           </Card>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div>
           <h3 className="text-2xl font-bold text-foreground mb-6">
