@@ -6,6 +6,7 @@ import About from '@/components/home/About';
 import Skills from '@/components/home/Skills';
 import Experience from '@/components/home/Experience';
 import Contact from '@/components/home/Contact';
+import PlayStage from '@/components/home/PlayStage';
 import Reveal from '@/components/ui/Reveal';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import ScrollProgress from '@/components/ui/ScrollProgress';
@@ -34,7 +35,11 @@ const Index = () => {
       <Reveal>
         <Experience />
       </Reveal>
-      
+
+      <Reveal>
+        <PlayStage />
+      </Reveal>
+
       <Reveal>
         <Contact />
       </Reveal>
