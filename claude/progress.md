@@ -2,6 +2,40 @@
 
 > Handoff notes so the next session can pick up right where we left off.
 
+---
+
+## ⛳ RESUME HERE (2026-06-14, end of session 2)
+
+**Task in progress: "Midas holding the Star Wand" in the About panel.**
+
+Status: Midas renders great in the About panel (`src/components/home/About.tsx` → `MidasScene`):
+faces the camera, pistol hidden, idle animation playing, full body, well lit. **The only
+thing left is sizing/seating the Star Wand in his hand** — right now the wand is attached to
+his right-hand bone but is scaled tiny (≈invisible).
+
+**Files:**
+- `src/components/three/MidasLoadout.tsx` — Midas + held wand. Hides pistol (material
+  `M_Top_Tier_Pistol`), attaches wand clone to bone **`hand_r_037`**, plays idle anim.
+- `src/components/three/MidasScene.tsx` — the canvas/stage.
+- `src/components/home/About.tsx` — panel is now `aspect-[4/5]`, dark gold display case,
+  caption "Midas · Star Wand · drag to spin".
+
+**THE FIX (do this first next session):** in `MidasLoadout.tsx`, the grip constants
+`WAND_SCALE / WAND_POS / WAND_ROT` need tuning. Measured: `hand_r_037` world scale ≈ **0.0205**;
+at `WAND_SCALE=1` the wand ends up only ~0.028 world units tall (Midas is 3.4 tall → invisible).
+**Set `WAND_SCALE ≈ 60–65** (≈1.8/0.028) to get a ~1.8-unit wand, then iterate `WAND_POS` and
+`WAND_ROT` so it sits in the palm pointing up like a harvesting tool.
+
+**How to iterate:** `npx vite --port 8123 &` then `node scripts/midas.mjs` → opens
+`scripts/midas-about.png`. Tweak the 3 consts, re-run, look, repeat (a few passes).
+
+After it looks right: remove `scripts/midaslog.mjs` + `scripts/midas.mjs` if desired, commit,
+and add a Midas/Star-Wand model credit (CC BY authors — ask user for the Sketchfab links).
+
+Note: `src/components/three/ModelShowcase.tsx` is now unused by About (kept as a reusable
+generic stage — fine to keep). The current Midas-in-About work is **committed but the wand is
+still tiny** — that's the known state.
+
 ## Project
 Aaryan Kapoor's portfolio. **Vite + React 18 + TypeScript + Tailwind + shadcn/ui + Framer Motion + Three.js (React Three Fiber v8 + drei v9)**. Single page composed in `src/pages/Index.tsx`. Sections live in `src/components/home/`, 3D in `src/components/three/`, shared effects in `src/components/ui/`.
 
