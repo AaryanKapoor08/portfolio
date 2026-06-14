@@ -26,26 +26,26 @@ const item: Variants = {
 const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 py-24 lg:px-24">
-      <HeroCanvas />
-
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-background/40" />
+      {/* Decorative grid + glow, painted behind the 3D canvas */}
+      <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.45)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.45)_1px,transparent_1px)] bg-[size:64px_64px] opacity-25" />
         <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-accent/10 to-transparent" />
         {/* Soft animated glow behind the headline */}
         <motion.div
           aria-hidden
-          className="absolute left-1/2 top-1/3 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl"
+          className="absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl"
           animate={{ opacity: [0.35, 0.6, 0.35], scale: [1, 1.1, 1] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
+      <HeroCanvas />
+
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-4xl mx-auto text-center space-y-8"
+        className="relative z-10 max-w-4xl mx-auto text-center space-y-8"
       >
         <div className="space-y-5">
           <motion.div variants={item}>

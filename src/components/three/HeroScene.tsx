@@ -13,13 +13,13 @@ interface FloatingBlock {
 
 // A loose, asymmetric scatter so the scene never reads as a grid.
 const BLOCKS: FloatingBlock[] = [
-  { position: [-4.2, 1.4, -2], kind: 'grass', scale: 1.1, speed: 0.9 },
-  { position: [4.4, -0.6, -1], kind: 'diamond', scale: 0.85, speed: 1.2 },
-  { position: [-3.1, -1.8, -3], kind: 'stone', scale: 0.7, speed: 0.7 },
-  { position: [3.2, 1.9, -4], kind: 'grass', scale: 0.65, speed: 1.0 },
-  { position: [0.4, 2.3, -5], kind: 'diamond', scale: 0.6, speed: 1.4 },
-  { position: [-5.4, -0.3, -5], kind: 'diamond', scale: 0.5, speed: 1.1 },
-  { position: [5.6, 1.0, -6], kind: 'stone', scale: 0.55, speed: 0.8 },
+  { position: [-4.6, 1.1, -2], kind: 'grass', scale: 1.1, speed: 0.9 },
+  { position: [4.6, -1.0, -1], kind: 'diamond', scale: 0.85, speed: 1.2 },
+  { position: [-3.6, -2.0, -3], kind: 'stone', scale: 0.7, speed: 0.7 },
+  { position: [4.9, 2.6, -4], kind: 'grass', scale: 0.65, speed: 1.0 },
+  { position: [-1.6, 3.4, -6], kind: 'diamond', scale: 0.6, speed: 1.4 },
+  { position: [-5.8, -0.6, -5], kind: 'diamond', scale: 0.5, speed: 1.1 },
+  { position: [6.0, 0.6, -6], kind: 'stone', scale: 0.55, speed: 0.8 },
 ];
 
 /** Tilts the whole block field gently toward the cursor for parallax depth. */
