@@ -13,10 +13,12 @@ import ScrollToTop from '@/components/ui/ScrollToTop';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import KonamiRain from '@/components/ui/KonamiRain';
 import CustomCursor from '@/components/ui/CustomCursor';
+import IntroSplash from '@/components/ui/IntroSplash';
 
 const Index = () => {
   return (
     <Layout>
+      <IntroSplash />
       <ScrollProgress />
       <KonamiRain />
       <CustomCursor />
