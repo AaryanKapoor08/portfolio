@@ -4,16 +4,16 @@ import { ContactShadows, Environment, Lightformer, OrbitControls } from '@react-
 import MidasLoadout from './MidasLoadout';
 
 /**
- * Showcase stage for Midas holding the Star Wand. Procedural Lightformer
- * environment (no CDN) keeps the gold reading; drag to spin him.
+ * Showcase stage for Midas. Procedural Lightformer environment (no CDN) keeps
+ * the gold reading; drag to spin him.
  */
 export default function MidasScene({ autoRotate = true }: { autoRotate?: boolean }) {
-  const maxDpr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2.5) : 2;
+  const maxDpr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 3) : 2;
   const targetSize = 3.4;
 
   return (
     <Canvas
-      dpr={[1.25, maxDpr]}
+      dpr={[1.75, maxDpr]}
       shadows
       camera={{ position: [0, 0.4, 5.2], fov: 38 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}

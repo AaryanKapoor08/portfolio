@@ -35,7 +35,7 @@ const About: React.FC = () => {
             </Suspense>
           </div>
           <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-background/70 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground backdrop-blur">
-            Midas · Star Wand · drag to spin
+            Midas · drag to spin
           </span>
         </div>
       </div>

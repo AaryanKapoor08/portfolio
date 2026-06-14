@@ -4,37 +4,49 @@
 
 ---
 
-## ⛳ RESUME HERE (2026-06-14, end of session 2)
+## ⛳ RESUME HERE (2026-06-14, end of session 3)
 
-**Task in progress: "Midas holding the Star Wand" in the About panel.**
+**Midas-in-About is DONE.** The About panel (`src/components/home/About.tsx` → `MidasScene`)
+shows Midas standing in his idle, **holding his default gold pistol**, **facing the camera**,
+full body, well lit, in the dark gold display case.
 
-Status: Midas renders great in the About panel (`src/components/home/About.tsx` → `MidasScene`):
-faces the camera, pistol hidden, idle animation playing, full body, well lit. **The only
-thing left is sizing/seating the Star Wand in his hand** — right now the wand is attached to
-his right-hand bone but is scaled tiny (≈invisible).
+**Decision log this session (Star Wand abandoned):**
+- Tried "Midas holding the Star Wand". Got it standing upright in his right hand via a
+  deterministic per-frame orientation lock (parented the wand to the clean `spinner` group
+  — NOT the right-hand bone, whose mirrored/non-uniform scale skewed the quaternion math —
+  and re-imposed "long axis up" in the yaw-only rig frame). Imported wand long axis is local
+  **X** (FBX→glTF import rotated it), stood up via a ~0.95 rad rotation about Z.
+- **User wanted it two-handed.** Not realistically achievable: only one anim
+  (`CatBurglar_Male_Idle`), no IK, hand-tuning a 3-bone reach + finger wrap via screenshots
+  comes out stiff/clipping. Told the user; **they chose to remove the Star Wand entirely.**
+- So `MidasLoadout.tsx` was reverted to just-Midas: **un-hid the pistol** (idle pose holds it
+  naturally; an empty gripping hand looked broken), removed all wand/grip code.
 
-**Files:**
-- `src/components/three/MidasLoadout.tsx` — Midas + held wand. Hides pistol (material
-  `M_Top_Tier_Pistol`), attaches wand clone to bone **`hand_r_037`**, plays idle anim.
-- `src/components/three/MidasScene.tsx` — the canvas/stage.
-- `src/components/home/About.tsx` — panel is now `aspect-[4/5]`, dark gold display case,
-  caption "Midas · Star Wand · drag to spin".
+**Sharpness fix (user flagged pixelation):** GLB textures import with `anisotropy = 1`.
+`MidasLoadout.tsx` now cranks every map (`map/normalMap/roughnessMap/metalnessMap/emissiveMap/
+aoMap`) to `gl.capabilities.getMaxAnisotropy()`, and `MidasScene.tsx` DPR bumped to `[1.75, 3]`.
 
-**THE FIX (do this first next session):** in `MidasLoadout.tsx`, the grip constants
-`WAND_SCALE / WAND_POS / WAND_ROT` need tuning. Measured: `hand_r_037` world scale ≈ **0.0205**;
-at `WAND_SCALE=1` the wand ends up only ~0.028 world units tall (Midas is 3.4 tall → invisible).
-**Set `WAND_SCALE ≈ 60–65** (≈1.8/0.028) to get a ~1.8-unit wand, then iterate `WAND_POS` and
-`WAND_ROT` so it sits in the palm pointing up like a harvesting tool.
+**Facing fix:** model ships facing **+Z (toward camera)**, so `facingY` default is now **0**
+(was `Math.PI`, which showed his back when auto-spin is off — and this user has reduce-motion
+ON, so they see the static pose).
 
-**How to iterate:** `npx vite --port 8123 &` then `node scripts/midas.mjs` → opens
-`scripts/midas-about.png`. Tweak the 3 consts, re-run, look, repeat (a few passes).
+**Files touched:** `src/components/three/MidasLoadout.tsx`, `src/components/three/MidasScene.tsx`,
+`src/components/home/About.tsx` (caption now "Midas · drag to spin"). `scripts/midas.mjs` is a
+throwaway screenshot helper (now: `PORT` env, `reducedMotion:'reduce'`, 2x scale, writes
+`midas-about.png` full-page + `midas-case.png` cropped). Validated: tsc + eslint + `npm run build`
+all clean (only the pre-existing three-vendor >900kB chunk warning).
 
-After it looks right: remove `scripts/midaslog.mjs` + `scripts/midas.mjs` if desired, commit,
-and add a Midas/Star-Wand model credit (CC BY authors — ask user for the Sketchfab links).
+**Not yet done:** not committed (commit only as Aaryan Kapoor, no Claude trailer). Still owe a
+**Midas model CC-BY credit** (Sketchfab author) — ask user for the link. `star-wand.glb` is now
+**unused** (wand removed) — can delete from `public/models/` if not wanted elsewhere.
 
-Note: `src/components/three/ModelShowcase.tsx` is now unused by About (kept as a reusable
-generic stage — fine to keep). The current Midas-in-About work is **committed but the wand is
-still tiny** — that's the known state.
+**Gotcha seen this session:** after many HMR patches the About panel rendered **empty** (case
+glow, no Midas) — R3F left the canvas in a torn-down state. **Not a code bug:** a fresh page
+load (`Ctrl+Shift+R`, or restart dev) renders Midas correctly every time. Verified repeatedly
+via `node scripts/midas.mjs` (fresh Playwright load).
+
+Note: `src/components/three/ModelShowcase.tsx` is unused by About (kept as a reusable generic
+stage — fine to keep).
 
 ## Project
 Aaryan Kapoor's portfolio. **Vite + React 18 + TypeScript + Tailwind + shadcn/ui + Framer Motion + Three.js (React Three Fiber v8 + drei v9)**. Single page composed in `src/pages/Index.tsx`. Sections live in `src/components/home/`, 3D in `src/components/three/`, shared effects in `src/components/ui/`.
