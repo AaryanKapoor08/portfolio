@@ -8,6 +8,7 @@ import { projects } from '@/data/projects';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import HeroCanvas from '@/components/three/HeroCanvas';
 import Typewriter from '@/components/ui/Typewriter';
+import Magnetic from '@/components/ui/Magnetic';
 
 const container: Variants = {
   hidden: {},
@@ -74,13 +75,17 @@ const Hero: React.FC = () => {
         </div>
 
         <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button size="lg" className="group" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
-            View Projects
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-          <Button size="lg" variant="outline" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
-            Get in Touch
-          </Button>
+          <Magnetic>
+            <Button size="lg" className="group" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+              View Projects
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Magnetic>
+          <Magnetic>
+            <Button size="lg" variant="outline" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+              Get in Touch
+            </Button>
+          </Magnetic>
         </motion.div>
 
         <motion.div variants={item} className="flex items-center justify-center gap-3 pt-2">
