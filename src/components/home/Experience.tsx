@@ -71,7 +71,7 @@ const certifications = [
 
 const Experience: React.FC = () => {
   return (
-    <Section id="experience">
+    <Section id="experience" className="fn-shop">
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">
           Experience

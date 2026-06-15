@@ -50,7 +50,7 @@ const PlayStage: React.FC = () => {
   }, []);
 
   return (
-    <Section id="play" crossSection>
+    <Section id="play" className="fn-shop">
       <div className="text-center space-y-4 mb-8">
         <Badge variant="secondary" className="gap-1.5">
           <Gamepad2 className="h-3.5 w-3.5" />
