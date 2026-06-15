@@ -18,9 +18,9 @@ const Projects: React.FC = () => {
   );
 
   return (
-    <Section id="projects" crossSection>
+    <Section id="projects" className="mc-crafting">
       <div className="text-center space-y-4 mb-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">
+        <h2 className="text-4xl md:text-5xl font-bold font-title text-foreground">
           Featured Projects
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
