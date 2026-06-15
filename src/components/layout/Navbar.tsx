@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
         <a
           href="#home"
-          className="font-semibold tracking-tight text-foreground text-lg transition-colors hover:text-accent"
+          className="font-title font-bold tracking-tight text-foreground text-lg transition-colors hover:text-accent"
           aria-label="Back to top"
         >
           Aaryan&nbsp;Kapoor

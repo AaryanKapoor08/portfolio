@@ -14,6 +14,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Right Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+        title: ["Mondwest", "serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

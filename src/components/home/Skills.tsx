@@ -36,7 +36,7 @@ const Skills: React.FC = () => {
   return (
     <Section id="skills" crossSection>
       <div className="text-center space-y-4 mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+        <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">
           Technical Skills
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -48,7 +48,7 @@ const Skills: React.FC = () => {
         {skillGroups.map((group) => (
           <Card key={group.category} className="bg-card/80">
             <CardHeader>
-              <CardTitle className="text-xl font-semibold">
+              <CardTitle className="font-title text-xl font-normal">
               {group.category}
               </CardTitle>
             </CardHeader>

@@ -59,7 +59,7 @@ export default function HeroScene() {
               />
             </Float>
           ))}
-          <Sparkles count={40} scale={[14, 8, 6]} size={2} speed={0.3} opacity={0.5} color="#9ec5ff" />
+          <Sparkles count={40} scale={[14, 8, 6]} size={2} speed={0.3} opacity={0.7} color="#cfe3ff" />
         </ParallaxGroup>
       </Suspense>
     </Canvas>
