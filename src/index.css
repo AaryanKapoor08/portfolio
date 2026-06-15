@@ -200,3 +200,21 @@
   box-shadow: inset 1px 1px 0 0 #6e6e6e, inset -1px -1px 0 0 #3a3a3a;
   color: #ececec;
 }
+
+/* ---------------------------------------------------------------------------
+   Llama belt — supply llama runs across the strip; legs swap as a 4-frame
+   sprite (each group shows for 1/4 of the cycle via the opacity blink).
+--------------------------------------------------------------------------- */
+.llama-track {
+  animation: llama-track 40s linear infinite;
+  will-change: transform;
+}
+/* Track holds two identical rows; sliding by -50% loops seamlessly. Going
+   from -50% to 0 moves the llamas left-to-right. */
+@keyframes llama-track {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .llama-track { animation: none; }
+}

@@ -3,6 +3,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import Projects from '@/components/home/Projects';
+import LlamaBelt from '@/components/home/LlamaBelt';
 import About from '@/components/home/About';
 import Skills from '@/components/home/Skills';
 import Experience from '@/components/home/Experience';
@@ -28,6 +29,8 @@ const Index = () => {
       <Reveal>
         <Projects />
       </Reveal>
+
+      <LlamaBelt />
 
       <Reveal>
         <About />
