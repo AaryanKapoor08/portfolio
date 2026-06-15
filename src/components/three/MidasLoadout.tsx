@@ -6,12 +6,33 @@ import * as THREE from 'three';
 const MIDAS = '/models/midas.glb';
 useGLTF.preload(MIDAS);
 
+// Shoot timeline (seconds from trigger). The arm blends additively on top of
+// the idle, fires at SHOOT_AT, then lowers back to idle.
+const RAISE_END = 2.2;
+const SHOOT_AT = 2.4;
+const LOWER_START = 2.9;
+const LOWER_END = 3.7;
+
+// ponytail: aim-pose euler offsets (radians) added to the left arm bones — this
+// is the visual tuning knob, bone local axes aren't predictable from the rig.
+// Tune these against the rendered result, don't trust the numbers blind.
+const AIM = {
+  upperarm: new THREE.Euler(0, 0, -1.15),
+  lowerarm: new THREE.Euler(0, 0, 0.35),
+};
+
+const easeInOut = (t: number) => t * t * (3 - 2 * t);
+
 interface MidasLoadoutProps {
   targetSize?: number;
   spinSpeed?: number;
   animate?: boolean;
   /** Constant yaw so he faces the camera (model ships facing +Z, toward us). */
   facingY?: number;
+  /** When true, runs the raise-aim-shoot sequence once. */
+  play?: boolean;
+  /** Fired once at the shoot frame (muzzle flash) — drives the text reveal. */
+  onShot?: () => void;
 }
 
 /**
@@ -23,12 +44,24 @@ export default function MidasLoadout({
   spinSpeed = 0,
   animate = true,
   facingY = 0,
+  play = false,
+  onShot,
 }: MidasLoadoutProps) {
   const { scene, animations } = useGLTF(MIDAS);
   const gl = useThree((s) => s.gl);
   const root = useRef<THREE.Group>(null);
   const spinner = useRef<THREE.Group>(null);
   const { actions } = useAnimations(animations, root);
+
+  // Bone + muzzle-flash refs resolved once the rig is in the graph.
+  const upperarmL = useRef<THREE.Object3D | null>(null);
+  const lowerarmL = useRef<THREE.Object3D | null>(null);
+  const flash = useRef<THREE.PointLight | null>(null);
+
+  // Sequence clock state.
+  const start = useRef<number | null>(null);
+  const fired = useRef(false);
+  const finished = useRef(false);
 
   // Enable shadows and keep the high-res textures crisp: GLB textures import
   // with anisotropy = 1, which makes detailed maps look blurry/pixelated at
@@ -53,6 +86,19 @@ export default function MidasLoadout({
     });
   }, [scene, gl]);
 
+  // Grab the left-arm bones and hang a muzzle-flash light off the pistol.
+  useEffect(() => {
+    scene.traverse((o) => {
+      if (!upperarmL.current && /^upperarm_l/.test(o.name)) upperarmL.current = o;
+      if (!lowerarmL.current && /^lowerarm_l/.test(o.name)) lowerarmL.current = o;
+      if (!flash.current && /^pistol_l/.test(o.name)) {
+        const light = new THREE.PointLight(0xffd070, 0, 4, 2);
+        o.add(light);
+        flash.current = light;
+      }
+    });
+  }, [scene]);
+
   // Play the idle so he's posed and alive.
   useEffect(() => {
     const action = Object.values(actions)[0];
@@ -73,8 +119,50 @@ export default function MidasLoadout({
     return { scale: targetSize / maxDim, center };
   }, [scene, targetSize]);
 
-  useFrame((_, delta) => {
-    if (spinSpeed && spinner.current) spinner.current.rotation.y += spinSpeed * delta;
+  // Registered after useAnimations' mixer frame, so these bone offsets layer on
+  // top of the idle pose for this frame rather than being overwritten.
+  useFrame((state, delta) => {
+    if (play) {
+      if (start.current === null) start.current = state.clock.elapsedTime;
+      const t = state.clock.elapsedTime - start.current;
+
+      if (t >= LOWER_END) {
+        finished.current = true;
+      } else {
+        const blend =
+          t < RAISE_END ? easeInOut(t / RAISE_END)
+          : t < LOWER_START ? 1
+          : 1 - easeInOut((t - LOWER_START) / (LOWER_END - LOWER_START));
+
+        // Recoil kick + muzzle flash around the shoot frame.
+        const sinceShot = t - SHOOT_AT;
+        const recoil = sinceShot >= 0 && sinceShot < 0.25 ? (1 - sinceShot / 0.25) * 0.4 : 0;
+        if (flash.current) {
+          flash.current.intensity = sinceShot >= 0 && sinceShot < 0.12 ? (1 - sinceShot / 0.12) * 6 : 0;
+        }
+        if (!fired.current && t >= SHOOT_AT) {
+          fired.current = true;
+          onShot?.();
+        }
+
+        const ua = upperarmL.current;
+        const la = lowerarmL.current;
+        if (ua) {
+          ua.rotation.x += AIM.upperarm.x * blend;
+          ua.rotation.y += AIM.upperarm.y * blend;
+          ua.rotation.z += (AIM.upperarm.z - recoil) * blend;
+        }
+        if (la) {
+          la.rotation.x += AIM.lowerarm.x * blend;
+          la.rotation.y += AIM.lowerarm.y * blend;
+          la.rotation.z += AIM.lowerarm.z * blend;
+        }
+      }
+    }
+
+    // Stay fixed facing the description until the shoot+lower is done, then
+    // start the idle spin.
+    if (spinSpeed && spinner.current && finished.current) spinner.current.rotation.y += spinSpeed * delta;
   });
 
   return (
