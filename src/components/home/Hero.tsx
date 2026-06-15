@@ -1,15 +1,12 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { profileLinks } from '@/data/profile';
-import { projects } from '@/data/projects';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import HeroCanvas from '@/components/three/HeroCanvas';
+import MinecraftSky from '@/components/three/MinecraftSky';
 import Typewriter from '@/components/ui/Typewriter';
 import Magnetic from '@/components/ui/Magnetic';
-import CountUp from '@/components/ui/CountUp';
 
 const container: Variants = {
   hidden: {},
@@ -26,8 +23,11 @@ const item: Variants = {
 const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 py-24 lg:px-24">
-      {/* Decorative grid + glow, painted behind the 3D canvas */}
-      <div className="absolute inset-0 z-0">
+      {/* Light mode: live Minecraft sky behind the floating blocks. */}
+      <MinecraftSky className="z-0 dark:hidden" />
+
+      {/* Decorative grid + glow — dark mode only (light mode uses the sky). */}
+      <div className="absolute inset-0 z-0 hidden dark:block">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.45)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.45)_1px,transparent_1px)] bg-[size:64px_64px] opacity-25" />
         <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-accent/10 to-transparent" />
         {/* Soft animated glow behind the headline */}
@@ -48,14 +48,9 @@ const Hero: React.FC = () => {
         className="relative z-10 max-w-4xl mx-auto text-center space-y-8"
       >
         <div className="space-y-5">
-          <motion.div variants={item}>
-            <Badge variant="secondary" className="px-3 py-1 text-sm font-medium">
-              Rising third-year UNB CS student
-            </Badge>
-          </motion.div>
           <motion.h1
             variants={item}
-            className="bg-gradient-to-r from-foreground via-accent to-foreground bg-[length:200%_auto] bg-clip-text text-5xl font-bold text-transparent animate-aurora md:text-7xl"
+            className="font-title bg-gradient-to-r from-foreground via-accent to-foreground bg-[length:200%_auto] bg-clip-text text-5xl font-bold text-transparent animate-aurora md:text-7xl"
           >
             Aaryan Kapoor
           </motion.h1>
@@ -108,28 +103,6 @@ const Hero: React.FC = () => {
               <Mail className="h-5 w-5" />
             </a>
           </Button>
-        </motion.div>
-
-        <motion.div variants={item} className="grid gap-3 pt-4 sm:grid-cols-3">
-          <Card className="bg-card/70 backdrop-blur transition-colors hover:border-accent/50">
-            <CardContent className="p-4">
-              <p className="text-2xl font-semibold text-foreground">
-                <CountUp to={projects.length} suffix="+" />
-              </p>
-              <p className="text-sm text-muted-foreground">featured projects</p>
-            </CardContent>
-          </Card>
-          {[
-            ['AI', 'RAG, prompts, agents'],
-            ['UNB', 'Computer Science'],
-          ].map(([value, label]) => (
-            <Card key={label} className="bg-card/70 backdrop-blur transition-colors hover:border-accent/50">
-              <CardContent className="p-4">
-                <p className="text-2xl font-semibold text-foreground">{value}</p>
-                <p className="text-sm text-muted-foreground">{label}</p>
-              </CardContent>
-            </Card>
-          ))}
         </motion.div>
       </motion.div>
     </section>

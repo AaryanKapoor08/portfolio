@@ -12,7 +12,7 @@ const About: React.FC = () => {
     <Section id="about">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">
             About Me
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">

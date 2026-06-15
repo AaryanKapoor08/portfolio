@@ -59,7 +59,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <CardHeader className="space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <CardTitle className="text-2xl font-bold group-hover:text-accent transition-colors">
+            <CardTitle className="font-title text-2xl font-normal group-hover:text-accent transition-colors">
               {project.name}
             </CardTitle>
             <p className="mt-1 text-sm font-medium text-muted-foreground">

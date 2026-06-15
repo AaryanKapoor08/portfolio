@@ -56,7 +56,7 @@ const PlayStage: React.FC = () => {
           <Gamepad2 className="h-3.5 w-3.5" />
           Off the clock
         </Badge>
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground">Battle Bus Drop</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">Battle Bus Drop</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           When I'm not shipping AI tools, I'm probably hot-dropping in Fortnite. Drag to orbit the
           iconic Battle Bus, rendered in real time with Three.js and React Three Fiber.

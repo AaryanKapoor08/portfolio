@@ -20,7 +20,7 @@ const Projects: React.FC = () => {
   return (
     <Section id="projects" crossSection>
       <div className="text-center space-y-4 mb-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+        <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">
           Featured Projects
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

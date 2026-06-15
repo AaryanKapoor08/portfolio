@@ -73,7 +73,7 @@ const Experience: React.FC = () => {
   return (
     <Section id="experience">
       <div className="text-center space-y-4 mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+        <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">
           Experience
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -96,7 +96,7 @@ const Experience: React.FC = () => {
                 <p className="text-sm text-muted-foreground">
                   {experience.date} - {experience.location}
                 </p>
-                <CardTitle className="text-2xl font-bold">
+                <CardTitle className="font-title text-2xl font-normal">
                   {experience.title}
                 </CardTitle>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -123,7 +123,7 @@ const Experience: React.FC = () => {
               <p className="text-sm text-muted-foreground">
                 Sept 2024 - Apr 2028 - Fredericton, NB
               </p>
-              <CardTitle className="text-2xl font-bold">
+              <CardTitle className="font-title text-2xl font-normal">
                 University of New Brunswick
               </CardTitle>
               <p className="text-sm font-medium text-muted-foreground">
@@ -138,7 +138,7 @@ const Experience: React.FC = () => {
         </motion.div>
 
         <div>
-          <h3 className="text-2xl font-bold text-foreground mb-6">
+          <h3 className="text-2xl font-bold text-foreground mb-6 font-title">
             Certifications
           </h3>
           <div className="space-y-4">
@@ -147,7 +147,7 @@ const Experience: React.FC = () => {
                 <CardContent className="p-5">
                   <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="font-semibold text-foreground">
+                    <p className="font-title font-normal text-foreground">
                       {certification.name}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -161,14 +161,14 @@ const Experience: React.FC = () => {
             ))}
           </div>
 
-          <h3 className="mt-10 text-2xl font-bold text-foreground mb-6">
+          <h3 className="mt-10 text-2xl font-bold text-foreground mb-6 font-title">
             Volunteer
           </h3>
           <Card className="bg-card/80">
             <CardContent className="p-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="font-semibold text-foreground">
+                  <p className="font-title font-normal text-foreground">
                     Atlantic AI Summit 2026
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">

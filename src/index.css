@@ -1,4 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+/* Local fonts. Right Grotesk = body/UI (Regular for normal text, Compact
+   Medium for medium/bold weights). Mondwest = bitmap display face for titles. */
+@font-face {
+  font-family: 'Right Grotesk';
+  src: url('/fonts/PPRightGroteskText-CompactMedium.otf') format('opentype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mondwest';
+  src: url('/fonts/PPMondwest-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -93,14 +106,34 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Right Grotesk', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Right Grotesk', sans-serif;
   }
 
   html {
     scroll-behavior: smooth;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Minecraft sky — light-mode-only hero backdrop. A vertical blue gradient that
+   fades into the page background at the bottom so it dissolves cleanly into the
+   Featured Projects section.
+--------------------------------------------------------------------------- */
+.mc-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    #4d83c9 0%,
+    #5e90d1 16%,
+    #79a6dc 38%,
+    #a3c4e6 64%,
+    #cfe0ee 84%,
+    hsl(var(--background)) 100%
+  );
 }

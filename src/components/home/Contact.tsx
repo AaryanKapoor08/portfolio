@@ -12,7 +12,7 @@ const Contact: React.FC = () => {
         <CardContent className="p-8 text-center md:p-10">
         <div className="space-y-8">
         <div className="space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground font-title">
             Let's Connect
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
