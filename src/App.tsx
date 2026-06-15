@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import ThemeProvider from "@/components/theme/ThemeProvider";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+  <NextThemesProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
     <Sonner />
     <BrowserRouter>
       <Routes>
@@ -14,7 +14,7 @@ const App = () => (
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  </ThemeProvider>
+  </NextThemesProvider>
 );
 
 export default App;
