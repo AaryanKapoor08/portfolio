@@ -23,6 +23,26 @@ const AIM = {
 
 const easeInOut = (t: number) => t * t * (3 - 2 * t);
 
+// Lower-arm aim as a quaternion (constant). Upper-arm is rebuilt each frame
+// because recoil nudges its Z.
+const AIM_LOWER_Q = new THREE.Quaternion().setFromEuler(AIM.lowerarm);
+// Scratch objects reused each frame to avoid per-frame allocations.
+const _idleQ = new THREE.Quaternion();
+const _targetQ = new THREE.Quaternion();
+const _offsetQ = new THREE.Quaternion();
+const _upperE = new THREE.Euler();
+
+// Apply a fixed local-space rotation `offset` on top of the bone's current
+// (idle) orientation, eased in by `blend`. Composing via quaternion multiply +
+// slerp makes the result independent of the idle phase — unlike adding euler
+// components, which gimbal-flips depending on the base pose (the "hand rotates
+// the other way" bug).
+function applyAim(bone: THREE.Object3D, offset: THREE.Quaternion, blend: number) {
+  _idleQ.copy(bone.quaternion);
+  _targetQ.copy(_idleQ).multiply(offset);
+  bone.quaternion.copy(_idleQ).slerp(_targetQ, blend);
+}
+
 interface MidasLoadoutProps {
   targetSize?: number;
   spinSpeed?: number;
@@ -148,15 +168,11 @@ export default function MidasLoadout({
         const ua = upperarmL.current;
         const la = lowerarmL.current;
         if (ua) {
-          ua.rotation.x += AIM.upperarm.x * blend;
-          ua.rotation.y += AIM.upperarm.y * blend;
-          ua.rotation.z += (AIM.upperarm.z - recoil) * blend;
+          _upperE.set(AIM.upperarm.x, AIM.upperarm.y, AIM.upperarm.z - recoil);
+          _offsetQ.setFromEuler(_upperE);
+          applyAim(ua, _offsetQ, blend);
         }
-        if (la) {
-          la.rotation.x += AIM.lowerarm.x * blend;
-          la.rotation.y += AIM.lowerarm.y * blend;
-          la.rotation.z += AIM.lowerarm.z * blend;
-        }
+        if (la) applyAim(la, AIM_LOWER_Q, blend);
       }
     }
 

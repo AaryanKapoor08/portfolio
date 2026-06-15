@@ -39,20 +39,25 @@ const About: React.FC = () => {
   const [play, setPlay] = useState(false);
   const [revealed, setRevealed] = useState(reduced);
 
-  // Fire the shoot once when the showcase scrolls into view (skip if reduced).
+  // Fire the shoot once, 1s after the showcase is actually on screen (skip if
+  // reduced). The delay keeps Midas idle until the user has clearly arrived.
   useEffect(() => {
     if (reduced || !caseRef.current) return;
+    let timer: number;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setPlay(true);
           io.disconnect();
+          timer = window.setTimeout(() => setPlay(true), 1000);
         }
       },
-      { threshold: 0.4 },
+      { threshold: 0.5 },
     );
     io.observe(caseRef.current);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      window.clearTimeout(timer);
+    };
   }, [reduced]);
 
   return (
