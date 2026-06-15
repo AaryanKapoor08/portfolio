@@ -25,7 +25,7 @@ export default function MidasScene({
     <Canvas
       dpr={[1.75, maxDpr]}
       shadows
-      camera={{ position: [0, 0.4, 5.2], fov: 38 }}
+      camera={{ position: [0, 0.15, 6.6], fov: 36 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
       <Suspense fallback={null}>
@@ -35,7 +35,7 @@ export default function MidasScene({
 
         <MidasLoadout targetSize={targetSize} spinSpeed={0.5} facingY={FACING} play={play} onShot={onShot} />
 
-        <ContactShadows position={[0, -targetSize / 2 - 0.05, 0]} opacity={0.45} scale={targetSize * 2.4} blur={2.2} far={4} />
+        <ContactShadows position={[0, -targetSize / 2 - 0.02, 0]} opacity={0.55} scale={targetSize * 3} blur={2.8} far={3} resolution={1024} />
 
         <Environment resolution={256} frames={1}>
           <Lightformer intensity={2.4} position={[0, 4, -3]} scale={[8, 6, 1]} color="#fff3d6" />

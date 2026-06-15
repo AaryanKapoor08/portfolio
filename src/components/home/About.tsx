@@ -58,18 +58,18 @@ const About: React.FC = () => {
   return (
     <Section
       id="about"
-      className="relative overflow-hidden bg-gradient-to-br from-[hsl(40_45%_16%)] via-[hsl(245_30%_10%)] to-[hsl(222_30%_6%)]"
+      className="relative overflow-hidden bg-gradient-to-br from-[hsl(45_90%_88%)] via-[hsl(245_70%_86%)] to-[hsl(205_75%_85%)] dark:from-[hsl(40_45%_16%)] dark:via-[hsl(245_30%_10%)] dark:to-[hsl(222_30%_6%)]"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,hsl(45_85%_55%/0.16),transparent_62%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,hsl(265_85%_70%/0.22),transparent_62%)] dark:bg-[radial-gradient(circle_at_50%_42%,hsl(45_85%_55%/0.16),transparent_62%)]" />
       <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-white font-title">
+          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white font-title">
             About Me
           </h2>
-          <p className="text-lg text-white leading-relaxed">
+          <p className="text-lg text-black dark:text-white leading-relaxed">
             <WordReveal text={PARAGRAPHS[0]} start={revealed} baseIndex={0} />
           </p>
-          <p className="text-lg text-white leading-relaxed">
+          <p className="text-lg text-black dark:text-white leading-relaxed">
             <WordReveal
               text={PARAGRAPHS[1]}
               start={revealed}
@@ -77,13 +77,13 @@ const About: React.FC = () => {
             />
           </p>
         </div>
-        <div ref={caseRef} className="group relative aspect-[4/5] cursor-grab active:cursor-grabbing">
+        <div ref={caseRef} className="group relative aspect-[4/5.6] cursor-grab active:cursor-grabbing">
           <div className="absolute inset-0">
             <Suspense fallback={null}>
               <MidasScene play={play} onShot={() => setRevealed(true)} />
             </Suspense>
           </div>
-          <span className="pointer-events-none absolute right-6 top-4 text-right text-[11px] font-medium uppercase tracking-[0.15em] text-white/70">
+          <span className="pointer-events-none absolute right-6 -top-6 text-right text-[11px] font-medium uppercase tracking-[0.15em] text-black/70 dark:text-white/70">
             Midas · drag to spin
           </span>
         </div>
