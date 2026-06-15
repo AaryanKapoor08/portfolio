@@ -7,7 +7,7 @@ import { Github, Linkedin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
   return (
-    <Section id="contact" crossSection>
+    <Section id="contact" className="fn-shop">
       <Card className="mx-auto max-w-3xl bg-card/80">
         <CardContent className="p-8 text-center md:p-10">
         <div className="space-y-8">
