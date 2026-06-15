@@ -26,9 +26,7 @@ const Index = () => {
         <Hero />
       </div>
       
-      <Reveal>
-        <Projects />
-      </Reveal>
+      <Projects />
 
       <LlamaBelt />
 

@@ -27,20 +27,20 @@ const easeInOut = (t: number) => t * t * (3 - 2 * t);
 // because recoil nudges its Z.
 const AIM_LOWER_Q = new THREE.Quaternion().setFromEuler(AIM.lowerarm);
 // Scratch objects reused each frame to avoid per-frame allocations.
-const _idleQ = new THREE.Quaternion();
 const _targetQ = new THREE.Quaternion();
 const _offsetQ = new THREE.Quaternion();
 const _upperE = new THREE.Euler();
 
-// Apply a fixed local-space rotation `offset` on top of the bone's current
-// (idle) orientation, eased in by `blend`. Composing via quaternion multiply +
-// slerp makes the result independent of the idle phase — unlike adding euler
-// components, which gimbal-flips depending on the base pose (the "hand rotates
-// the other way" bug).
-function applyAim(bone: THREE.Object3D, offset: THREE.Quaternion, blend: number) {
-  _idleQ.copy(bone.quaternion);
-  _targetQ.copy(_idleQ).multiply(offset);
-  bone.quaternion.copy(_idleQ).slerp(_targetQ, blend);
+// Apply a fixed local-space rotation `offset` on top of `baseQ` (the idle pose
+// snapshotted once when the sequence started), eased in by `blend`. Composing
+// via quaternion multiply + slerp makes the result gimbal-safe and shortest-arc.
+// Critically, we slerp from the captured `baseQ`, never from the bone's live
+// quaternion: reading the bone back each frame would compound `offset` onto our
+// own previous output whenever the mixer hasn't reset the bone first, spinning
+// the arm through several full turns (the "rotates the other way" bug).
+function applyAim(bone: THREE.Object3D, baseQ: THREE.Quaternion, offset: THREE.Quaternion, blend: number) {
+  _targetQ.copy(baseQ).multiply(offset);
+  bone.quaternion.copy(baseQ).slerp(_targetQ, blend);
 }
 
 interface MidasLoadoutProps {
@@ -77,6 +77,9 @@ export default function MidasLoadout({
   const upperarmL = useRef<THREE.Object3D | null>(null);
   const lowerarmL = useRef<THREE.Object3D | null>(null);
   const flash = useRef<THREE.PointLight | null>(null);
+  // Idle pose captured once at sequence start; the aim slerps from these.
+  const upperBaseQ = useRef(new THREE.Quaternion());
+  const lowerBaseQ = useRef(new THREE.Quaternion());
 
   // Sequence clock state.
   const start = useRef<number | null>(null);
@@ -143,7 +146,13 @@ export default function MidasLoadout({
   // top of the idle pose for this frame rather than being overwritten.
   useFrame((state, delta) => {
     if (play) {
-      if (start.current === null) start.current = state.clock.elapsedTime;
+      if (start.current === null) {
+        start.current = state.clock.elapsedTime;
+        // Freeze the clean idle pose now (mixer has posed it for this frame),
+        // so the raise always slerps from a fixed base and can't accumulate.
+        if (upperarmL.current) upperBaseQ.current.copy(upperarmL.current.quaternion);
+        if (lowerarmL.current) lowerBaseQ.current.copy(lowerarmL.current.quaternion);
+      }
       const t = state.clock.elapsedTime - start.current;
 
       if (t >= LOWER_END) {
@@ -170,9 +179,9 @@ export default function MidasLoadout({
         if (ua) {
           _upperE.set(AIM.upperarm.x, AIM.upperarm.y, AIM.upperarm.z - recoil);
           _offsetQ.setFromEuler(_upperE);
-          applyAim(ua, _offsetQ, blend);
+          applyAim(ua, upperBaseQ.current, _offsetQ, blend);
         }
-        if (la) applyAim(la, AIM_LOWER_Q, blend);
+        if (la) applyAim(la, lowerBaseQ.current, AIM_LOWER_Q, blend);
       }
     }
 
