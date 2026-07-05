@@ -31,18 +31,18 @@ const WordReveal: React.FC<{ text: string; start: boolean; baseIndex: number }> 
 );
 
 const About: React.FC = () => {
-  const reduced =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   const caseRef = useRef<HTMLDivElement>(null);
   const [play, setPlay] = useState(false);
-  const [revealed, setRevealed] = useState(reduced);
+  const [revealed, setRevealed] = useState(false);
 
-  // Fire the shoot once, 1s after the showcase is actually on screen (skip if
-  // reduced). The delay keeps Midas idle until the user has clearly arrived.
+  // Fire the shoot once, 1s after the showcase is actually on screen. The
+  // delay keeps Midas idle until the user has clearly arrived.
+  // Deliberately NOT gated on prefers-reduced-motion: Windows reports
+  // "reduce" whenever the OS "Animation effects" toggle is off (a common,
+  // often unintentional state), which silently disabled the showcase — and
+  // the shot is this section's core content, not decoration.
   useEffect(() => {
-    if (reduced || !caseRef.current) return;
+    if (!caseRef.current) return;
     let timer: number;
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -58,7 +58,7 @@ const About: React.FC = () => {
       io.disconnect();
       window.clearTimeout(timer);
     };
-  }, [reduced]);
+  }, []);
 
   return (
     <Section
