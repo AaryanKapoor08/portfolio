@@ -7,9 +7,8 @@ import MidasLoadout from './MidasLoadout';
  * Showcase stage for Midas. Procedural Lightformer environment (no CDN) keeps
  * the gold reading; drag to spin him.
  */
-// ponytail: yaw so he faces the description (screen-left) — tune against the
-// render so the raised arm/gun reads as aiming at the text.
-const FACING = -Math.PI / 2.45;
+// Face the viewer straight-on (model ships facing +Z, toward the camera).
+const FACING = 0;
 
 export default function MidasScene({
   play = false,
@@ -33,7 +32,7 @@ export default function MidasScene({
         <directionalLight position={[4, 7, 4]} intensity={1.7} castShadow shadow-mapSize={[2048, 2048]} />
         <spotLight position={[-4, 6, 3]} intensity={0.8} color="#ffe9a8" angle={0.7} penumbra={0.7} />
 
-        <MidasLoadout targetSize={targetSize} spinSpeed={0.5} facingY={FACING} play={play} onShot={onShot} />
+        <MidasLoadout targetSize={targetSize} facingY={FACING} play={play} onShot={onShot} />
 
         <ContactShadows position={[0, -targetSize / 2 - 0.02, 0]} opacity={0.55} scale={targetSize * 3} blur={2.8} far={3} resolution={1024} />
 
