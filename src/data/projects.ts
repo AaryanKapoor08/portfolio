@@ -59,16 +59,30 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/AaryanKapoor08/auctus'
   },
   {
-    id: 'hermes-graph-context-router',
-    name: 'Hermes Graph Context Router',
-    date: 'May 2026 - Present',
-    category: 'AI Agents',
-    description: 'Graph-guided context router that prepares focused briefings before coding agents edit a repo.',
-    techStack: ['Python', 'CodeGraph', 'SQLite', 'MCP'],
+    id: 'dolos',
+    name: 'Dolos',
+    date: 'June 2026 - Present',
+    category: 'Full-Stack',
+    description: 'Real-time financial-crime detection platform — a student-scale Verafin — that scores bank transactions and opens investigation cases.',
+    techStack: ['Java', 'Spring', 'Kafka', 'Neo4j', 'Spring AI'],
     highlights: [
-      'Converts coding tasks into briefings with relevant files, symbols, callers, callees, impact areas, and test commands',
-      'Combines CodeGraph-style dependency lookup with SQLite task history',
-      'Generates Hermes/Codex-ready context packs to reduce repeated repository discovery before code changes'
+      'Scores bank transactions for fraud and money laundering, flags mule rings in a graph database, and opens investigation cases for analysts',
+      'Architected as event-sourced Java/Spring microservices with Kafka streaming and Drools rules',
+      'Pairs Neo4j ring detection with a Spring AI + MCP copilot and a React investigator console'
+    ],
+    githubUrl: 'https://github.com/AaryanKapoor08/dolos'
+  },
+  {
+    id: 'loopd',
+    name: 'loopd',
+    date: 'June 2026 - Present',
+    category: 'Dev Tools',
+    description: 'Vendor-neutral control plane for AI agent loops: one cockpit that ingests, observes, and governs agent runs.',
+    techStack: ['Rust', 'tokio', 'axum', 'rusqlite', 'ts-rs'],
+    highlights: [
+      'Ingests runs from Claude Code, Codex, and SDK/LangGraph agents and governs them with budget, runaway, and no-progress policies',
+      'Single Rust daemon (tokio, axum, rusqlite, portable-pty, ratatui) that owns or observes agents under one event model',
+      'Ships a TypeScript SDK whose types are generated from Rust via ts-rs'
     ]
   },
   {
