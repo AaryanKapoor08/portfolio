@@ -86,6 +86,20 @@ export const projects: Project[] = [
     ]
   },
   {
+    id: 'mercor',
+    name: 'Mercor',
+    date: 'June 2026',
+    category: 'AI Agents',
+    description: 'Voice AI interviewer that studies a candidate’s GitHub profile and conducts a live spoken technical interview in the browser.',
+    techStack: ['TypeScript', 'React 19', 'Express', 'OpenAI Realtime API', 'PostgreSQL'],
+    highlights: [
+      'Reads the candidate’s public repositories to build interview context, then interviews them by voice over WebRTC using OpenAI’s realtime model',
+      'Transcribes the candidate live with Deepgram and stores the full two-sided transcript in Postgres via Prisma',
+      'Scores the finished transcript with Gemini, returning a score out of ten with written feedback'
+    ],
+    githubUrl: 'https://github.com/AaryanKapoor08/mercor'
+  },
+  {
     id: 'agentic-rag-pipeline',
     name: 'Agentic RAG Pipeline',
     date: 'April 2026 - Present',
