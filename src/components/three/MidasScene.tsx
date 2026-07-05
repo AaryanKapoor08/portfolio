@@ -17,12 +17,19 @@ export default function MidasScene({
   play?: boolean;
   onShot?: () => void;
 }) {
-  const maxDpr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 3) : 2;
+  // Supersample: render at >= 1.75x regardless of the display's own DPR.
+  // The old dpr={[1.75, min(devicePixelRatio, 3)]} range collapsed to 1x on
+  // low-DPR monitors (max bound below the min bound), which is what made the
+  // gold read pixelated there — the GLB textures are 2048px with mipmaps.
+  const dpr =
+    typeof window !== 'undefined'
+      ? Math.min(Math.max(window.devicePixelRatio || 1, 1.75), 3)
+      : 2;
   const targetSize = 3.4;
 
   return (
     <Canvas
-      dpr={[1.75, maxDpr]}
+      dpr={dpr}
       shadows
       camera={{ position: [0, 0.15, 6.6], fov: 36 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
