@@ -1,4 +1,3 @@
-
 %-------------------------
 % Resume in LaTeX
 % Author : Aaryan Kapoor
@@ -117,7 +116,7 @@
     \href{mailto:aaryan.kapoor@unb.ca}{\raisebox{-0.2\height}\faEnvelope\  \underline{aaryan.kapoor@unb.ca}} ~ 
     \href{https://linkedin.com/in/aaryan-kapoor-88a007332/}{\raisebox{-0.2\height}\faLinkedin\ \underline{linkedin.com/in/aaryan-kapoor-88a007332}} \\ \vspace{1pt}
     \href{https://github.com/AaryanKapoor08}{\raisebox{-0.2\height}\faGithub\ \underline{github.com/AaryanKapoor08}} ~
-    \href{https://aaryan-kapoor-portfolio.vercel.app/}{\underline{portfolio website}}
+    \href{https://aaryankapoor.vercel.app/}{\underline{portfolio website}}
     \vspace{-8pt}
 \end{center}
 
@@ -145,31 +144,31 @@ Rising third-year Computer Science student building AI developer tools, Chrome e
     \resumeExpHeading
       {Hastinapur Metals Pvt. Ltd. -- Freelance Web Developer (Remote)}{2026}
       \resumeItemListStart
-        \resumeItem{Built an operations website for the firm's day-to-day work, replacing manual tracking with a structured catalog, enquiry handling, and an admin dashboard.}
+        \resumeItem{Built an operations website replacing manual tracking with a structured product catalog, enquiry handling, and an admin dashboard.}
       \resumeItemListEnd
 
     \resumeExpHeading
       {Dual-Use Technology Hackathon, UNB -- Participant}{May 2026}
       \resumeItemListStart
-        \resumeItem{Built Fluo in a 48-hour team sprint: a defence procurement workflow using n8n-style automation, vendor risk checks, and a blockchain audit ledger for tamper-evident procurement events.}
+        \resumeItem{Built Fluo in a 48-hour sprint: a defence procurement workflow with n8n-style automation, vendor risk checks, and a blockchain audit ledger for tamper-evident events.}
       \resumeItemListEnd
 
     \resumeExpHeading
       {GirlScript Summer of Code -- Open Source Contributor (Remote)}{2026}
       \resumeItemListStart
-        \resumeItem{Active contributor in a large open-source mentorship program, resolving issues and landing merged pull requests across community-maintained repositories.}
+        \resumeItem{Active contributor in a large open-source mentorship program, resolving issues and landing merged pull requests across community repositories.}
       \resumeItemListEnd
 
     \resumeExpHeading
       {Code Social, Winter of Code -- Open Source Contributor (Remote)}{Nov 2025 -- Present}
       \resumeItemListStart
-        \resumeItem{Contributing across multiple repositories in a 3-month seasonal program through code reviews, pull requests, and issue triage.}
+        \resumeItem{Contributing across repositories in a 3-month seasonal program through code reviews, pull requests, and issue triage.}
       \resumeItemListEnd
 
     \resumeExpHeading
       {Fredericton Ideation Boost Camp 2026 -- Participant}{January 2026}
       \resumeItemListStart
-        \resumeItem{Participated in the 48-hour camp to design and pitch Auctus, an AI funding-discovery platform, and ship a working MVP.}
+        \resumeItem{Designed and pitched Auctus, an AI funding-discovery platform, and shipped a working MVP in a 48-hour camp.}
       \resumeItemListEnd
 
   \resumeSubHeadingListEnd
@@ -199,7 +198,7 @@ Rising third-year Computer Science student building AI developer tools, Chrome e
       \newpage
 
       \resumeProjectHeading
-          {\textbf{Auctus} $|$ \emph{Next.js 16, React 19, Supabase} $|$ \href{https://auctus-five.vercel.app/}{\underline{Live}} $\cdot$ \href{https://github.com/AaryanKapoor08/auctus}{\underline{GitHub}}}{January 2026 -- Present}
+          {\textbf{Auctus} $|$ \emph{Next.js 16, React 19, Supabase} $|$ \href{https://auctus-five.vercel.app/}{\underline{Live}} $\cdot$ \href{https://github.com/AaryanKapoor08/auctus}{\underline{GitHub}}}{January 2026 -- May 2026}
           \resumeItemListStart
             \resumeItem{A Canadian funding-discovery platform serving three roles: businesses pursuing grants, students seeking scholarships and bursaries, and professors sourcing research funding, built on Next.js 16, React 19, and Supabase.}
             \resumeItem{Implemented role-based onboarding, profile-based match scoring, Postgres row-level security, and a TypeScript scraper that ingests official funding sources into a structured funding database.}
@@ -207,10 +206,18 @@ Rising third-year Computer Science student building AI developer tools, Chrome e
           \vspace{-13pt}
 
       \resumeProjectHeading
-          {\textbf{Hermes Graph Context Router} $|$ \emph{Python, CodeGraph, SQLite, MCP}}{May 2026 -- Present}
+          {\textbf{Dolos} $|$ \emph{Java, Spring, Kafka, Neo4j, Spring AI} $|$ \href{https://github.com/AaryanKapoor08/dolos}{\underline{GitHub}}}{June 2026 -- Present}
           \resumeItemListStart
-            \resumeItem{Built a graph-guided context router that converts coding tasks into focused agent briefings with relevant files, symbols, callers, callees, impact areas, and test commands.}
-            \resumeItem{Integrated CodeGraph-style dependency lookup with SQLite task history to generate Hermes/Codex-ready context packs and reduce repeated repository discovery before code changes.}
+            \resumeItem{Building a real-time financial-crime detection platform (a student-scale Verafin) that scores bank transactions for fraud and money laundering, flags mule rings in a graph database, and opens investigation cases for analysts.}
+            \resumeItem{Architected as event-sourced Java/Spring microservices: Kafka streaming, Drools rules, Neo4j ring detection, a Spring AI + MCP copilot, and a React investigator console.}
+          \resumeItemListEnd
+          \vspace{-13pt}
+
+      \resumeProjectHeading
+          {\textbf{loopd} $|$ \emph{Rust, tokio, axum, rusqlite, ts-rs}}{June 2026 -- Present}
+          \resumeItemListStart
+            \resumeItem{Building a vendor-neutral control plane for AI agent loops: one cockpit that ingests runs from Claude Code, Codex, and SDK/LangGraph agents and governs them with budget, runaway, and no-progress policies.}
+            \resumeItem{Built as a single Rust daemon (tokio, axum, rusqlite, portable-pty, ratatui) that owns or observes agents under one event model, with a TypeScript SDK whose types are generated from Rust via ts-rs.}
           \resumeItemListEnd
           \vspace{-13pt}
 
