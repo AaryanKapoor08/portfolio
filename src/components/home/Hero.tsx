@@ -7,6 +7,7 @@ import HeroCanvas from '@/components/three/HeroCanvas';
 import MinecraftSky from '@/components/three/MinecraftSky';
 import Typewriter from '@/components/ui/Typewriter';
 import Magnetic from '@/components/ui/Magnetic';
+import { playPop } from '@/lib/sounds';
 
 const container: Variants = {
   hidden: {},
@@ -23,13 +24,12 @@ const item: Variants = {
 const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 py-24 lg:px-24">
-      {/* Light mode: live Minecraft sky behind the floating blocks. */}
-      <MinecraftSky className="z-0 dark:hidden" />
+      {/* Minecraft sky: blue day gradient in light mode, night sky with the
+          square pixel moon + star field in dark mode. */}
+      <MinecraftSky className="z-0" />
 
-      {/* Decorative grid + glow — dark mode only (light mode uses the sky). */}
+      {/* Soft glow behind the headline — dark mode only. */}
       <div className="absolute inset-0 z-0 hidden dark:block">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.45)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.45)_1px,transparent_1px)] bg-[size:64px_64px] opacity-25" />
-        <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-accent/10 to-transparent" />
         {/* Soft animated glow behind the headline */}
         <motion.div
           aria-hidden
@@ -75,13 +75,27 @@ const Hero: React.FC = () => {
 
         <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Magnetic>
-            <Button size="lg" className="group" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button
+              size="lg"
+              className="group"
+              onClick={() => {
+                playPop();
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               View Projects
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Magnetic>
           <Magnetic>
-            <Button size="lg" variant="outline" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => {
+                playPop();
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Get in Touch
             </Button>
           </Magnetic>
