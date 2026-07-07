@@ -139,6 +139,64 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Minecraft night sky — dark-mode hero backdrop. Deep navy gradient (darkest
+   at the zenith, faint horizon glow), two layers of chunky square stars (one
+   twinkles) and the game's square pixel moon.
+--------------------------------------------------------------------------- */
+.mc-night {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    #010104 0%,
+    #04091c 42%,
+    #0b1330 78%,
+    hsl(var(--background)) 100%
+  );
+}
+
+/* Square pixel stars: a tiny SVG tile blown up so every star is a chunky
+   2-4px square, like the game's star field. */
+.mc-stars {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' shape-rendering='crispEdges'%3E%3Crect x='5' y='8' width='1' height='1' fill='%23ffffff' opacity='.8'/%3E%3Crect x='22' y='3' width='2' height='2' fill='%23ffffff' opacity='.9'/%3E%3Crect x='41' y='15' width='1' height='1' fill='%23dbe4ff' opacity='.7'/%3E%3Crect x='60' y='7' width='1' height='1' fill='%23ffffff' opacity='.6'/%3E%3Crect x='75' y='20' width='2' height='2' fill='%23fff7d6' opacity='.85'/%3E%3Crect x='12' y='30' width='1' height='1' fill='%23ffffff' opacity='.75'/%3E%3Crect x='33' y='38' width='2' height='2' fill='%23dbe4ff' opacity='.8'/%3E%3Crect x='55' y='33' width='1' height='1' fill='%23ffffff' opacity='.55'/%3E%3Crect x='80' y='45' width='1' height='1' fill='%23ffffff' opacity='.7'/%3E%3Crect x='8' y='55' width='2' height='2' fill='%23ffffff' opacity='.9'/%3E%3Crect x='28' y='62' width='1' height='1' fill='%23fff7d6' opacity='.65'/%3E%3Crect x='48' y='58' width='1' height='1' fill='%23ffffff' opacity='.8'/%3E%3Crect x='68' y='70' width='2' height='2' fill='%23dbe4ff' opacity='.85'/%3E%3Crect x='85' y='78' width='1' height='1' fill='%23ffffff' opacity='.6'/%3E%3Crect x='18' y='80' width='1' height='1' fill='%23ffffff' opacity='.75'/%3E%3Crect x='40' y='85' width='1' height='1' fill='%23fff7d6' opacity='.7'/%3E%3Crect x='63' y='50' width='1' height='1' fill='%23ffffff' opacity='.5'/%3E%3C/svg%3E");
+  background-size: 360px 360px;
+  /* Stars thin out toward the horizon like in the game. */
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 92%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 92%);
+}
+/* Second layer, offset + smaller tile, gently twinkling. */
+.mc-stars--twinkle {
+  background-size: 280px 280px;
+  background-position: 140px 60px;
+  animation: mc-twinkle 5s ease-in-out infinite;
+}
+@keyframes mc-twinkle {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.35; }
+}
+
+/* The square pixel moon (8x8 sprite, crisp edges), drifting very slowly. */
+.mc-moon {
+  position: absolute;
+  top: 10%;
+  right: 12%;
+  width: 88px;
+  height: 88px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%23dadde2'/%3E%3Crect x='0' y='0' width='5' height='2' fill='%23edeff3'/%3E%3Crect x='0' y='2' width='3' height='2' fill='%23edeff3'/%3E%3Crect x='4' y='2' width='1' height='1' fill='%23c6cad2'/%3E%3Crect x='1' y='3' width='1' height='1' fill='%23c6cad2'/%3E%3Crect x='5' y='3' width='2' height='2' fill='%23b8bcc5'/%3E%3Crect x='6' y='4' width='1' height='1' fill='%239da1ab'/%3E%3Crect x='2' y='5' width='2' height='1' fill='%23b8bcc5'/%3E%3Crect x='3' y='6' width='1' height='1' fill='%239da1ab'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%23b8bcc5'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  /* Faint cool halo so it reads against the sky without losing the hard square edge. */
+  box-shadow: 0 0 46px 6px rgba(190, 205, 255, 0.18);
+  animation: mc-moon-drift 90s ease-in-out infinite alternate;
+}
+@keyframes mc-moon-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-56px, 26px); }
+}
+
+/* ---------------------------------------------------------------------------
    Featured Projects — Minecraft crafting-table theme. All rules are scoped to
    .mc-crafting / .mc-* so the rest of the site is untouched. Same in light and
    dark mode (Minecraft GUIs don't theme-switch).
