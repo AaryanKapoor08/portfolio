@@ -111,6 +111,82 @@ function ferrisTexture(frame: 0 | 1): THREE.CanvasTexture {
   return tex;
 }
 
+/** 3x5 pixel glyphs (5 wide for M) for the "CLICK ME!" speech bubble. */
+const GLYPHS: Record<string, string[]> = {
+  C: ['.##', '#..', '#..', '#..', '.##'],
+  L: ['#..', '#..', '#..', '#..', '###'],
+  I: ['###', '.#.', '.#.', '.#.', '###'],
+  K: ['#.#', '#.#', '##.', '#.#', '#.#'],
+  M: ['#...#', '##.##', '#.#.#', '#...#', '#...#'],
+  E: ['###', '#..', '##.', '#..', '###'],
+  '!': ['#', '#', '#', '.', '#'],
+  ' ': ['..', '..', '..', '..', '..'],
+};
+
+const BUBBLE_TEXT = 'CLICK ME!';
+const BUBBLE_W = 40;
+const BUBBLE_H = 13;
+
+let bubbleCache: THREE.CanvasTexture | null = null;
+
+/** Pixel-art speech bubble with a downward tail, drawn in Ferris's palette. */
+function bubbleTexture(): THREE.CanvasTexture {
+  if (bubbleCache) return bubbleCache;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = BUBBLE_W;
+  canvas.height = BUBBLE_H;
+  const ctx = canvas.getContext('2d')!;
+  const px = (x: number, y: number, [r, g, b]: RGB) => {
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillRect(x, y, 1, 1);
+  };
+
+  // Body with square-cut corners so it reads as rounded at pixel scale.
+  for (let y = 0; y <= 10; y++) {
+    for (let x = 0; x < BUBBLE_W; x++) {
+      const corner = (x === 0 || x === BUBBLE_W - 1) && (y === 0 || y === 10);
+      if (corner) continue;
+      const edge = x === 0 || x === BUBBLE_W - 1 || y === 0 || y === 10;
+      px(x, y, edge ? DARK : WHITE);
+    }
+  }
+
+  // Tail pointing down at Ferris.
+  px(19, 10, WHITE);
+  px(20, 10, WHITE);
+  px(18, 11, DARK);
+  px(19, 11, WHITE);
+  px(20, 11, WHITE);
+  px(21, 11, DARK);
+  px(19, 12, DARK);
+  px(20, 12, DARK);
+
+  let cx = 3;
+  for (const ch of BUBBLE_TEXT) {
+    const rows = GLYPHS[ch];
+    rows.forEach((row, gy) => {
+      for (let gx = 0; gx < row.length; gx++) {
+        if (row[gx] === '#') px(cx + gx, 3 + gy, BODY);
+      }
+    });
+    cx += rows[0].length + 1;
+  }
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.magFilter = THREE.NearestFilter;
+  tex.minFilter = THREE.NearestFilter;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  bubbleCache = tex;
+  return tex;
+}
+
+/** Bubble pixels are a bit finer than Ferris's so the text doesn't dwarf him. */
+const BUBBLE_HEIGHT = (BUBBLE_H / H) * 0.45;
+/** Ferris's texture has ~5 transparent rows up top; sit just above his spikes. */
+const BUBBLE_BASE_Y = 0.3 + BUBBLE_HEIGHT / 2;
+const noRaycast = () => null;
+
 const FLIP_DURATION = 0.8;
 
 interface FerrisProps {
@@ -119,8 +195,20 @@ interface FerrisProps {
 }
 
 export default function Ferris({ position, scale = 1 }: FerrisProps) {
+  const groupRef = useRef<THREE.Group>(null);
   const ref = useRef<THREE.Mesh>(null);
+  const bubbleRef = useRef<THREE.Mesh>(null);
   const frames = useMemo(() => [ferrisTexture(0), ferrisTexture(1)] as const, []);
+  const bubbleMaterial = useMemo(
+    () =>
+      new THREE.MeshBasicMaterial({
+        map: bubbleTexture(),
+        transparent: true,
+        alphaTest: 0.1,
+        side: THREE.DoubleSide,
+      }),
+    [],
+  );
   const material = useMemo(
     () =>
       new THREE.MeshBasicMaterial({
@@ -134,13 +222,18 @@ export default function Ferris({ position, scale = 1 }: FerrisProps) {
   const seed = useMemo(() => Math.random() * Math.PI * 2, []);
 
   useFrame((state) => {
-    if (!ref.current) return;
+    if (!ref.current || !groupRef.current) return;
     const t = state.clock.elapsedTime;
 
     // Claw-bob sprite animation.
     material.map = frames[Math.floor(t / 0.45) % 2];
 
-    ref.current.position.y = position[1] + Math.sin(t * 0.8 + seed) * 0.3;
+    // Bob the group so the bubble follows Ferris; the bubble adds its own
+    // little hop but stays upright during the backflip.
+    groupRef.current.position.y = position[1] + Math.sin(t * 0.8 + seed) * 0.3;
+    if (bubbleRef.current) {
+      bubbleRef.current.position.y = BUBBLE_BASE_Y + Math.abs(Math.sin(t * 3)) * 0.05;
+    }
 
     // Click backflip beats the idle sway while it runs.
     const kickAt = ref.current.userData.kickAt as number | undefined;
@@ -159,14 +252,13 @@ export default function Ferris({ position, scale = 1 }: FerrisProps) {
   });
 
   return (
-    <mesh
-      ref={ref}
-      position={position}
-      scale={scale}
-      material={material}
-      userData={{ kind: 'ferris' }}
-    >
-      <planeGeometry args={[W / H, 1]} />
-    </mesh>
+    <group ref={groupRef} position={position} scale={scale}>
+      <mesh ref={ref} material={material} userData={{ kind: 'ferris' }}>
+        <planeGeometry args={[W / H, 1]} />
+      </mesh>
+      <mesh ref={bubbleRef} material={bubbleMaterial} raycast={noRaycast}>
+        <planeGeometry args={[(BUBBLE_W / BUBBLE_H) * BUBBLE_HEIGHT, BUBBLE_HEIGHT]} />
+      </mesh>
+    </group>
   );
 }
