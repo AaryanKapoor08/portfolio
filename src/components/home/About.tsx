@@ -1,5 +1,6 @@
-import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import Section from '@/components/ui/Section';
+import { useNearViewport } from '@/lib/useNearViewport';
 
 const MidasScene = lazy(() => import('@/components/three/MidasScene'));
 
@@ -10,11 +11,7 @@ const PARAGRAPHS = [
 
 // Word-by-word fade-in. Continuous stagger across both paragraphs reads as one
 // flowing reveal; baseIndex keeps the delay running between paragraphs.
-const WordReveal: React.FC<{ text: string; start: boolean; baseIndex: number }> = ({
-  text,
-  start,
-  baseIndex,
-}) => (
+const WordReveal = ({ text, start, baseIndex }: { text: string; start: boolean; baseIndex: number }) => (
   <>
     {text.split(' ').map((word, i) => (
       <span
@@ -30,10 +27,13 @@ const WordReveal: React.FC<{ text: string; start: boolean; baseIndex: number }> 
   </>
 );
 
-const About: React.FC = () => {
+export default function About() {
   const caseRef = useRef<HTMLDivElement>(null);
   const [play, setPlay] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  // Mount the WebGL stage (and fetch the model) only once the section is near,
+  // so the hero and projects never compete with a second render loop.
+  const near = useNearViewport(caseRef, '1500px');
 
   // Fire the shoot once, 1s after the showcase is actually on screen. The
   // delay keeps Midas idle until the user has clearly arrived.
@@ -84,9 +84,11 @@ const About: React.FC = () => {
         </div>
         <div ref={caseRef} className="group relative aspect-[4/5.6] cursor-grab active:cursor-grabbing">
           <div className="absolute inset-0">
-            <Suspense fallback={null}>
-              <MidasScene play={play} onShot={() => setRevealed(true)} />
-            </Suspense>
+            {near && (
+              <Suspense fallback={null}>
+                <MidasScene play={play} onShot={() => setRevealed(true)} />
+              </Suspense>
+            )}
           </div>
           <span className="pointer-events-none absolute right-6 -top-6 text-right text-[11px] font-medium uppercase tracking-[0.15em] text-black/70 dark:text-white/70">
             Midas · drag to spin
@@ -95,6 +97,4 @@ const About: React.FC = () => {
       </div>
     </Section>
   );
-};
-
-export default About;
+}

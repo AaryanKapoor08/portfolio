@@ -37,10 +37,7 @@ const Projects: React.FC = () => {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={cn(
-                'relative rounded-full px-4 py-2 text-sm font-medium text-black transition-colors',
-                active ? 'text-black' : 'text-black hover:text-black',
-              )}
+              className="relative rounded-full px-4 py-2 text-sm font-medium text-black transition-colors"
             >
               {active && (
                 <motion.span

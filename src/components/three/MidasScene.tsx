@@ -5,26 +5,15 @@ import MidasLoadout from './MidasLoadout';
 
 /**
  * Showcase stage for Midas. Procedural Lightformer environment (no CDN) keeps
- * the gold reading; drag to spin him.
+ * the gold reading; drag to spin him. He faces the viewer straight-on (the
+ * model ships facing +Z, toward the camera).
  */
-// Face the viewer straight-on (model ships facing +Z, toward the camera).
-const FACING = 0;
-
-export default function MidasScene({
-  play = false,
-  onShot,
-}: {
-  play?: boolean;
-  onShot?: () => void;
-}) {
+export default function MidasScene({ play = false, onShot }: { play?: boolean; onShot?: () => void }) {
   // Supersample: render at >= 1.75x regardless of the display's own DPR.
   // The old dpr={[1.75, min(devicePixelRatio, 3)]} range collapsed to 1x on
   // low-DPR monitors (max bound below the min bound), which is what made the
   // gold read pixelated there — the GLB textures are 2048px with mipmaps.
-  const dpr =
-    typeof window !== 'undefined'
-      ? Math.min(Math.max(window.devicePixelRatio || 1, 1.75), 3)
-      : 2;
+  const dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1.75), 3);
   const targetSize = 3.4;
 
   return (
@@ -39,7 +28,7 @@ export default function MidasScene({
         <directionalLight position={[4, 7, 4]} intensity={1.7} castShadow shadow-mapSize={[2048, 2048]} />
         <spotLight position={[-4, 6, 3]} intensity={0.8} color="#ffe9a8" angle={0.7} penumbra={0.7} />
 
-        <MidasLoadout targetSize={targetSize} facingY={FACING} play={play} onShot={onShot} />
+        <MidasLoadout targetSize={targetSize} play={play} onShot={onShot} />
 
         <ContactShadows position={[0, -targetSize / 2 - 0.02, 0]} opacity={0.55} scale={targetSize * 3} blur={2.8} far={3} resolution={1024} />
 

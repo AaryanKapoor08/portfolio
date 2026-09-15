@@ -174,7 +174,7 @@ const Experience: React.FC = () => {
                       {certification.issuer}
                     </p>
                   </div>
-                  <Badge variant="secondary">{certification.date}</Badge>
+                  <Badge>{certification.date}</Badge>
                 </div>
                 </CardContent>
               </Card>
@@ -195,7 +195,7 @@ const Experience: React.FC = () => {
                     Supported on-site logistics across keynotes, panels, and workshops for UNB's RIDSAI applied-AI gathering.
                   </p>
                 </div>
-                <Badge variant="secondary">Jun 2026</Badge>
+                <Badge>Jun 2026</Badge>
               </div>
             </CardContent>
           </Card>

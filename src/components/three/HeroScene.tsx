@@ -109,7 +109,7 @@ export default function HeroScene() {
     >
       <Suspense fallback={null}>
         <ambientLight intensity={0.6} />
-        <directionalLight position={[5, 8, 5]} intensity={1.4} castShadow />
+        <directionalLight position={[5, 8, 5]} intensity={1.4} />
         <directionalLight position={[-6, -2, 2]} intensity={0.4} color="#9ec5ff" />
         {/* Warm halo around the glowstone block. */}
         <pointLight position={[-1.6, 3.4, -5]} intensity={6} distance={7} color="#ffb84d" />

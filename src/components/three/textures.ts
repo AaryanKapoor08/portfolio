@@ -1,14 +1,16 @@
 import * as THREE from 'three';
 
 /**
- * Procedural pixel-art textures for Minecraft-style voxel blocks.
- * Everything is generated on a <canvas> at runtime so the site ships
- * zero binary texture assets — keeps the bundle light and the look crisp.
+ * Procedural pixel-art textures for Minecraft-style voxel blocks, plus the
+ * shared canvas/material helpers used by every sprite (Ferris, bees, logos).
+ * Everything is generated on a <canvas> at runtime so the site ships zero
+ * binary texture assets — keeps the bundle light and the look crisp.
  */
 
 const TILE = 16; // 16x16 logical pixels, the classic Minecraft texel grid
 
-type RGB = [number, number, number];
+export type RGB = [number, number, number];
+export type Px = (x: number, y: number, color: RGB) => void;
 
 const cache = new Map<string, THREE.CanvasTexture>();
 
@@ -20,9 +22,8 @@ function mix(a: RGB, b: RGB, t: number): RGB {
   ];
 }
 
-function rgb([r, g, b]: RGB): string {
-  return `rgb(${r},${g},${b})`;
-}
+/** Lighten (t > 0) or darken (t < 0) a color by |t|. */
+const shade = (c: RGB, t: number): RGB => mix(c, t < 0 ? [0, 0, 0] : [255, 255, 255], Math.abs(t));
 
 /** Deterministic pseudo-random so textures look identical every render. */
 function makeRng(seed: number) {
@@ -33,63 +34,102 @@ function makeRng(seed: number) {
   };
 }
 
+const keySeed = (key: string) => key.split('').reduce((a, c) => a + c.charCodeAt(0), 7);
+
 /**
- * Paint a 16x16 tile by calling `shade(x, y, rng)` for each texel.
- * Returns a NearestFilter CanvasTexture so the pixels stay sharp.
+ * Paint a w×h pixel-art texture once (cached by key) and return it as a
+ * NearestFilter CanvasTexture so the pixels stay sharp.
  */
-function buildTile(
-  key: string,
-  base: RGB,
-  shade: (x: number, y: number, rand: () => number) => number,
-): THREE.CanvasTexture {
+export function pixelTexture(key: string, w: number, h: number, draw: (px: Px) => void): THREE.CanvasTexture {
   const cached = cache.get(key);
   if (cached) return cached;
 
   const canvas = document.createElement('canvas');
-  canvas.width = TILE;
-  canvas.height = TILE;
+  canvas.width = w;
+  canvas.height = h;
   const ctx = canvas.getContext('2d')!;
-  const rand = makeRng(key.split('').reduce((a, c) => a + c.charCodeAt(0), 7));
-
-  for (let y = 0; y < TILE; y++) {
-    for (let x = 0; x < TILE; x++) {
-      const t = shade(x, y, rand);
-      ctx.fillStyle = rgb(mix(base, t < 0 ? [0, 0, 0] : [255, 255, 255], Math.abs(t)));
-      ctx.fillRect(x, y, 1, 1);
-    }
-  }
+  draw((x, y, [r, g, b]) => {
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillRect(Math.round(x), Math.round(y), 1, 1);
+  });
 
   const tex = new THREE.CanvasTexture(canvas);
-  tex.magFilter = THREE.NearestFilter;
-  tex.minFilter = THREE.NearestFilter;
+  tex.magFilter = tex.minFilter = THREE.NearestFilter;
   tex.colorSpace = THREE.SRGBColorSpace;
   cache.set(key, tex);
   return tex;
 }
 
-const noise = (amp: number) => (_x: number, _y: number, rand: () => number) =>
-  (rand() - 0.5) * 2 * amp;
+/** Unlit, alpha-cut, double-sided material for billboard sprites. */
+export function spriteMaterial(map: THREE.Texture) {
+  return new THREE.MeshBasicMaterial({ map, transparent: true, alphaTest: 0.1, side: THREE.DoubleSide });
+}
+
+/** Paint a 16x16 tile by calling `tone(x, y, rng)` (-1 dark … 1 light) per texel. */
+function buildTile(key: string, base: RGB, tone: (x: number, y: number, rand: () => number) => number) {
+  return pixelTexture(key, TILE, TILE, (px) => {
+    const rand = makeRng(keySeed(key));
+    for (let y = 0; y < TILE; y++) {
+      for (let x = 0; x < TILE; x++) px(x, y, shade(base, tone(x, y, rand)));
+    }
+  });
+}
+
+/**
+ * Free-form painter for tiles that need real multi-color art (TNT, logs, …).
+ * `px(x, y, color, jitter?)` fills one texel, optionally noise-shaded.
+ */
+function buildArtTile(
+  key: string,
+  paint: (px: (x: number, y: number, color: RGB, jitter?: number) => void, rand: () => number) => void,
+  seed = keySeed(key),
+) {
+  return pixelTexture(key, TILE, TILE, (px) => {
+    const rand = makeRng(seed);
+    paint((x, y, color, jitter = 0) => px(x, y, shade(color, (rand() - 0.5) * 2 * jitter)), rand);
+  });
+}
+
+const noise = (amp: number) => (_x: number, _y: number, rand: () => number) => (rand() - 0.5) * 2 * amp;
 
 const GRASS_GREEN: RGB = [104, 168, 73];
 const DIRT_BROWN: RGB = [134, 96, 67];
 const STONE_GREY: RGB = [128, 128, 128];
 const DIAMOND_ORE: RGB = [120, 124, 130];
 const DIAMOND_CRYSTAL: RGB = [120, 222, 224];
+const EMERALD_GREEN: RGB = [80, 200, 120];
+const TNT_RED: RGB = [200, 58, 40];
+const TNT_SAND: RGB = [216, 196, 160];
+const BARK_BROWN: RGB = [107, 84, 51];
+const WOOD_TAN: RGB = [178, 143, 88];
+const GLOW_AMBER: RGB = [244, 191, 90];
+const GLOW_DIRT: RGB = [130, 96, 48];
+const OBSIDIAN_BLACK: RGB = [22, 16, 34];
+const OBSIDIAN_PURPLE: RGB = [66, 48, 104];
+const GOLD_YELLOW: RGB = [250, 238, 77];
+const LEAF_GREEN: RGB = [66, 130, 46];
+const NEST_TAN: RGB = [200, 150, 86];
+const NEST_DARK: RGB = [152, 104, 52];
+const NEST_LIGHT: RGB = [225, 183, 118];
 
 export function grassTop() {
   return buildTile('grass-top', GRASS_GREEN, noise(0.22));
 }
 
-export function grassSide() {
-  return buildTile('grass-side', DIRT_BROWN, (x, y, rand) => {
-    // Top 4 rows are the green grass lip, the rest is dirt.
-    if (y < 4) {
-      const edge = y === 3 ? (rand() > 0.5 ? -0.1 : 0.15) : 0;
-      // Encode grass by returning a strong positive that we override below.
-      return edge;
-    }
-    return (rand() - 0.5) * 0.45;
-  });
+/** Grass side: green lip with a ragged edge over dirt. */
+export function grassSideTwoTone() {
+  return buildArtTile(
+    'grass-side-two-tone',
+    (px, rand) => {
+      for (let y = 0; y < TILE; y++) {
+        for (let x = 0; x < TILE; x++) {
+          const isGrass = y < 4 || (y === 4 && rand() > 0.55);
+          px(x, y, isGrass ? GRASS_GREEN : DIRT_BROWN, isGrass ? 0.15 : 0.225);
+        }
+      }
+    },
+    99,
+  );
 }
 
 export function dirt() {
@@ -129,50 +169,6 @@ export function emerald() {
   return gemBlock('emerald', EMERALD_GREEN);
 }
 
-/**
- * Free-form painter for tiles that need real multi-color art (TNT, logs, …).
- * `px(x, y, color, jitter?)` fills one texel, optionally noise-shaded.
- */
-function buildArtTile(
-  key: string,
-  paint: (px: (x: number, y: number, color: RGB, jitter?: number) => void, rand: () => number) => void,
-): THREE.CanvasTexture {
-  const cached = cache.get(key);
-  if (cached) return cached;
-
-  const canvas = document.createElement('canvas');
-  canvas.width = TILE;
-  canvas.height = TILE;
-  const ctx = canvas.getContext('2d')!;
-  const rand = makeRng(key.split('').reduce((a, c) => a + c.charCodeAt(0), 7));
-
-  const px = (x: number, y: number, color: RGB, jitter = 0) => {
-    const t = (rand() - 0.5) * 2 * jitter;
-    ctx.fillStyle = rgb(mix(color, t < 0 ? [0, 0, 0] : [255, 255, 255], Math.abs(t)));
-    ctx.fillRect(x, y, 1, 1);
-  };
-
-  paint(px, rand);
-
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.magFilter = THREE.NearestFilter;
-  tex.minFilter = THREE.NearestFilter;
-  tex.colorSpace = THREE.SRGBColorSpace;
-  cache.set(key, tex);
-  return tex;
-}
-
-const EMERALD_GREEN: RGB = [80, 200, 120];
-const TNT_RED: RGB = [200, 58, 40];
-const TNT_SAND: RGB = [216, 196, 160];
-const BARK_BROWN: RGB = [107, 84, 51];
-const WOOD_TAN: RGB = [178, 143, 88];
-const GLOW_AMBER: RGB = [244, 191, 90];
-const GLOW_DIRT: RGB = [130, 96, 48];
-const OBSIDIAN_BLACK: RGB = [22, 16, 34];
-const OBSIDIAN_PURPLE: RGB = [66, 48, 104];
-const GOLD_YELLOW: RGB = [250, 238, 77];
-
 /** Cobblestone: rounded grey blobs separated by dark mortar. */
 export function cobblestone() {
   return buildArtTile('cobblestone', (px) => {
@@ -191,7 +187,7 @@ export function cobblestone() {
         let hit: RGB | null = null;
         for (const [cx, cy, r, b] of blobs) {
           if ((x - cx) ** 2 + (y - cy) ** 2 <= r * r) {
-            hit = mix(STONE_GREY, b < 0 ? [0, 0, 0] : [255, 255, 255], Math.abs(b));
+            hit = shade(STONE_GREY, b);
             break;
           }
         }
@@ -317,11 +313,6 @@ export function goldOre() {
   });
 }
 
-const LEAF_GREEN: RGB = [66, 130, 46];
-const NEST_TAN: RGB = [200, 150, 86];
-const NEST_DARK: RGB = [152, 104, 52];
-const NEST_LIGHT: RGB = [225, 183, 118];
-
 /** Oak leaves: soft green with sparse darker pockets. */
 export function leaves() {
   return buildTile('leaves', LEAF_GREEN, (_x, _y, rand) => {
@@ -330,23 +321,22 @@ export function leaves() {
   });
 }
 
+const nestBands = (px: (x: number, y: number, color: RGB, jitter?: number) => void) => {
+  for (let y = 0; y < TILE; y++) {
+    const band = y % 4 === 3 ? NEST_DARK : y % 4 === 1 ? NEST_LIGHT : NEST_TAN;
+    for (let x = 0; x < TILE; x++) px(x, y, band, 0.1);
+  }
+};
+
 /** Bee nest side: layered honey-wax bands. */
 export function beeNestSide() {
-  return buildArtTile('bee-nest-side', (px) => {
-    for (let y = 0; y < TILE; y++) {
-      const band = y % 4 === 3 ? NEST_DARK : y % 4 === 1 ? NEST_LIGHT : NEST_TAN;
-      for (let x = 0; x < TILE; x++) px(x, y, band, 0.1);
-    }
-  });
+  return buildArtTile('bee-nest-side', nestBands);
 }
 
 /** Bee nest front: same bands plus the dark entrance hole. */
 export function beeNestFront() {
   return buildArtTile('bee-nest-front', (px) => {
-    for (let y = 0; y < TILE; y++) {
-      const band = y % 4 === 3 ? NEST_DARK : y % 4 === 1 ? NEST_LIGHT : NEST_TAN;
-      for (let x = 0; x < TILE; x++) px(x, y, band, 0.1);
-    }
+    nestBands(px);
     for (let y = 9; y <= 13; y++) {
       for (let x = 6; x <= 9; x++) px(x, y, [66, 46, 26], 0.12);
     }
@@ -378,34 +368,4 @@ export function obsidian() {
       }
     }
   });
-}
-
-/** The grass-side tile needs a real two-tone look; build it explicitly. */
-export function grassSideTwoTone(): THREE.CanvasTexture {
-  const key = 'grass-side-two-tone';
-  const cached = cache.get(key);
-  if (cached) return cached;
-
-  const canvas = document.createElement('canvas');
-  canvas.width = TILE;
-  canvas.height = TILE;
-  const ctx = canvas.getContext('2d')!;
-  const rand = makeRng(99);
-
-  for (let y = 0; y < TILE; y++) {
-    for (let x = 0; x < TILE; x++) {
-      const isGrass = y < 4 || (y === 4 && rand() > 0.55);
-      const base = isGrass ? GRASS_GREEN : DIRT_BROWN;
-      const shade = (rand() - 0.5) * (isGrass ? 0.3 : 0.45);
-      ctx.fillStyle = rgb(mix(base, shade < 0 ? [0, 0, 0] : [255, 255, 255], Math.abs(shade)));
-      ctx.fillRect(x, y, 1, 1);
-    }
-  }
-
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.magFilter = THREE.NearestFilter;
-  tex.minFilter = THREE.NearestFilter;
-  tex.colorSpace = THREE.SRGBColorSpace;
-  cache.set(key, tex);
-  return tex;
 }

@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { pixelTexture, spriteMaterial, type RGB } from './textures';
 
 /**
  * Pixel-art logo sprites floating with the Minecraft blocks — same
@@ -11,42 +12,9 @@ import * as THREE from 'three';
  * OpenClaw: an open lobster pincer; clicking it snips it shut twice.
  */
 
-type RGB = [number, number, number];
-
-const texCache = new Map<string, THREE.CanvasTexture>();
-
-function makeTexture(
-  key: string,
-  size: number,
-  draw: (px: (x: number, y: number, c: RGB) => void) => void,
-): THREE.CanvasTexture {
-  const cached = texCache.get(key);
-  if (cached) return cached;
-
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d')!;
-  draw((x, y, [r, g, b]) => {
-    ctx.fillStyle = `rgb(${r},${g},${b})`;
-    ctx.fillRect(Math.round(x), Math.round(y), 1, 1);
-  });
-
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.magFilter = THREE.NearestFilter;
-  tex.minFilter = THREE.NearestFilter;
-  tex.colorSpace = THREE.SRGBColorSpace;
-  texCache.set(key, tex);
-  return tex;
-}
-
-function spriteMaterial(map: THREE.Texture) {
-  return new THREE.MeshBasicMaterial({
-    map,
-    transparent: true,
-    alphaTest: 0.1,
-    side: THREE.DoubleSide,
-  });
+interface SpriteProps {
+  position: [number, number, number];
+  scale?: number;
 }
 
 /* ------------------------------- Claude spark ---------------------------- */
@@ -57,8 +25,8 @@ const CLAUDE_ORANGE: RGB = [217, 119, 87];
 // not a perfect gear.
 const RAY_LENGTHS = [15, 11, 14, 10, 15, 12, 14, 10, 15, 11, 13, 10];
 
-function claudeSparkTexture(): THREE.CanvasTexture {
-  return makeTexture('claude-spark', 32, (px) => {
+function claudeSparkTexture() {
+  return pixelTexture('claude-spark', 32, 32, (px) => {
     const c = 15.5;
     RAY_LENGTHS.forEach((len, i) => {
       const a = (i / RAY_LENGTHS.length) * Math.PI * 2;
@@ -76,11 +44,6 @@ function claudeSparkTexture(): THREE.CanvasTexture {
 }
 
 const SPIN_DURATION = 0.9;
-
-interface SpriteProps {
-  position: [number, number, number];
-  scale?: number;
-}
 
 export function ClaudeSpark({ position, scale = 1 }: SpriteProps) {
   const ref = useRef<THREE.Mesh>(null);
@@ -119,8 +82,10 @@ const CLAW_RED: RGB = [203, 58, 41];
 const CLAW_DARK: RGB = [140, 32, 22];
 const CLAW_LIGHT: RGB = [236, 116, 86];
 
+type Tri = [[number, number], [number, number], [number, number]];
+
 /** Point-in-triangle via sign tests. */
-function inTri(px: number, py: number, a: [number, number], b: [number, number], c: [number, number]) {
+function inTri(px: number, py: number, [a, b, c]: Tri) {
   const sign = (p1: [number, number], p2: [number, number], p3: [number, number]) =>
     (p1[0] - p3[0]) * (p2[1] - p3[1]) - (p2[0] - p3[0]) * (p1[1] - p3[1]);
   const d1 = sign([px, py], a, b);
@@ -131,10 +96,8 @@ function inTri(px: number, py: number, a: [number, number], b: [number, number],
   return !(hasNeg && hasPos);
 }
 
-type Tri = [[number, number], [number, number], [number, number]];
-
-function openClawTexture(closed: boolean): THREE.CanvasTexture {
-  return makeTexture(closed ? 'claw-closed' : 'claw-open', 24, (px) => {
+function openClawTexture(closed: boolean) {
+  return pixelTexture(closed ? 'claw-closed' : 'claw-open', 24, 24, (px) => {
     // Upper (movable) jaw is a chunky wedge that swings down when closed;
     // lower jaw is fixed. Both are quads (two triangles) from the palm to
     // a blunt 2px tip so they read as crab pincers, not fins.
@@ -147,7 +110,7 @@ function openClawTexture(closed: boolean): THREE.CanvasTexture {
     const inShape = (x: number, y: number): boolean => {
       if (Math.hypot(x - 16, y - 12) <= 5.2) return true; // palm
       if (x >= 20 && x <= 23 && y >= 10 && y <= 14) return true; // arm
-      return tris.some((t) => inTri(x, y, t[0], t[1], t[2]));
+      return tris.some((t) => inTri(x, y, t));
     };
 
     for (let y = 0; y < 24; y++) {

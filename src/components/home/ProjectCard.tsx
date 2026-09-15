@@ -18,8 +18,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const py = useMotionValue(0.5);
   const rotateX = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
   const rotateY = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
-  const glowX = useMotionTemplate`${useSpring(px, { stiffness: 150, damping: 20 })}`;
-  const glowY = useMotionTemplate`${useSpring(py, { stiffness: 150, damping: 20 })}`;
+  const glowX = useSpring(px, { stiffness: 150, damping: 20 });
+  const glowY = useSpring(py, { stiffness: 150, damping: 20 });
   const spotlight = useMotionTemplate`radial-gradient(420px circle at calc(${glowX} * 100%) calc(${glowY} * 100%), hsl(var(--accent) / 0.18), transparent 70%)`;
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {

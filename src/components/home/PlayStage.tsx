@@ -1,15 +1,16 @@
-import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useRef } from 'react';
 import Section from '@/components/ui/Section';
 import { Badge } from '@/components/ui/badge';
 import { Gamepad2 } from 'lucide-react';
+import { useNearViewport } from '@/lib/useNearViewport';
 
 const FortniteScene = lazy(() => import('@/components/three/FortniteScene'));
 
 /** Centred placeholder shown before the scene mounts / while it loads. */
-const StageHint: React.FC<{ label: string }> = ({ label }) => (
+const StageHint = () => (
   <div className="absolute inset-0 flex items-center justify-center">
     <p className="animate-pulse text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-      {label}
+      Loading the lobby…
     </p>
   </div>
 );
@@ -19,40 +20,16 @@ const StageHint: React.FC<{ label: string }> = ({ label }) => (
  * pickaxe, V-Bucks), mounted only once it scrolls into view so the WebGL
  * context isn't created up front.
  */
-const PlayStage: React.FC = () => {
+export default function PlayStage() {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const visible = useNearViewport(ref, '300px');
   // Reduced-motion users still get the scene — we just don't auto-spin it.
-  const reduced =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    // If it's already on screen (deep-link, fast scroll), mount right away.
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 300 && rect.bottom > -300) {
-      setVisible(true);
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '300px' },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   return (
     <Section id="play" className="fn-shop">
       <div className="text-center space-y-4 mb-8">
-        <Badge variant="secondary" className="gap-1.5">
+        <Badge className="gap-1.5">
           <Gamepad2 className="h-3.5 w-3.5" />
           Off the clock
         </Badge>
@@ -68,11 +45,11 @@ const PlayStage: React.FC = () => {
         className="relative mx-auto h-[460px] w-full max-w-4xl cursor-grab overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-sky-400/10 via-accent/5 to-transparent active:cursor-grabbing"
       >
         {visible ? (
-          <Suspense fallback={<StageHint label="Loading the lobby…" />}>
+          <Suspense fallback={<StageHint />}>
             <FortniteScene autoRotate={!reduced} />
           </Suspense>
         ) : (
-          <StageHint label="Loading the lobby…" />
+          <StageHint />
         )}
         <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
           drag to orbit
@@ -93,6 +70,4 @@ const PlayStage: React.FC = () => {
       </p>
     </Section>
   );
-};
-
-export default PlayStage;
+}

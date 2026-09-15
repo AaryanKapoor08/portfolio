@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-64">
+            <SheetContent className="w-64">
               <div className="mt-10 flex flex-col gap-2">
                 {navLinks.map((link) => (
                   <SheetClose asChild key={link.name}>

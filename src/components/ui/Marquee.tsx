@@ -1,6 +1,9 @@
 import { cn } from '@/lib/utils';
 
-export type MarqueeItem = string | { label: string; logo?: string };
+export interface MarqueeItem {
+  label: string;
+  logo?: string;
+}
 
 interface MarqueeProps {
   items: MarqueeItem[];
@@ -17,8 +20,6 @@ interface MarqueeProps {
  * invisible. Pauses on hover.
  */
 export default function Marquee({ items, reverse = false, duration = 32, className }: MarqueeProps) {
-  const normalized = items.map((it) => (typeof it === 'string' ? { label: it } : it));
-
   return (
     <div
       className={cn(
@@ -33,7 +34,7 @@ export default function Marquee({ items, reverse = false, duration = 32, classNa
         )}
         style={{ ['--marquee-duration' as string]: `${duration}s` }}
       >
-        {[...normalized, ...normalized].map((item, i) =>
+        {[...items, ...items].map((item, i) =>
           item.logo ? (
             <div
               key={`${item.label}-${i}`}

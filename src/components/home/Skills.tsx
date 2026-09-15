@@ -4,11 +4,6 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Marquee, { type MarqueeItem } from '@/components/ui/Marquee';
 
-interface SkillGroup {
-  category: string;
-  skills: string[];
-}
-
 // Colored, transparent-background brand logos from devicon (jsDelivr CDN).
 // Anything not listed here keeps its text chip in the marquee.
 const dev = (name: string, variant = 'original') =>
@@ -43,7 +38,7 @@ const LOGOS: Record<string, string> = {
   Hardhat: dev('hardhat'),
 };
 
-const skillGroups: SkillGroup[] = [
+const skillGroups: { category: string; skills: string[] }[] = [
   {
     category: 'Programming',
     skills: ['Python', 'JavaScript', 'TypeScript', 'Java', 'C'],
@@ -79,13 +74,11 @@ const weave = <T,>(a: T[], b: T[]): T[] => {
   return out;
 };
 
-const allItems: MarqueeItem[] = skillGroups
-  .flatMap((g) => g.skills)
-  .map((skill) => ({ label: skill, logo: LOGOS[skill] }));
+const allItems: MarqueeItem[] = skillGroups.flatMap((g) => g.skills).map((label) => ({ label, logo: LOGOS[label] }));
 
 const marqueeItems = weave(
-  allItems.filter((it) => typeof it !== 'string' && it.logo),
-  allItems.filter((it) => typeof it !== 'string' && !it.logo),
+  allItems.filter((it) => it.logo),
+  allItems.filter((it) => !it.logo),
 );
 
 const Skills: React.FC = () => {
@@ -111,9 +104,7 @@ const Skills: React.FC = () => {
             <CardContent>
             <div className="flex flex-wrap gap-2">
               {group.skills.map((skill) => (
-                <Badge key={skill} variant="secondary">
-                  {skill}
-                </Badge>
+                <Badge key={skill}>{skill}</Badge>
               ))}
             </div>
             </CardContent>

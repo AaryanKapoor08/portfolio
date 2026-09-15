@@ -13,19 +13,14 @@ const SHOOT_AT = 2.4;
 const LOWER_START = 2.9;
 const LOWER_END = 3.7;
 
-// ponytail: aim-pose euler offsets (radians) added to the left arm bones — this
-// is the visual tuning knob, bone local axes aren't predictable from the rig.
-// Tune these against the rendered result, don't trust the numbers blind.
-const AIM = {
-  upperarm: new THREE.Euler(0, 0, -1.15),
-  lowerarm: new THREE.Euler(0, 0, 0.35),
-};
+// Aim-pose euler offsets (radians) added to the left arm bones — this is the
+// visual tuning knob, bone local axes aren't predictable from the rig. Tune
+// these against the rendered result, don't trust the numbers blind.
+const AIM_UPPER = new THREE.Euler(0, 0, -1.15);
+const AIM_LOWER_Q = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0.35));
 
 const easeInOut = (t: number) => t * t * (3 - 2 * t);
 
-// Lower-arm aim as a quaternion (constant). Upper-arm is rebuilt each frame
-// because recoil nudges its Z.
-const AIM_LOWER_Q = new THREE.Quaternion().setFromEuler(AIM.lowerarm);
 // Scratch objects reused each frame to avoid per-frame allocations.
 const _targetQ = new THREE.Quaternion();
 const _offsetQ = new THREE.Quaternion();
@@ -45,10 +40,6 @@ function applyAim(bone: THREE.Object3D, baseQ: THREE.Quaternion, offset: THREE.Q
 
 interface MidasLoadoutProps {
   targetSize?: number;
-  spinSpeed?: number;
-  animate?: boolean;
-  /** Constant yaw so he faces the camera (model ships facing +Z, toward us). */
-  facingY?: number;
   /** When true, runs the raise-aim-shoot sequence once. */
   play?: boolean;
   /** Fired once at the shoot frame (muzzle flash) — drives the text reveal. */
@@ -59,21 +50,14 @@ interface MidasLoadoutProps {
  * Midas (rigged) standing in his idle pose, holding his default gold pistol.
  * Centred and height-normalized so he drops cleanly into the showcase stage.
  */
-export default function MidasLoadout({
-  targetSize = 3.4,
-  spinSpeed = 0,
-  animate = true,
-  facingY = 0,
-  play = false,
-  onShot,
-}: MidasLoadoutProps) {
+export default function MidasLoadout({ targetSize = 3.4, play = false, onShot }: MidasLoadoutProps) {
   const { scene, animations } = useGLTF(MIDAS);
   const gl = useThree((s) => s.gl);
   const root = useRef<THREE.Group>(null);
-  const spinner = useRef<THREE.Group>(null);
   const { actions } = useAnimations(animations, root);
 
-  // Bone + muzzle-flash refs resolved once the rig is in the graph.
+  // Idle action, bones and muzzle flash resolved once the rig is in the graph.
+  const idle = useRef<THREE.AnimationAction | null>(null);
   const upperarmL = useRef<THREE.Object3D | null>(null);
   const lowerarmL = useRef<THREE.Object3D | null>(null);
   const flash = useRef<THREE.PointLight | null>(null);
@@ -84,7 +68,6 @@ export default function MidasLoadout({
   // Sequence clock state.
   const start = useRef<number | null>(null);
   const fired = useRef(false);
-  const finished = useRef(false);
 
   // Enable shadows and keep the high-res textures crisp: GLB textures import
   // with anisotropy = 1, which makes detailed maps look blurry/pixelated at
@@ -126,81 +109,66 @@ export default function MidasLoadout({
   useEffect(() => {
     const action = Object.values(actions)[0];
     if (!action) return;
-    if (animate) action.reset().fadeIn(0.4).play();
-    else action.reset().play().paused = true; // freeze on the idle pose
+    idle.current = action;
+    action.reset().fadeIn(0.4).play();
     return () => void action.fadeOut(0.2);
-  }, [actions, animate]);
+  }, [actions]);
 
   // Centre the whole rig at the origin and normalize its height.
   const fit = useMemo(() => {
     const box = new THREE.Box3().setFromObject(scene);
-    const size = new THREE.Vector3();
-    const center = new THREE.Vector3();
-    box.getSize(size);
-    box.getCenter(center);
-    const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    return { scale: targetSize / maxDim, center };
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    return { scale: targetSize / (Math.max(size.x, size.y, size.z) || 1), center };
   }, [scene, targetSize]);
 
   // Registered after useAnimations' mixer frame, so these bone offsets layer on
   // top of the idle pose for this frame rather than being overwritten.
-  useFrame((state, delta) => {
-    if (play) {
-      if (start.current === null) {
-        start.current = state.clock.elapsedTime;
-        // Freeze the clean idle pose now (mixer has posed it for this frame),
-        // so the raise always slerps from a fixed base and can't accumulate.
-        if (upperarmL.current) upperBaseQ.current.copy(upperarmL.current.quaternion);
-        if (lowerarmL.current) lowerBaseQ.current.copy(lowerarmL.current.quaternion);
-      }
-      const t = state.clock.elapsedTime - start.current;
+  useFrame((state) => {
+    if (!play) return;
+    if (start.current === null) {
+      // Wait for the idle fade-in so the captured base is the true idle pose
+      // (matters when `play` arrives before the model finished loading).
+      if (idle.current && idle.current.getEffectiveWeight() < 1) return;
+      // Freeze the clean idle pose now (mixer has posed it for this frame),
+      // so the raise always slerps from a fixed base and can't accumulate.
+      start.current = state.clock.elapsedTime;
+      if (upperarmL.current) upperBaseQ.current.copy(upperarmL.current.quaternion);
+      if (lowerarmL.current) lowerBaseQ.current.copy(lowerarmL.current.quaternion);
+    }
+    const t = state.clock.elapsedTime - start.current;
+    if (t >= LOWER_END) return;
 
-      if (t >= LOWER_END) {
-        finished.current = true;
-      } else {
-        const blend =
-          t < RAISE_END ? easeInOut(t / RAISE_END)
-          : t < LOWER_START ? 1
-          : 1 - easeInOut((t - LOWER_START) / (LOWER_END - LOWER_START));
+    const blend =
+      t < RAISE_END ? easeInOut(t / RAISE_END)
+      : t < LOWER_START ? 1
+      : 1 - easeInOut((t - LOWER_START) / (LOWER_END - LOWER_START));
 
-        // Recoil kick + muzzle flash around the shoot frame.
-        const sinceShot = t - SHOOT_AT;
-        const recoil = sinceShot >= 0 && sinceShot < 0.25 ? (1 - sinceShot / 0.25) * 0.4 : 0;
-        if (flash.current) {
-          flash.current.intensity = sinceShot >= 0 && sinceShot < 0.12 ? (1 - sinceShot / 0.12) * 6 : 0;
-        }
-        if (!fired.current && t >= SHOOT_AT) {
-          fired.current = true;
-          onShot?.();
-        }
-
-        const ua = upperarmL.current;
-        const la = lowerarmL.current;
-        if (ua) {
-          _upperE.set(AIM.upperarm.x, AIM.upperarm.y, AIM.upperarm.z - recoil);
-          _offsetQ.setFromEuler(_upperE);
-          applyAim(ua, upperBaseQ.current, _offsetQ, blend);
-        }
-        if (la) applyAim(la, lowerBaseQ.current, AIM_LOWER_Q, blend);
-      }
+    // Recoil kick + muzzle flash around the shoot frame.
+    const sinceShot = t - SHOOT_AT;
+    const recoil = sinceShot >= 0 && sinceShot < 0.25 ? (1 - sinceShot / 0.25) * 0.4 : 0;
+    if (flash.current) {
+      flash.current.intensity = sinceShot >= 0 && sinceShot < 0.12 ? (1 - sinceShot / 0.12) * 6 : 0;
+    }
+    if (!fired.current && t >= SHOOT_AT) {
+      fired.current = true;
+      onShot?.();
     }
 
-    // Stay fixed facing the description until the shoot+lower is done, then
-    // start the idle spin.
-    if (spinSpeed && spinner.current && finished.current) spinner.current.rotation.y += spinSpeed * delta;
+    if (upperarmL.current) {
+      _upperE.set(AIM_UPPER.x, AIM_UPPER.y, AIM_UPPER.z - recoil);
+      applyAim(upperarmL.current, upperBaseQ.current, _offsetQ.setFromEuler(_upperE), blend);
+    }
+    if (lowerarmL.current) applyAim(lowerarmL.current, lowerBaseQ.current, AIM_LOWER_Q, blend);
   });
 
   return (
     <group ref={root}>
-      <group ref={spinner}>
-        <group rotation={[0, facingY, 0]}>
-          <group
-            scale={fit.scale}
-            position={[-fit.center.x * fit.scale, -fit.center.y * fit.scale, -fit.center.z * fit.scale]}
-          >
-            <primitive object={scene} />
-          </group>
-        </group>
+      <group
+        scale={fit.scale}
+        position={[-fit.center.x * fit.scale, -fit.center.y * fit.scale, -fit.center.z * fit.scale]}
+      >
+        <primitive object={scene} />
       </group>
     </group>
   );

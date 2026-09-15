@@ -10,14 +10,13 @@ export interface Project {
   highlights: string[];
   demoUrl?: string;
   githubUrl?: string;
-  image?: string;
 }
 
 export const projects: Project[] = [
   {
     id: 'promptgod',
     name: 'PromptGod',
-    date: 'November 2025 - Present',
+    date: 'November 2025 - June 2026',
     category: 'Dev Tools',
     description: 'Manifest V3 Chrome extension that rewrites prompts directly inside major AI chat tools.',
     techStack: ['Manifest V3', 'TypeScript', 'Vite'],
@@ -32,7 +31,7 @@ export const projects: Project[] = [
   {
     id: 'software-maintenance-agent',
     name: 'Software Maintenance Agent',
-    date: 'April 2026 - Present',
+    date: 'April 2026 - July 2026',
     category: 'AI Agents',
     description: 'Local coding agent for small, testable software maintenance fixes.',
     techStack: ['Python', 'DSPy', 'pytest', 'SQLite', 'JEPA-style scoring'],
@@ -76,7 +75,7 @@ export const projects: Project[] = [
   {
     id: 'dolos',
     name: 'Dolos',
-    date: 'June 2026 - Present',
+    date: 'June 2026 - July 2026',
     category: 'Full-Stack',
     description: 'Real-time financial-crime detection platform — a student-scale Verafin — that scores bank transactions and opens investigation cases.',
     techStack: ['Java', 'Spring', 'Kafka', 'Neo4j', 'Spring AI'],
@@ -90,7 +89,7 @@ export const projects: Project[] = [
   {
     id: 'loopd',
     name: 'loopd',
-    date: 'June 2026 - Present',
+    date: 'June 2026 - July 2026',
     category: 'Dev Tools',
     description: 'Vendor-neutral control plane for AI agent loops: one cockpit that ingests, observes, and governs agent runs.',
     techStack: ['Rust', 'tokio', 'axum', 'rusqlite', 'ts-rs'],
