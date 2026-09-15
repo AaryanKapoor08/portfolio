@@ -57,7 +57,7 @@ const Hero: React.FC = () => {
           <motion.p variants={item} className="text-xl md:text-2xl font-medium text-muted-foreground">
             <Typewriter
               words={[
-                'Full Stack AI Developer',
+                'CS Student at UNB',
                 'Chrome Extension Builder',
                 'RAG & Retrieval Systems',
                 'LangGraph Agent Engineer',

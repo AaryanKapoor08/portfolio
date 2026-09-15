@@ -44,9 +44,24 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/AaryanKapoor08/software_maintenance_agent'
   },
   {
+    id: 'shorecheck',
+    name: 'ShoreCheck',
+    date: 'September 2026',
+    category: 'Full-Stack',
+    description: 'Halifax beach water-quality dashboard that won Best Student Team at the Anthropic Halifax Hackathon.',
+    techStack: ['Next.js', 'React', 'Tailwind', 'Sentinel-2', 'Gemini API'],
+    highlights: [
+      'Pulls official lab samples, ECCC weather data, and Sentinel-2 satellite imagery of 43 lakes into one live view',
+      'Backtested the rain-based bloom prediction model against 647 satellite readings and reported it as statistically insignificant (p = 0.49) instead of overselling accuracy',
+      'Awarded Best Student Team at the Anthropic Halifax Hackathon'
+    ],
+    demoUrl: 'https://shorecheck-five.vercel.app',
+    githubUrl: 'https://github.com/PriyanArora/shorecheck'
+  },
+  {
     id: 'auctus',
     name: 'Auctus',
-    date: 'January 2026 - Present',
+    date: 'January 2026 - May 2026',
     category: 'Full-Stack',
     description: 'Canadian funding-discovery platform for businesses, students, and professors.',
     techStack: ['Next.js 16', 'React 19', 'Supabase'],

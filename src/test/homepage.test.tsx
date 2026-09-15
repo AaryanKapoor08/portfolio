@@ -10,7 +10,7 @@ describe("portfolio homepage", () => {
     render(<Index />);
 
     expect(screen.getByRole("heading", { name: /aaryan kapoor/i })).toBeInTheDocument();
-    expect(screen.getByText(/full stack ai developer/i)).toBeInTheDocument();
+    expect(screen.getByText(/cs student at unb/i)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /featured projects/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /about me/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /technical skills/i })).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe("portfolio homepage", () => {
       expect(screen.getByRole("heading", { name: project.name })).toBeInTheDocument();
       expect(screen.getAllByText(project.date).length).toBeGreaterThan(0);
       if (project.githubUrl) {
-        expect(project.githubUrl).toMatch(/^https:\/\/github\.com\/AaryanKapoor08\//);
+        expect(project.githubUrl).toMatch(/^https:\/\/github\.com\/(AaryanKapoor08|PriyanArora)\//);
         expect(project.githubUrl).not.toBe("#");
       }
       expect(project.demoUrl).not.toBe("#");

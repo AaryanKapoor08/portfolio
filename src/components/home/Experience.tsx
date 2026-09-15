@@ -16,6 +16,25 @@ const listItem: Variants = {
 
 const experiences = [
   {
+    title: 'Research Assistant',
+    org: 'University of New Brunswick · Supervisor: Dr. Andrew Fisher',
+    date: '2026 - Present',
+    location: 'Fredericton, NB',
+    points: [
+      'Undergraduate research on whether a multi-step agent pipeline (planner, coder, checker) beats single-prompt generation when a small local LLM writes Arduino firmware, giving both sides the same compiler evidence and attempt limit so the study measures structure, not feedback.',
+      'Built the Python research harness that grades firmware by running it in a Wokwi simulator against hidden checks, so a program that prints "LED ON" without ever driving the pin fails.',
+    ],
+  },
+  {
+    title: 'Best Student Team Award',
+    org: 'Anthropic Halifax Hackathon',
+    date: 'September 2026',
+    location: 'Halifax, NS',
+    points: [
+      'Won Best Student Team for ShoreCheck, a beach water-quality dashboard combining official lab samples, a self-scoring rain-based prediction model, and Sentinel-2 satellite monitoring of 43 untested lakes.',
+    ],
+  },
+  {
     title: 'Freelance Web Developer',
     org: 'Hastinapur Metals Pvt. Ltd.',
     date: '2026',
@@ -63,6 +82,7 @@ const experiences = [
 ];
 
 const certifications = [
+  { name: 'Best Student Team Award', issuer: 'Anthropic Halifax Hackathon', date: 'Sep 2026' },
   { name: 'RAG Bootcamp', issuer: 'Udemy', date: 'May 2026' },
   { name: 'Oracle GenAI Certified', issuer: 'Oracle', date: 'Nov 2025' },
   { name: 'Oracle APEX Cloud Developer Certified Professional', issuer: 'Oracle', date: 'Nov 2025' },
@@ -139,7 +159,7 @@ const Experience: React.FC = () => {
 
         <div>
           <h3 className="text-2xl font-bold text-foreground mb-6 font-title">
-            Certifications
+            Awards & Certifications
           </h3>
           <div className="space-y-4">
             {certifications.map((certification) => (

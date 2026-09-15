@@ -4,8 +4,8 @@ import Section from '@/components/ui/Section';
 const MidasScene = lazy(() => import('@/components/three/MidasScene'));
 
 const PARAGRAPHS = [
-  'I am a rising third-year Computer Science student at the University of New Brunswick and an Oracle GenAI Certified developer. I build AI developer tools, Chrome extensions, and retrieval-agent systems.',
-  'My work spans TypeScript, Python, React, LangGraph, RAG, and LLM provider orchestration, with shipped open-source projects focused on making model behavior reliable in real workflows.',
+  'I am a rising third-year Computer Science student at the University of New Brunswick building AI developer tools, agent infrastructure, and retrieval systems. As a research assistant, I am studying whether multi-step agent pipelines outperform single-prompt LLMs at embedded code generation.',
+  'My work spans TypeScript, Python, LangGraph, and RAG, from shipped open-source projects to ShoreCheck, which won Best Student Team at the Anthropic Halifax Hackathon, with evaluation work that holds model claims to measured evidence.',
 ];
 
 // Word-by-word fade-in. Continuous stagger across both paragraphs reads as one
