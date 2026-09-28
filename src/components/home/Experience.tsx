@@ -35,12 +35,11 @@ const experiences = [
     ],
   },
   {
-    title: 'Freelance Web Developer',
-    org: 'Hastinapur Metals Pvt. Ltd.',
+    title: 'Participant',
+    org: 'HackAtlantic 2026',
     date: '2026',
-    location: 'Remote',
     points: [
-      "Built a robust website to run the firm's day-to-day operations, replacing manual tracking with a structured catalog, enquiry handling, and a direct admin view.",
+      'Built Keepline, a company-memory tool that turns Slack, email, and ticket history into versioned, cited facts, flags knowledge held by only one person, and writes handoff packs for departing employees.',
     ],
   },
   {
@@ -59,15 +58,6 @@ const experiences = [
     location: 'Remote',
     points: [
       'Active contributor in a large open-source mentorship program, resolving issues and landing merged pull requests across community-maintained repositories.',
-    ],
-  },
-  {
-    title: 'Open Source Contributor',
-    org: 'Code Social, Winter of Code',
-    date: 'Nov 2025 - Present',
-    location: 'Remote',
-    points: [
-      'Contributing across multiple repositories in a 3-month seasonal program through code reviews, pull requests, and issue triage.',
     ],
   },
   {
@@ -114,7 +104,8 @@ const Experience: React.FC = () => {
             <Card className="border-l-4 border-l-accent bg-card/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-l-[6px] hover:shadow-lg">
               <CardHeader>
                 <p className="text-sm text-muted-foreground">
-                  {experience.date} - {experience.location}
+                  {experience.date}
+                  {experience.location && ` - ${experience.location}`}
                 </p>
                 <CardTitle className="font-title text-2xl font-normal">
                   {experience.title}

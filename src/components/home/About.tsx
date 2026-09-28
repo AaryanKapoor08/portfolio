@@ -5,7 +5,7 @@ import { useNearViewport } from '@/lib/useNearViewport';
 const MidasScene = lazy(() => import('@/components/three/MidasScene'));
 
 const PARAGRAPHS = [
-  'I am a rising third-year Computer Science student at the University of New Brunswick building AI developer tools, agent infrastructure, and retrieval systems. As a research assistant, I am studying whether multi-step agent pipelines outperform single-prompt LLMs at embedded code generation.',
+  'I am a third-year Computer Science student at the University of New Brunswick building AI developer tools, agent infrastructure, and retrieval systems. As a research assistant, I am studying whether multi-step agent pipelines outperform single-prompt LLMs at embedded code generation.',
   'My work spans TypeScript, Python, LangGraph, and RAG, from shipped open-source projects to ShoreCheck, which won Best Student Team at the Anthropic Halifax Hackathon, with evaluation work that holds model claims to measured evidence.',
 ];
 

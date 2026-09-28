@@ -16,7 +16,7 @@ export const projects: Project[] = [
   {
     id: 'promptgod',
     name: 'PromptGod',
-    date: 'November 2025 - June 2026',
+    date: 'November 2025 - Present',
     category: 'Dev Tools',
     description: 'Manifest V3 Chrome extension that rewrites prompts directly inside major AI chat tools.',
     techStack: ['Manifest V3', 'TypeScript', 'Vite'],
@@ -31,7 +31,7 @@ export const projects: Project[] = [
   {
     id: 'software-maintenance-agent',
     name: 'Software Maintenance Agent',
-    date: 'April 2026 - July 2026',
+    date: 'April 2026 - Present',
     category: 'AI Agents',
     description: 'Local coding agent for small, testable software maintenance fixes.',
     techStack: ['Python', 'DSPy', 'pytest', 'SQLite', 'JEPA-style scoring'],
@@ -58,6 +58,35 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/PriyanArora/shorecheck'
   },
   {
+    id: 'keepline',
+    name: 'Keepline',
+    date: '2026',
+    category: 'RAG',
+    description: 'Company-memory tool that turns Slack, email, and ticket history into versioned, cited facts.',
+    techStack: ['Python', 'FastAPI', 'Next.js', 'SQLite', 'Snowflake Cortex'],
+    highlights: [
+      'Turns Slack, email, and ticket history into versioned, cited company memory that flags knowledge only one person holds',
+      'Cut confidently wrong answers from 71.8% to 22.2% vs. plain search on a synthetic 216-question held-out benchmark',
+      'Writes handoff packs for departing employees; built at HackAtlantic 2026'
+    ],
+    demoUrl: 'https://keepline.vercel.app',
+    githubUrl: 'https://github.com/AaryanKapoor08/keepline'
+  },
+  {
+    id: 'whis',
+    name: 'whis',
+    date: '2026',
+    category: 'AI Agents',
+    description: 'Voice agent that runs a Windows 11 PC from plain speech and can be called from a real phone number.',
+    techStack: ['Python', 'faster-whisper', 'Playwright', 'Windows UI Automation', 'Retell'],
+    highlights: [
+      'Built solo in 36 hours: drives a Windows 11 PC from plain speech, reachable from a real phone number',
+      'Acts while you are still talking (p50 ~170 ms over 1,350 calls)',
+      'Asks for a spoken yes before saving, closing, or submitting'
+    ],
+    githubUrl: 'https://github.com/AaryanKapoor08/whis'
+  },
+  {
     id: 'auctus',
     name: 'Auctus',
     date: 'January 2026 - May 2026',
@@ -75,7 +104,7 @@ export const projects: Project[] = [
   {
     id: 'dolos',
     name: 'Dolos',
-    date: 'June 2026 - July 2026',
+    date: 'June 2026 - Present',
     category: 'Full-Stack',
     description: 'Real-time financial-crime detection platform — a student-scale Verafin — that scores bank transactions and opens investigation cases.',
     techStack: ['Java', 'Spring', 'Kafka', 'Neo4j', 'Spring AI'],
@@ -89,7 +118,7 @@ export const projects: Project[] = [
   {
     id: 'loopd',
     name: 'loopd',
-    date: 'June 2026 - July 2026',
+    date: 'June 2026 - Present',
     category: 'Dev Tools',
     description: 'Vendor-neutral control plane for AI agent loops: one cockpit that ingests, observes, and governs agent runs.',
     techStack: ['Rust', 'tokio', 'axum', 'rusqlite', 'ts-rs'],
