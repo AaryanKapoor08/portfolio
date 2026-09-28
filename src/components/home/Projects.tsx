@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 type Filter = 'All' | ProjectCategory;
 
-const FILTERS: Filter[] = ['All', 'AI Agents', 'RAG', 'Full-Stack', 'Dev Tools'];
+const FILTERS: Filter[] = ['All', 'Hackathons', 'AI Agents', 'RAG', 'Platforms', 'Dev Tools'];
 
 const Projects: React.FC = () => {
   const [filter, setFilter] = useState<Filter>('All');

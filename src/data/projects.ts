@@ -1,4 +1,4 @@
-export type ProjectCategory = 'AI Agents' | 'RAG' | 'Full-Stack' | 'Dev Tools';
+export type ProjectCategory = 'Hackathons' | 'AI Agents' | 'RAG' | 'Platforms' | 'Dev Tools';
 
 export interface Project {
   id: string;
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     id: 'shorecheck',
     name: 'ShoreCheck',
     date: 'September 2026',
-    category: 'Full-Stack',
+    category: 'Hackathons',
     description: 'Halifax beach water-quality dashboard that won Best Student Team at the Anthropic Halifax Hackathon.',
     techStack: ['Next.js', 'React', 'Tailwind', 'Sentinel-2', 'Gemini API'],
     highlights: [
@@ -61,7 +61,7 @@ export const projects: Project[] = [
     id: 'keepline',
     name: 'Keepline',
     date: '2026',
-    category: 'RAG',
+    category: 'Hackathons',
     description: 'Company-memory tool that turns Slack, email, and ticket history into versioned, cited facts.',
     techStack: ['Python', 'FastAPI', 'Next.js', 'SQLite', 'Snowflake Cortex'],
     highlights: [
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     id: 'auctus',
     name: 'Auctus',
     date: 'January 2026 - May 2026',
-    category: 'Full-Stack',
+    category: 'Platforms',
     description: 'Canadian funding-discovery platform for businesses, students, and professors.',
     techStack: ['Next.js 16', 'React 19', 'Supabase'],
     highlights: [
@@ -105,7 +105,7 @@ export const projects: Project[] = [
     id: 'dolos',
     name: 'Dolos',
     date: 'June 2026 - Present',
-    category: 'Full-Stack',
+    category: 'Platforms',
     description: 'Real-time financial-crime detection platform — a student-scale Verafin — that scores bank transactions and opens investigation cases.',
     techStack: ['Java', 'Spring', 'Kafka', 'Neo4j', 'Spring AI'],
     highlights: [
