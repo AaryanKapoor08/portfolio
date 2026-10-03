@@ -69,6 +69,23 @@ const experiences = [
       'Participated in the 48-hour camp to design and pitch Auctus, an AI funding-discovery platform, and ship a working MVP.',
     ],
   },
+  {
+    title: 'Finalist',
+    org: 'Google Developer Groups Hackathon',
+    date: '2025',
+    points: [
+      'Reached the finals with MedBuddy, a voice-enabled medication assistant with speech input, spoken responses, and a live medication checklist, built with Next.js, Express, and the Groq API.',
+    ],
+  },
+  {
+    title: 'Open Source Contributor',
+    org: 'CodeSocial',
+    date: '2025',
+    location: 'Remote',
+    points: [
+      'Contributed to open-source projects through the CodeSocial program, fixing issues and getting pull requests merged.',
+    ],
+  },
 ];
 
 const certifications = [
@@ -76,7 +93,7 @@ const certifications = [
   { name: 'RAG Bootcamp', issuer: 'Udemy', date: 'May 2026' },
   { name: 'Oracle GenAI Certified', issuer: 'Oracle', date: 'Nov 2025' },
   { name: 'Oracle APEX Cloud Developer Certified Professional', issuer: 'Oracle', date: 'Nov 2025' },
-  { name: 'HackFest Hackathon', issuer: 'GDG Cloud New Delhi', date: 'Nov 2025' },
+  { name: 'HackFest Hackathon Finalist', issuer: 'GDG Cloud New Delhi', date: 'Nov 2025' },
 ];
 
 const Experience: React.FC = () => {
@@ -138,7 +155,7 @@ const Experience: React.FC = () => {
                 University of New Brunswick
               </CardTitle>
               <p className="text-sm font-medium text-muted-foreground">
-                Bachelor of Science in Computer Science (Rising 3rd Year)
+                Bachelor of Science in Computer Science (3rd Year)
               </p>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 Relevant coursework: Java, C, SQL, Calculus I & II, Statistics, Data Analysis, Machine Language.

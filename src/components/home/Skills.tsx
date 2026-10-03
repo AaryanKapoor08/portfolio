@@ -14,11 +14,15 @@ const LOGOS: Record<string, string> = {
   JavaScript: dev('javascript'),
   TypeScript: dev('typescript'),
   Java: dev('java'),
+  Rust: dev('rust'),
   C: dev('c'),
   'React.js': dev('react'),
   'Next.js': dev('nextjs'),
   'Node.js': dev('nodejs'),
   'Express.js': dev('express'),
+  FastAPI: dev('fastapi'),
+  'Spring Boot': dev('spring'),
+  gRPC: dev('grpc'),
   HTML: dev('html5'),
   CSS: dev('css3'),
   'Tailwind CSS': dev('tailwindcss'),
@@ -26,9 +30,12 @@ const LOGOS: Record<string, string> = {
   PostgreSQL: dev('postgresql'),
   MongoDB: dev('mongodb'),
   SQLite: dev('sqlite'),
+  Neo4j: dev('neo4j'),
+  Kafka: dev('apachekafka'),
   Git: dev('git'),
   'GitHub Actions': dev('githubactions'),
   Docker: dev('docker'),
+  Kubernetes: dev('kubernetes'),
   pytest: dev('pytest'),
   Vitest: dev('vitest'),
   Vite: dev('vitejs'),
@@ -41,19 +48,19 @@ const LOGOS: Record<string, string> = {
 const skillGroups: { category: string; skills: string[] }[] = [
   {
     category: 'Programming',
-    skills: ['Python', 'JavaScript', 'TypeScript', 'Java', 'C'],
+    skills: ['Python', 'TypeScript', 'JavaScript', 'Java', 'Rust', 'C', 'SQL'],
   },
   {
     category: 'Frontend & Backend',
-    skills: ['React.js', 'Next.js', 'Node.js', 'Express.js', 'HTML', 'CSS', 'Tailwind CSS', 'REST APIs'],
+    skills: ['React.js', 'Next.js', 'Node.js', 'Express.js', 'FastAPI', 'Spring Boot', 'axum', 'HTML', 'CSS', 'Tailwind CSS', 'REST APIs', 'gRPC'],
   },
   {
-    category: 'AI & Retrieval',
-    skills: ['RAG fundamentals', 'LangChain', 'LangGraph', 'LangSmith', 'LLM APIs', 'Prompt engineering', 'Provider orchestration', 'BM25'],
+    category: 'AI & Agents',
+    skills: ['LangChain', 'LangGraph', 'LangSmith', 'DSPy', 'Spring AI', 'MCP', 'RAG', 'BM25', 'LLM APIs', 'Ollama', 'Prompt engineering', 'Provider orchestration'],
   },
   {
     category: 'Databases & Tools',
-    skills: ['Supabase', 'PostgreSQL', 'MongoDB', 'SQL', 'SQLite', 'Git', 'GitHub Actions', 'Docker'],
+    skills: ['PostgreSQL', 'SQLite', 'MongoDB', 'Supabase', 'Neo4j', 'Kafka', 'Docker', 'Kubernetes', 'Git', 'GitHub Actions'],
   },
   {
     category: 'Testing & Platforms',
@@ -80,6 +87,8 @@ const marqueeItems = weave(
   allItems.filter((it) => it.logo),
   allItems.filter((it) => !it.logo),
 );
+
+const MARQUEE_SPLIT = Math.ceil(marqueeItems.length / 2);
 
 const Skills: React.FC = () => {
   return (
@@ -113,8 +122,8 @@ const Skills: React.FC = () => {
       </div>
 
       <div className="mt-20 md:mt-24 space-y-4">
-        <Marquee items={marqueeItems.slice(0, 18)} duration={36} />
-        <Marquee items={marqueeItems.slice(18)} duration={30} reverse />
+        <Marquee items={marqueeItems.slice(0, MARQUEE_SPLIT)} duration={36} />
+        <Marquee items={marqueeItems.slice(MARQUEE_SPLIT)} duration={30} reverse />
       </div>
     </Section>
   );
