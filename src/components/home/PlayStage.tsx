@@ -42,7 +42,7 @@ export default function PlayStage() {
 
       <div
         ref={ref}
-        className="relative mx-auto h-[460px] w-full max-w-4xl cursor-grab overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-sky-400/10 via-accent/5 to-transparent active:cursor-grabbing"
+        className="touch-scroll-y relative mx-auto h-[360px] sm:h-[460px] w-full max-w-4xl cursor-grab overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-sky-400/10 via-accent/5 to-transparent active:cursor-grabbing"
       >
         {visible ? (
           <Suspense fallback={<StageHint />}>

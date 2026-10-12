@@ -5,7 +5,7 @@ import { useNearViewport } from '@/lib/useNearViewport';
 const MidasScene = lazy(() => import('@/components/three/MidasScene'));
 
 const PARAGRAPHS = [
-  'I am a third-year Computer Science student at the University of New Brunswick building AI developer tools, agent infrastructure, and retrieval systems. As a research assistant, I am studying whether multi-step agent pipelines outperform single-prompt LLMs at embedded code generation.',
+  'I am a third-year Computer Science student at the University of New Brunswick building AI developer tools, agent infrastructure, and retrieval systems. As a student researcher, I am studying whether multi-step agent pipelines outperform single-prompt LLMs at embedded code generation.',
   'My work spans TypeScript, Python, LangGraph, and RAG, from shipped open-source projects to ShoreCheck, which won Best Student Team at the Anthropic Halifax Hackathon, with evaluation work that holds model claims to measured evidence.',
 ];
 
@@ -60,29 +60,27 @@ export default function About() {
     };
   }, []);
 
+  // Safety net: if WebGL never loads (old phone, blocked GPU), the shot never
+  // fires — still reveal the copy shortly after the stage comes into view.
+  useEffect(() => {
+    if (!play) return;
+    const t = window.setTimeout(() => setRevealed(true), 3500);
+    return () => window.clearTimeout(t);
+  }, [play]);
+
   return (
     <Section
       id="about"
       className="relative overflow-hidden bg-gradient-to-br from-[hsl(45_90%_88%)] via-[hsl(245_70%_86%)] to-[hsl(205_75%_85%)] dark:from-[hsl(40_45%_16%)] dark:via-[hsl(245_30%_10%)] dark:to-[hsl(222_30%_6%)]"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,hsl(265_85%_70%/0.22),transparent_62%)] dark:bg-[radial-gradient(circle_at_50%_42%,hsl(45_85%_55%/0.16),transparent_62%)]" />
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white font-title">
-            About Me
-          </h2>
-          <p className="text-lg text-black dark:text-white leading-relaxed">
-            <WordReveal text={PARAGRAPHS[0]} start={revealed} baseIndex={0} />
-          </p>
-          <p className="text-lg text-black dark:text-white leading-relaxed">
-            <WordReveal
-              text={PARAGRAPHS[1]}
-              start={revealed}
-              baseIndex={PARAGRAPHS[0].split(' ').length}
-            />
-          </p>
-        </div>
-        <div ref={caseRef} className="group relative aspect-[4/5.6] cursor-grab active:cursor-grabbing">
+      {/* Phones stack heading → Midas → copy, so the shot plays before the
+          text it reveals; md+ puts Midas in its own column beside both. */}
+      <div className="relative grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-12 md:gap-y-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white font-title md:col-start-1 md:row-start-1 md:self-end">
+          About Me
+        </h2>
+        <div ref={caseRef} className="touch-scroll-y group relative aspect-[4/5.6] cursor-grab active:cursor-grabbing md:col-start-2 md:row-span-2 md:row-start-1">
           <div className="absolute inset-0">
             {near && (
               <Suspense fallback={null}>
@@ -93,6 +91,18 @@ export default function About() {
           <span className="pointer-events-none absolute right-6 -top-6 text-right text-[11px] font-medium uppercase tracking-[0.15em] text-black/70 dark:text-white/70">
             Midas · drag to spin
           </span>
+        </div>
+        <div className="space-y-6 md:col-start-1 md:row-start-2 md:self-start">
+          <p className="text-lg text-black dark:text-white leading-relaxed">
+            <WordReveal text={PARAGRAPHS[0]} start={revealed} baseIndex={0} />
+          </p>
+          <p className="text-lg text-black dark:text-white leading-relaxed">
+            <WordReveal
+              text={PARAGRAPHS[1]}
+              start={revealed}
+              baseIndex={PARAGRAPHS[0].split(' ').length}
+            />
+          </p>
         </div>
       </div>
     </Section>

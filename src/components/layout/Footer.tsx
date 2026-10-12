@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
 
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span>© {new Date().getFullYear()} Aaryan Kapoor</span>
-            <button onClick={scrollTop} className="inline-flex items-center gap-1 transition-colors hover:text-foreground">
+            <button onClick={scrollTop} className="inline-flex items-center gap-1 py-2 transition-colors hover:text-foreground">
               Back to top <ArrowUp className="h-3.5 w-3.5" />
             </button>
           </div>

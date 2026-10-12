@@ -51,12 +51,6 @@ const Contact: React.FC = () => {
         </div>
         </CardContent>
       </Card>
-
-      <div className="mx-auto mt-20 max-w-5xl border-t border-border pt-8">
-        <p className="text-center text-xs text-muted-foreground">
-          (c) {new Date().getFullYear()} Aaryan Kapoor. Built with React and Tailwind CSS.
-        </p>
-      </div>
     </Section>
   );
 };

@@ -146,7 +146,7 @@ const Experience: React.FC = () => {
                 {experience.link && (
                   <Link
                     to={experience.link.to}
-                    className="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+                    className="group mt-2 inline-flex items-center gap-1.5 py-2 text-sm font-medium text-accent hover:underline"
                   >
                     {experience.link.label}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -194,7 +194,7 @@ const Experience: React.FC = () => {
                       {certification.issuer}
                     </p>
                   </div>
-                  <Badge>{certification.date}</Badge>
+                  <Badge className="shrink-0 whitespace-nowrap">{certification.date}</Badge>
                 </div>
                 </CardContent>
               </Card>
@@ -215,7 +215,7 @@ const Experience: React.FC = () => {
                     Supported on-site logistics across keynotes, panels, and workshops for UNB's RIDSAI applied-AI gathering.
                   </p>
                 </div>
-                <Badge>Jun 2026</Badge>
+                <Badge className="shrink-0 whitespace-nowrap">Jun 2026</Badge>
               </div>
             </CardContent>
           </Card>

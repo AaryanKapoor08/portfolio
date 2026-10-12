@@ -50,7 +50,7 @@ const Hero: React.FC = () => {
         <div className="space-y-5">
           <motion.h1
             variants={item}
-            className="font-title bg-gradient-to-r from-foreground via-accent to-foreground bg-[length:200%_auto] bg-clip-text text-5xl font-bold text-transparent animate-aurora md:text-7xl"
+            className="font-title text-5xl font-bold text-foreground sm:bg-gradient-to-r sm:from-foreground sm:via-accent sm:to-foreground sm:bg-[length:200%_auto] sm:bg-clip-text sm:text-transparent sm:animate-aurora md:text-7xl"
           >
             Aaryan Kapoor
           </motion.h1>
@@ -67,17 +67,17 @@ const Hero: React.FC = () => {
           </motion.p>
           <motion.p
             variants={item}
-            className="text-lg md:text-xl text-muted-foreground/80 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto leading-relaxed"
           >
             Building AI developer tools, Chrome extensions, and retrieval-agent systems with TypeScript, Python, React, and LangGraph.
           </motion.p>
         </div>
 
-        <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Magnetic>
+        <motion.div variants={item} className="mx-auto flex w-full max-w-xs flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4">
+          <Magnetic className="w-full sm:w-auto">
             <Button
               size="lg"
-              className="group"
+              className="group w-full sm:w-auto"
               onClick={() => {
                 playPop();
                 document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -87,10 +87,11 @@ const Hero: React.FC = () => {
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Magnetic>
-          <Magnetic>
+          <Magnetic className="w-full sm:w-auto">
             <Button
               size="lg"
               variant="outline"
+              className="w-full sm:w-auto"
               onClick={() => {
                 playPop();
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -99,8 +100,8 @@ const Hero: React.FC = () => {
               Get in Touch
             </Button>
           </Magnetic>
-          <Magnetic>
-            <Button size="lg" variant="outline" className="group" asChild>
+          <Magnetic className="w-full sm:w-auto">
+            <Button size="lg" variant="outline" className="group w-full sm:w-auto" asChild>
               <a href={profileLinks.resume} download="Aaryan_Kapoor_Resume.pdf" onClick={() => playPop()}>
                 <Download className="mr-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />
                 Download Resume

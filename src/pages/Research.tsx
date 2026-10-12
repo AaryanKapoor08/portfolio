@@ -351,7 +351,7 @@ const Research: React.FC = () => {
         <div className="relative z-10 mx-auto max-w-6xl">
           <Link
             to="/"
-            className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="mb-6 inline-flex items-center gap-1.5 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" /> Back home
           </Link>
@@ -362,10 +362,10 @@ const Research: React.FC = () => {
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="space-y-6"
           >
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-muted-foreground">
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-foreground/60 sm:text-sm sm:tracking-[0.3em]">
               Undergraduate research · University of New Brunswick
             </p>
-            <h1 className="font-title bg-gradient-to-r from-foreground via-accent to-foreground bg-[length:200%_auto] bg-clip-text text-5xl font-bold text-transparent animate-aurora md:text-7xl">
+            <h1 className="font-title text-[2.6rem] font-bold leading-[1.05] text-foreground sm:text-5xl md:text-7xl">
               Embedded LLM Research Harness
             </h1>
             <p className="max-w-3xl text-lg leading-relaxed text-foreground/80 md:text-xl">
@@ -410,7 +410,7 @@ const Research: React.FC = () => {
           {/* Contents */}
           <nav aria-label="Research sections" className="mt-6 flex flex-wrap gap-2">
             {SECTIONS.map((s, i) => (
-              <a key={s.id} href={`#${s.id}`} className="mc-btn px-3 py-1.5 text-xs font-medium">
+              <a key={s.id} href={`#${s.id}`} className="mc-btn px-3 py-2 text-xs font-medium">
                 <span className="mr-1 font-mono opacity-60">{String(i + 1).padStart(2, '0')}</span>
                 {s.label}
               </a>
@@ -590,7 +590,7 @@ const Research: React.FC = () => {
             <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-6">
               {JUDGE_STEPS.map((s, i) => (
                 <li key={s.step} className="relative flex flex-col gap-1 bg-[#2b2b2b] p-3">
-                  <span className="font-mono text-[0.65rem] text-[#8a8a8a]">STEP {i + 1}</span>
+                  <span className="font-mono text-xs text-[#8a8a8a]">STEP {i + 1}</span>
                   <span className="font-title text-lg leading-tight text-white">{s.step}</span>
                   <span className="text-xs leading-snug text-[#bdbdbd]">{s.text}</span>
                   {i < JUDGE_STEPS.length - 1 && (
