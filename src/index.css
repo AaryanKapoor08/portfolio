@@ -353,6 +353,163 @@
 }
 .dark .fn-shop::before { opacity: 0.06; }
 
+/* ---------------------------------------------------------------------------
+   Fortnite stage — Item Shop (Skills) and Battle Pass (Experience). A vivid
+   lobby-blue backdrop with slowly spinning light rays; like the Minecraft
+   panels it stays vivid in both themes. Rarity colours follow the game.
+--------------------------------------------------------------------------- */
+.fn-stage {
+  position: relative;
+  isolation: isolate;
+  /* clip, not hidden: hidden would make this a scroll container and break
+     the sticky rewards column. */
+  overflow: hidden;
+  overflow: clip;
+  color: #ffffff;
+  background:
+    radial-gradient(120% 70% at 50% 0%, #4aa3ff 0%, #2563eb 38%, #1a3aa8 70%, #142a7c 100%);
+}
+.dark .fn-stage {
+  background:
+    radial-gradient(120% 70% at 50% 0%, #2f6be0 0%, #1a3b9e 38%, #10236b 70%, #0a1547 100%);
+}
+/* Light rays fanning from above the headline. */
+.fn-stage::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -1200px;
+  z-index: -1;
+  width: 2400px;
+  height: 2400px;
+  margin-left: -1200px;
+  pointer-events: none;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.075) 0deg 5deg, transparent 5deg 15deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 0%, black 30%, transparent 62%);
+  mask-image: radial-gradient(circle at 50% 50%, black 0%, black 30%, transparent 62%);
+  animation: fn-rays 120s linear infinite;
+}
+/* Bottom glow and a faint floor grid. */
+.fn-stage::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(10, 18, 70, 0.55), transparent),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 64px);
+}
+@keyframes fn-rays {
+  to { transform: rotate(360deg); }
+}
+
+/* Skewed yellow callout, the game's "ITEM SHOP" / "BATTLE PASS" tab. */
+.fn-banner {
+  display: inline-block;
+  transform: skew(-8deg);
+  background: #ffe14d;
+  color: #12164a;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 4px 4px 0 #0b1240;
+}
+.fn-banner > * { display: inline-block; transform: skew(8deg); }
+.fn-heading {
+  color: #ffffff;
+  text-shadow: 0 4px 0 #0c1660, 0 10px 24px rgba(5, 10, 50, 0.45);
+}
+.fn-italic {
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+/* Frosted panel that sits on the stage. */
+.fn-glass {
+  background: rgba(8, 16, 64, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 12px 30px rgba(4, 8, 40, 0.3);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* Rarity: each sets --r1 (light) and --r2 (dark). */
+.rarity-common { --r1: #b4bcc2; --r2: #5d666d; }
+.rarity-uncommon { --r1: #8fdc3a; --r2: #2f7f14; }
+.rarity-rare { --r1: #5fd0ff; --r2: #1c63d4; }
+.rarity-epic { --r1: #d27bff; --r2: #6c23c2; }
+.rarity-legendary { --r1: #ffb35c; --r2: #c24f12; }
+.rarity-mythic { --r1: #ffe680; --r2: #c08a12; }
+
+/* Shop tile: rarity burst, inner rim, dark name strip, sheen on hover. */
+.fn-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: radial-gradient(circle at 50% 32%, var(--r1) 0%, var(--r2) 78%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28), 0 6px 14px rgba(4, 8, 40, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.fn-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.45) 48%, transparent 66%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.fn-tile:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6), 0 12px 24px rgba(4, 8, 40, 0.45);
+}
+.fn-tile:hover::after { transform: translateX(120%); }
+.fn-rarity-stripe { background: linear-gradient(var(--r1), var(--r2)); }
+.fn-rarity-text { color: var(--r1); }
+
+/* XP / tier bar. */
+.fn-xp {
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(4, 10, 50, 0.55);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+.fn-xp > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ffe14d, #ffb21f);
+  box-shadow: 0 0 12px rgba(255, 216, 74, 0.6);
+}
+
+/* Floating bits of "action". */
+.fn-bob { animation: fn-bob 3.2s ease-in-out infinite; }
+@keyframes fn-bob {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-12px) rotate(4deg); }
+}
+.fn-drop { animation: fn-drop 7s ease-in-out infinite; transform-origin: 50% 0; }
+@keyframes fn-drop {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(18px) rotate(5deg); }
+}
+.fn-pulse { animation: fn-pulse 1.6s ease-in-out infinite; }
+@keyframes fn-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+/* Reduced motion stops the large spinning rays. The small bobbing props keep
+   moving, like the Midas showcase: Windows reports "reduce" whenever its
+   Animation effects toggle is off, which would otherwise freeze the stage. */
+@media (prefers-reduced-motion: reduce) {
+  .fn-stage::before { animation: none; }
+}
+
 /* Touch: let vertical swipes over a 3D stage scroll the page. OrbitControls
    sets touch-action: none inline on its element, which traps the scroll on
    phones; !important beats the inline style, and horizontal drags still spin. */

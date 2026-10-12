@@ -43,14 +43,6 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
-        marquee: {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-50%)" },
-        },
-        "marquee-reverse": {
-          from: { transform: "translateX(-50%)" },
-          to: { transform: "translateX(0)" },
-        },
         "float-slow": {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-8px)" },
@@ -61,8 +53,6 @@ export default {
         },
       },
       animation: {
-        marquee: "marquee var(--marquee-duration, 30s) linear infinite",
-        "marquee-reverse": "marquee-reverse var(--marquee-duration, 30s) linear infinite",
         "float-slow": "float-slow 4s ease-in-out infinite",
         aurora: "aurora 12s ease infinite",
       },
