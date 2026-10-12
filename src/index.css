@@ -232,6 +232,66 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Research page — "dig down" strata. Each section is a terrain layer (grass,
+   dirt, stone, deepslate, bedrock) that darkens with depth; content sits in
+   the same .mc-panel GUI pieces as Featured Projects. Like those panels, the
+   strata look the same in light and dark mode.
+--------------------------------------------------------------------------- */
+.mc-strata {
+  --dirt: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%23866043'/%3E%3Crect x='1' y='0' width='1' height='1' fill='%235a3d25'/%3E%3Crect x='7' y='0' width='1' height='1' fill='%2379553a'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%236b4a2f'/%3E%3Crect x='2' y='1' width='1' height='1' fill='%239b7653'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%236b4a2f'/%3E%3Crect x='0' y='2' width='1' height='1' fill='%235a3d25'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%2379553a'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%2379553a'/%3E%3Crect x='4' y='2' width='1' height='1' fill='%236b4a2f'/%3E%3Crect x='3' y='3' width='1' height='1' fill='%239b7653'/%3E%3Crect x='4' y='3' width='1' height='1' fill='%235a3d25'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%239b7653'/%3E%3Crect x='7' y='3' width='1' height='1' fill='%2379553a'/%3E%3Crect x='1' y='4' width='1' height='1' fill='%239b7653'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%239b7653'/%3E%3Crect x='6' y='4' width='1' height='1' fill='%235a3d25'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%235a3d25'/%3E%3Crect x='1' y='5' width='1' height='1' fill='%236b4a2f'/%3E%3Crect x='5' y='5' width='1' height='1' fill='%239b7653'/%3E%3Crect x='6' y='5' width='1' height='1' fill='%2379553a'/%3E%3Crect x='7' y='5' width='1' height='1' fill='%236b4a2f'/%3E%3Crect x='4' y='6' width='1' height='1' fill='%239b7653'/%3E%3Crect x='5' y='6' width='1' height='1' fill='%235a3d25'/%3E%3Crect x='7' y='6' width='1' height='1' fill='%236b4a2f'/%3E%3Crect x='1' y='7' width='1' height='1' fill='%239b7653'/%3E%3Crect x='5' y='7' width='1' height='1' fill='%235a3d25'/%3E%3Crect x='6' y='7' width='1' height='1' fill='%239b7653'/%3E%3C/svg%3E");
+  --stone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%237d7d7d'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='1' y='0' width='1' height='1' fill='%23747474'/%3E%3Crect x='4' y='0' width='1' height='1' fill='%23747474'/%3E%3Crect x='5' y='0' width='1' height='1' fill='%236a6a6a'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%236a6a6a'/%3E%3Crect x='2' y='1' width='1' height='1' fill='%23747474'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='0' y='2' width='1' height='1' fill='%236a6a6a'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23747474'/%3E%3Crect x='0' y='3' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='3' y='3' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='6' y='3' width='1' height='1' fill='%236a6a6a'/%3E%3Crect x='7' y='3' width='1' height='1' fill='%236a6a6a'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='2' y='4' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%236a6a6a'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='1' y='5' width='1' height='1' fill='%23747474'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%238f8f8f'/%3E%3Crect x='4' y='5' width='1' height='1' fill='%23747474'/%3E%3Crect x='5' y='5' width='1' height='1' fill='%238f8f8f'/%3E%3Crect x='4' y='6' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%235e5e5e'/%3E%3Crect x='1' y='7' width='1' height='1' fill='%23747474'/%3E%3Crect x='6' y='7' width='1' height='1' fill='%23747474'/%3E%3Crect x='7' y='7' width='1' height='1' fill='%236a6a6a'/%3E%3C/svg%3E");
+  --deepslate: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%234a4a51'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%233c3c43'/%3E%3Crect x='4' y='0' width='1' height='1' fill='%235a5a62'/%3E%3Crect x='7' y='0' width='1' height='1' fill='%233c3c43'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%23323238'/%3E%3Crect x='2' y='1' width='1' height='1' fill='%23323238'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%23444449'/%3E%3Crect x='4' y='1' width='1' height='1' fill='%23444449'/%3E%3Crect x='5' y='1' width='1' height='1' fill='%235a5a62'/%3E%3Crect x='6' y='1' width='1' height='1' fill='%23323238'/%3E%3Crect x='1' y='2' width='1' height='1' fill='%233c3c43'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%233c3c43'/%3E%3Crect x='4' y='2' width='1' height='1' fill='%23444449'/%3E%3Crect x='5' y='2' width='1' height='1' fill='%233c3c43'/%3E%3Crect x='6' y='2' width='1' height='1' fill='%235a5a62'/%3E%3Crect x='4' y='3' width='1' height='1' fill='%235a5a62'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%23323238'/%3E%3Crect x='2' y='4' width='1' height='1' fill='%233c3c43'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%233c3c43'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%23323238'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%23323238'/%3E%3Crect x='2' y='6' width='1' height='1' fill='%23444449'/%3E%3Crect x='1' y='7' width='1' height='1' fill='%23323238'/%3E%3Crect x='2' y='7' width='1' height='1' fill='%23323238'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%23444449'/%3E%3Crect x='4' y='7' width='1' height='1' fill='%23444449'/%3E%3Crect x='6' y='7' width='1' height='1' fill='%235a5a62'/%3E%3Crect x='7' y='7' width='1' height='1' fill='%23323238'/%3E%3C/svg%3E");
+  --bedrock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%233a3a3a'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23575757'/%3E%3Crect x='1' y='0' width='1' height='1' fill='%23575757'/%3E%3Crect x='5' y='0' width='1' height='1' fill='%232c2c2c'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%23121212'/%3E%3Crect x='2' y='1' width='1' height='1' fill='%23575757'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%231e1e1e'/%3E%3Crect x='4' y='1' width='1' height='1' fill='%23575757'/%3E%3Crect x='6' y='2' width='1' height='1' fill='%231e1e1e'/%3E%3Crect x='2' y='3' width='1' height='1' fill='%231e1e1e'/%3E%3Crect x='7' y='3' width='1' height='1' fill='%231e1e1e'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%23121212'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%23575757'/%3E%3Crect x='5' y='4' width='1' height='1' fill='%232c2c2c'/%3E%3Crect x='7' y='4' width='1' height='1' fill='%23575757'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%232c2c2c'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%231e1e1e'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%23121212'/%3E%3Crect x='4' y='5' width='1' height='1' fill='%23121212'/%3E%3Crect x='6' y='5' width='1' height='1' fill='%23121212'/%3E%3Crect x='1' y='7' width='1' height='1' fill='%23575757'/%3E%3Crect x='6' y='7' width='1' height='1' fill='%23121212'/%3E%3Crect x='7' y='7' width='1' height='1' fill='%232c2c2c'/%3E%3C/svg%3E");
+  --grass: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='3' shape-rendering='crispEdges'%3E%3Crect width='8' height='2' fill='%235d9c37'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='0' y='2' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='1' y='2' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='2' y='1' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='3' y='0' width='1' height='1' fill='%236fb544'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='4' y='1' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='4' y='2' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='6' y='0' width='1' height='1' fill='%236fb544'/%3E%3Crect x='6' y='2' width='1' height='1' fill='%234a8a2c'/%3E%3Crect x='7' y='0' width='1' height='1' fill='%236fb544'/%3E%3Crect x='7' y='1' width='1' height='1' fill='%234a8a2c'/%3E%3C/svg%3E");
+}
+.mc-layer {
+  position: relative;
+  isolation: isolate;
+  image-rendering: pixelated;
+  background-color: #3a3a3a;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, var(--shade, 0)), rgba(0, 0, 0, var(--shade, 0))),
+    var(--tile);
+  background-size: auto, 256px 256px;
+  border-top: 4px solid rgba(0, 0, 0, 0.35);
+}
+.mc-layer--dirt { --tile: var(--dirt); background-color: #866043; }
+.mc-layer--stone { --tile: var(--stone); background-color: #7d7d7d; }
+.mc-layer--deepslate { --tile: var(--deepslate); background-color: #4a4a51; }
+.mc-layer--bedrock { --tile: var(--bedrock); background-color: #3a3a3a; }
+/* Grass lip on the first layer under the sky. */
+.mc-layer--grass {
+  border-top: 0;
+  background-image:
+    var(--grass),
+    linear-gradient(rgba(0, 0, 0, var(--shade, 0)), rgba(0, 0, 0, var(--shade, 0))),
+    var(--tile);
+  background-repeat: repeat-x, repeat, repeat;
+  background-size: 256px 96px, auto, 256px 256px;
+  padding-top: 3rem;
+}
+/* White GUI text with the hard drop shadow Minecraft uses for titles. */
+.mc-heading {
+  color: #ffffff;
+  text-shadow: 3px 3px 0 #3f3f3f;
+}
+.mc-subtext {
+  color: #e8e8e8;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+}
+/* Inventory slot: sunken square, dark top-left, light bottom-right. */
+.mc-slot {
+  background: #8b8b8b;
+  box-shadow: inset 2px 2px 0 0 #373737, inset -2px -2px 0 0 #ffffff;
+}
+/* Advancement toast. */
+.mc-toast {
+  background: #212121;
+  border: 2px solid #000;
+  box-shadow: inset 2px 2px 0 0 #5a5a5a, inset -2px -2px 0 0 #101010;
+}
+
+/* ---------------------------------------------------------------------------
    Llama belt — supply llama runs across the strip; legs swap as a 4-frame
    sprite (each group shows for 1/4 of the cycle via the opacity blink).
 --------------------------------------------------------------------------- */

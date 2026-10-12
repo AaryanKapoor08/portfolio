@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { profileLinks } from '@/data/profile';
-import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react';
 import HeroCanvas from '@/components/three/HeroCanvas';
 import MinecraftSky from '@/components/three/MinecraftSky';
 import Typewriter from '@/components/ui/Typewriter';
@@ -97,6 +97,14 @@ const Hero: React.FC = () => {
               }}
             >
               Get in Touch
+            </Button>
+          </Magnetic>
+          <Magnetic>
+            <Button size="lg" variant="outline" className="group" asChild>
+              <a href={profileLinks.resume} download="Aaryan_Kapoor_Resume.pdf" onClick={() => playPop()}>
+                <Download className="mr-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+                Download Resume
+              </a>
             </Button>
           </Magnetic>
         </motion.div>

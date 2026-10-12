@@ -1,13 +1,19 @@
 import { render, screen } from "@testing-library/react";
+import type { ReactElement } from "react";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
 import Index from "@/pages/Index";
+import Research from "@/pages/Research";
 import { projects } from "@/data/projects";
 import { profileLinks } from "@/data/profile";
 
+const renderAt = (path: string, ui: ReactElement) =>
+  render(<MemoryRouter initialEntries={[path]}>{ui}</MemoryRouter>);
+
 describe("portfolio homepage", () => {
   it("renders the key homepage sections and contact email", () => {
-    render(<Index />);
+    renderAt("/", <Index />);
 
     expect(screen.getByRole("heading", { name: /aaryan kapoor/i })).toBeInTheDocument();
     expect(screen.getByText(/cs student at unb/i)).toBeInTheDocument();
@@ -22,7 +28,7 @@ describe("portfolio homepage", () => {
   });
 
   it("renders project content and real portfolio links", () => {
-    render(<Index />);
+    renderAt("/", <Index />);
 
     for (const project of projects) {
       expect(screen.getByRole("heading", { name: project.name })).toBeInTheDocument();
@@ -50,5 +56,37 @@ describe("portfolio homepage", () => {
       "href",
       profileLinks.linkedin,
     );
+  });
+
+  it("offers the resume download and links to the research page", () => {
+    renderAt("/", <Index />);
+
+    for (const link of screen.getAllByRole("link", { name: /download resume/i })) {
+      expect(link).toHaveAttribute("href", profileLinks.resume);
+      expect(link).toHaveAttribute("download");
+    }
+    expect(screen.getAllByRole("link", { name: /^research$/i })[0]).toHaveAttribute("href", "/research");
+  });
+});
+
+describe("research page", () => {
+  it("renders every research section in order", () => {
+    renderAt("/research", <Research />);
+
+    expect(screen.getByRole("heading", { level: 1, name: /embedded llm research harness/i })).toBeInTheDocument();
+    const headings = screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent);
+    expect(headings).toEqual([
+      "Overview",
+      "Five setups, one pipeline",
+      "Task suite",
+      "How a program is judged",
+      "Testing",
+      "Fairness",
+      "Determinism",
+      "Audit",
+      "Analysis",
+      "Tech stack",
+      "Progress",
+    ]);
   });
 });

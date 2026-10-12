@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,9 +18,10 @@ const listItem: Variants = {
 
 const experiences = [
   {
-    title: 'Research Assistant',
+    title: 'Undergraduate Researcher, First Author',
     org: 'University of New Brunswick · Supervisor: Dr. Andrew Fisher',
-    date: '2026 - Present',
+    date: 'July 2026 - Present',
+    link: { to: '/research', label: 'Read about the research' },
     location: 'Fredericton, NB',
     points: [
       'Undergraduate research on whether a multi-step agent pipeline (planner, coder, checker) beats single-prompt generation when a small local LLM writes Arduino firmware, giving both sides the same compiler evidence and attempt limit so the study measures structure, not feedback.',
@@ -140,6 +143,15 @@ const Experience: React.FC = () => {
                     </li>
                   ))}
                 </ul>
+                {experience.link && (
+                  <Link
+                    to={experience.link.to}
+                    className="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+                  >
+                    {experience.link.label}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                )}
               </CardContent>
             </Card>
             </motion.div>

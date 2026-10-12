@@ -3,7 +3,7 @@ import Section from '@/components/ui/Section';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { profileLinks } from '@/data/profile';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Download, Github, Linkedin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
   return (
@@ -21,12 +21,20 @@ const Contact: React.FC = () => {
           </p>
         </div>
 
-        <Button size="lg" asChild>
-          <a href={`mailto:${profileLinks.email}`}>
-            <Mail className="mr-2 h-4 w-4" />
-            {profileLinks.email}
-          </a>
-        </Button>
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Button size="lg" asChild>
+            <a href={`mailto:${profileLinks.email}`}>
+              <Mail className="mr-2 h-4 w-4" />
+              {profileLinks.email}
+            </a>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <a href={profileLinks.resume} download="Aaryan_Kapoor_Resume.pdf">
+              <Download className="mr-2 h-4 w-4" />
+              Download Resume
+            </a>
+          </Button>
+        </div>
 
         <div className="flex items-center justify-center gap-3">
           <Button variant="outline" size="icon" asChild>

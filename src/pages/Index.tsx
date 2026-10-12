@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -16,6 +18,16 @@ import KonamiRain from '@/components/ui/KonamiRain';
 import IntroSplash from '@/components/ui/IntroSplash';
 
 const Index = () => {
+  // Arriving from another page via "/#section": scroll there once it's mounted.
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    const t = window.setTimeout(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth' });
+    }, 80);
+    return () => window.clearTimeout(t);
+  }, [hash]);
+
   return (
     <Layout>
       <IntroSplash />
